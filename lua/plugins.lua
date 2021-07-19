@@ -1,0 +1,579 @@
+local has = function(x)
+  return vim.fn.has(x) == 1
+end
+
+
+local packer = require("packer")
+
+local conf = require('configs.all')
+
+packer.init {
+  display = {
+    open_fn = function()
+      return require("packer.util").float {border = "single"}
+    end
+  },
+  git = {
+    cmd = '/home/e367212/git-test-inst/bin/git',
+    clone_timeout = 600 -- Timeout, in seconds, for git clones
+  }
+}
+
+
+return packer.startup( function()
+
+  local use = packer.use
+
+  use {"nvim-lua/popup.nvim"}
+
+  use {"nvim-lua/plenary.nvim"}
+
+  use {"wbthomason/packer.nvim"}
+
+  use {
+    'rmagatti/auto-session',
+    event = 'VimEnter',
+    config = function()
+      require "configs.auto-session"
+    end
+  }
+
+  use {
+    'neovim/nvim-lspconfig',
+    requires = { 'kabouzeid/nvim-lspinstall'},
+    event = 'BufReadPre',
+    config = function()
+      require "configs.lspconfig"
+    end,
+  }
+
+  use {
+    'kabouzeid/nvim-lspinstall',
+    -- opt = true,
+    -- cmd = {'LspInstall'}
+  }
+
+
+  use {
+    'folke/lua-dev.nvim',
+    requires = {
+      {'nvim-lua/plenary.nvim',opt = true}
+    }
+  }
+
+  use {
+    'glepnir/lspsaga.nvim',
+    cmd = 'Lspsaga',
+    config = function()
+      require "configs.lspsaga"
+    end
+  }
+
+
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup()
+    end
+  }
+
+  use {
+    'hrsh7th/nvim-compe',
+    event = 'InsertEnter',
+    after = 'nvim-autopairs',
+    config = function()
+      require "configs.compe"
+      -- vim.cmd[[
+      -- augroup user_plugin_compe
+      -- autocmd!
+      -- autocmd FileType denite-filter,clap_input,TelescopePrompt
+      -- \ call compe#setup({'enabled': v:false}, 0)
+      -- augroup END
+      -- ]]
+
+    end,
+  }
+
+-- -- casuing Packer trouble right now
+--   use {
+--     'folke/which-key.nvim',
+--     event = 'WhichKey',
+--     config = function()
+--       require "configs.which-key"
+--     end,
+--   }
+
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+
+
+  use {
+    'folke/trouble.nvim',
+    cmd = {'Trouble', 'TroubleToggle'}
+  } 
+
+
+  use {
+    'embear/vim-localvimrc',
+    config = function()
+      local cwd = vim.fn.getcwd()
+      vim.g.localvimrc_enable = 1
+      vim.g.localvimrc_ask = 0
+      vim.g.localvimrc_sandbox = 0
+      vim.g.localvimrc_event = { "VimEnter", "BufRead", "BufWrite"}
+--       vim.g.localvimrc_name = { cwd .. "/.project/config.vim", cwd .. "/.project/local.vim" }
+      vim.g.localvimrc_name = {"~/.config/nvim/local.vim"}
+    end
+  }
+
+
+  use {
+    'hrsh7th/vim-vsnip',
+    event = 'InsertCharPre',
+    config = conf.vim_vsnip
+  }
+
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'},
+      -- using fzf port
+      {'huynle/telescope-fzf-native.nvim', run = 'make'},
+
+      -- using fzf lua
+      -- {'nvim-telescope/telescope-fzy-native.nvim'},
+      
+      -- using system FZF?
+      -- {'nvim-telescope/telescope-fzf-writer.nvim'},
+      {'nvim-telescope/telescope-dap.nvim'},
+    },
+    config = function()
+      require('configs.telescope')
+      require('configs.telescope.mappings')
+    end
+  }
+
+  use {
+    'mattn/vim-sonictemplate',
+    cmd = 'Template',
+    ft = {'go','typescript','lua','javascript','vim','rust','markdown'},
+    config = conf.vim_sonictemplate,
+  }
+
+  use {
+    'rodjek/vim-puppet',
+    ft = 'puppet'
+  }
+
+
+  use {
+    'phaazon/hop.nvim',
+    as = 'hop',
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+      vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+
+    end
+  }
+
+
+  --   use {
+  --     'Raimondi/delimitMate',
+  --     event = 'InsertEnter',
+  --     config = conf.delimimate,
+  --   }
+
+
+
+  use {
+    'rhysd/accelerated-jk',
+    opt = true
+  }
+
+  use {
+    'ojroques/vim-oscyank',
+    opt = true,
+    cmd = {"OSCYank", 'OSCYankReg'}
+
+
+  }
+
+  use {
+    'tpope/vim-unimpaired',
+  }
+
+  use {
+    'junegunn/vim-easy-align',
+    config = function()
+      require 'configs.easyalign'
+    end,
+  }
+
+  use {
+    'itchyny/vim-cursorword',
+    event = {'BufReadPre','BufNewFile'},
+    config = conf.vim_cursorword
+  }
+
+  use {
+    'hrsh7th/vim-eft',
+    opt = true,
+    config = function()
+      vim.g.eft_ignorecase = true
+    end
+  }
+
+
+--   use {
+--     'kana/vim-operator-replace',
+--     keys = {{'x','p'}},
+--     config = function()
+--       vim.api.nvim_set_keymap("x", "p", "<Plug>(operator-replace)",{silent =true})
+--     end,
+--     requires = 'kana/vim-operator-user'
+--   }
+
+  use {
+    'rhysd/vim-operator-surround',
+    event = 'BufRead',
+    requires = 'kana/vim-operator-user'
+  }
+
+--   use {
+--     'kana/vim-niceblock',
+--     opt = true,
+--   }
+
+  use {
+    'christoomey/vim-tmux-navigator'
+  }
+
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    event = 'BufRead',
+    after = 'telescope.nvim',
+    config = function()
+      require 'configs.treesitter'
+    end
+  }
+
+  use {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+    config = function()
+      require 'configs.textobjects'
+    end
+  }
+
+
+  use {
+    'kristijanhusak/vim-dadbod-ui',
+    cmd = {'DBUIToggle','DBUIAddConnection','DBUI','DBUIFindBuffer','DBUIRenameBuffer'},
+    config = conf.vim_dadbod_ui,
+    requires = {{'tpope/vim-dadbod',opt = true}}
+  }
+
+  use {
+    'editorconfig/editorconfig-vim',
+    ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
+  }
+
+  use {
+    'glepnir/prodoc.nvim',
+    event = 'BufReadPre'
+  }
+
+
+  use {
+    'folke/todo-comments.nvim',
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require('configs.todo-comments')
+    end
+  }
+
+
+  use {
+    -- TODO: Eventually move this out to its own lua config
+    'tpope/vim-commentary',
+    config = function()
+      vim.cmd[[
+      xmap <Leader>v  <Plug>Commentary
+      nmap <Leader>v  <Plug>CommentaryLine
+      ]]
+    end
+  }
+
+  -- Symbols
+  use {
+    'simrat39/symbols-outline.nvim',
+    config = function()
+      require('symbols-outline').setup {
+        highlight_hovered_item = true,
+        show_guides = true,
+        auto_preview = false,
+        position = 'right',
+        keymaps = {
+          close = "<Esc>",
+          goto_location = "<CR>",
+          focus_location = "o",
+          hover_symbol = "p",
+          rename_symbol = "r",
+          code_actions = "a",
+        },
+        lsp_blacklist = {},
+      }
+    end,
+    cmd = {'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose'}
+  }
+
+
+  -- QuickFix
+  -- Fzf
+  use {
+    'junegunn/fzf',
+    run = function()
+      vim.fn['fzf#install']()
+    end,
+    event = {'BufReadPost'}
+  }
+  use {
+    'junegunn/fzf.vim',
+    requires = 'junegunn/fzf',
+    after = {'nvim-bqf'}
+  }
+
+  -- Quickfix enhancements
+  use {
+    'kevinhwang91/nvim-bqf',
+    requires = {{'junegunn/fzf', opt = true}, {'junegunn/fzf.vim', opt = true}},
+    ft = {'qf'},
+    config = function()
+      require('bqf').setup {
+        auto_enable = true,
+        auto_resize_height = false,
+        preview = { auto_preview = true },
+        func_map = {
+          tab = 'st',
+          split = 'sg',
+          vsplit = 'sv',
+          ptoggleitem = 'p',
+        },
+      }
+    end
+  }
+
+
+  -- use {
+  -- 'lambdalisue/gina.vim',
+  -- cmd = 'Gina',
+  -- ft = {'gitcommit', 'gitrebase'},
+  --   }
+
+  -- Git
+  use {
+    'tpope/vim-fugitive',
+    cmd = {'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gvdiffsplit'},
+    config = function ()
+      vim.cmd[[
+        nnoremap <silent> <leader>gb :<C-u>Git blame<CR>
+        nnoremap <leader>gd :Gvdiffsplit!<CR>
+        nnoremap gj :diffget //2<CR>
+        nnoremap g; :diffget //3<CR>
+        ]]
+    end,
+    keys = {
+      {'n', '<leader>gd'},
+      {'n', '<leader>gb'},
+      {'n', '<leader>hp'},
+      {'n', '<leader>hs'},
+      {'n', '<leader>hu'},
+      {'n', '<leader>hr'},
+      {'n', '<leader>hR'},
+      {'n', '<leader>hp'},
+      {'n', '<leader>hb'},
+    }
+  }
+
+  use {
+    'TimUntersberger/neogit',
+    opt = true,
+    cmd = {'Neogit'},
+    config = function()
+      require('neogit').setup{
+        integrations = {
+          diffview = true
+        }
+      }
+    end
+  }
+
+  use {
+    'sindrets/diffview.nvim',
+    config = function()
+      require('rmagatti.diffview')
+    end,
+    cmd = {'DiffviewOpen'},
+    keys = '<leader>ddo'
+  }
+
+  use {
+    'ThePrimeagen/git-worktree.nvim',
+    requires = {
+      'nvim-telescope/telescope.nvim'
+    },
+    config = function()
+      require('telescope').load_extension("git_worktree")
+      vim.cmd[[nnoremap <leader>wt <cmd>Telescope git_worktree git_worktrees<CR>]]
+    end,
+    keys = '<leader>wt'
+  }
+
+
+
+
+  use {
+    'mfussenegger/nvim-dap',
+    requires = {
+      'rcarriga/nvim-dap-ui',
+      'nvim-telescope/telescope-dap.nvim',
+    },
+    config = function()
+      require('telescope').load_extension('dap')
+      require 'configs.dap'
+    end,
+    keys = {
+      {'n', '<leader>db'},
+      {'n', '<leader>dB'}
+    }
+  }
+
+
+  use {
+    'mfussenegger/nvim-dap-python',
+    after = 'nvim-dap'
+  }
+
+
+  use {
+    'theHamsta/nvim-dap-virtual-text',
+    after = 'nvim-dap'
+  }
+
+  use {
+    'nvim-telescope/telescope-dap.nvim',
+    requires = {
+      'nvim-telescope/telescope.nvim'
+    },
+    config = function()
+      require('telescope').load_extension('dap')
+    end,
+    after = 'nvim-dap',
+    module = 'telescope._extensions.dap'
+  }
+
+
+  -- causing a bit of a problem here
+  -- use {
+  -- 'rcarriga/vim-ultest',
+  --   config = "require('config.ultest').post()",
+  --   run = ":UpdateRemotePlugins",
+  --   requires = {"vim-test/vim-test"}
+  -- }
+
+  use {
+    'brooth/far.vim',
+    cmd = {'Far','Farp'},
+    config = function ()
+      vim.g['far#source'] = 'rg'
+    end
+  }
+
+  use {
+    'iamcco/markdown-preview.nvim',
+    ft = 'markdown',
+    config = function ()
+      vim.g.mkdp_auto_start = 0
+    end
+  }
+
+
+  use {
+    'kristijanhusak/orgmode.nvim',
+    config = function()
+      require('orgmode').setup{
+        -- org_agenda_files = {'~/docs/org/*', '~/my-orgs/**/*'},
+        org_agenda_files = {'~/docs/org/*'},
+        org_default_notes_file = '~/docs/org/refile.org',
+      }
+    end
+  }
+
+
+  use {
+    'glepnir/galaxyline.nvim',
+    branch = 'main',
+    config = function()
+      require 'configs.galaxyline'
+    end,
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
+
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    event = 'BufRead',
+    branch = 'master',
+    config = conf.indent_blankline
+  }
+
+--   use {
+--     'norcalli/nvim-base16.lua',
+   --   config = conf.base16
+--   }
+
+  -- use {
+  -- 'akinsho/nvim-bufferline.lua',
+  --   config = conf.nvim_bufferline,
+  --   requires = 'kyazdani42/nvim-web-devicons'
+  -- }
+
+  use {
+    'kyazdani42/nvim-tree.lua',
+--     cmd = {'NvimTreeToggle','NvimTreeOpen'},
+    config = function()
+      require 'configs.nvim-tree'
+    end,
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
+
+  use {
+    'lewis6991/gitsigns.nvim',
+    event = {'BufRead','BufNewFile'},
+    config = function()
+      require 'configs.gitsigns'
+    end,
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  }
+
+
+  use {
+    'navarasu/onedark.nvim',
+    config = function()
+      vim.g.onedark_style = 'deep'
+      require('onedark').setup()
+    end,
+  }
+
+end)
