@@ -6,12 +6,12 @@ local sorters = require "telescope.sorters"
 
 TelescopeMapArgs = TelescopeMapArgs or {}
 
-local map_tele = function(key, f, options, buffer)
+local map_tele = function(mode, key, f, options, buffer)
   local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
 
   TelescopeMapArgs[map_key] = options or {}
 
-  local mode = "n"
+  -- local mode = "n"
   local rhs = string.format("<cmd>lua R('configs.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
   local map_options = {
@@ -27,12 +27,12 @@ local map_tele = function(key, f, options, buffer)
 end
 
 -- Dotfiles
-map_tele("<Leader>en", "edit_neovim")
--- map_tele("<leader>ez", "edit_zsh")
+map_tele("n", "<Leader>en", "edit_neovim")
+map_tele("n", "<leader>ed", "edit_dotfiles")
 -- 
 -- Search
 -- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG
--- map_tele("<space>gw", "grep_string", {
+-- map_tele("n", "<space>gw", "grep_string", {
 --   short_path = true,
 --   word_match = "-w",
 --   only_sort_text = true,
@@ -40,55 +40,58 @@ map_tele("<Leader>en", "edit_neovim")
 --   sorter = sorters.get_fzy_sorter(),
 -- })
 
--- map_tele("<leader>f/", "grep_last_search", {
+-- map_tele("n", "<leader>f/", "grep_last_search", {
 --   layout_strategy = "vertical",
 -- })
 
 -- Files
--- map_tele("<space>ft", "git_files")
-map_tele("<LocalLeader>gp", "grep_prompt")
-map_tele("<LocalLeader>gq", "grep_quickfix")
-map_tele("<LocalLeader>g", "live_grep")
-map_tele("<LocalLeader>f", "find_files")
--- map_tele("<space>fo", "oldfiles")
--- map_tele("<space>fd", "fd")
--- map_tele("<space>fv", "find_nvim_source")
--- map_tele("<space>fe", "file_browser")
-map_tele("<LocalLeader>ff", "search_only_certain_files")
-map_tele("<LocalLeader>gg", "grep_in_path")
+-- map_tele("n", "<space>ft", "git_files")
+map_tele("n", "<LocalLeader>gp", "grep_prompt")
+map_tele("n", "<LocalLeader>gq", "grep_quickfix")
+map_tele("n", "<LocalLeader>g", "live_grep")
+map_tele("v", "<LocalLeader>g", "find_word")
+map_tele("n", "<LocalLeader>f", "find_files")
+-- map_tele("n", "<space>fo", "oldfiles")
+-- map_tele("n", "<space>fd", "fd")
+-- map_tele("n", "<space>fv", "find_nvim_source")
+-- map_tele("n", "<space>fe", "file_browser")
+map_tele("n", "<LocalLeader>ff", "search_only_certain_files")
+map_tele("n", "<LocalLeader>gg", "grep_in_path")
 
-map_tele("<LocalLeader>hh",'help_tags')
-map_tele("<LocalLeader>hm",'keymaps')
-map_tele("<LocalLeader>hc",'commands')
-map_tele("<LocalLeader>gc",'git_commits')
+-- map_tele("n", "<LocalLeader>.", "symbol?")
 
-map_tele("<Leader>fl", 'loclist')
-map_tele("<Leader>g", 'current_buffer_fuzzy_find')
-map_tele("<Leader>fi", "tbs_infrastructure_search")
-map_tele("<Leader>gi", "tbs_infrastructure_live_grep")
+map_tele("n", "<LocalLeader>hh",'help_tags')
+map_tele("n", "<LocalLeader>hm",'keymaps')
+map_tele("n", "<LocalLeader>hc",'commands')
+map_tele("n", "<LocalLeader>gc",'git_commits')
+
+map_tele("n", "<Leader>fl", 'loclist')
+map_tele("n", "<Leader>g", 'current_buffer_fuzzy_find')
+map_tele("n", "<Leader>fi", "tbs_infrastructure_search")
+map_tele("n", "<Leader>gi", "tbs_infrastructure_live_grep")
 
 
 
 -- Sourcegraph
--- map_tele("<space>sf", "sourcegraph_find")
--- map_tele("<space>saf", "sourcegraph_about_find")
--- map_tele("<space>sag", "sourcegraph_about_grep")
--- map_tele('<space>fz', 'sourcegraph_tips')
+-- map_tele("n", "<space>sf", "sourcegraph_find")
+-- map_tele("n", "<space>saf", "sourcegraph_about_find")
+-- map_tele("n", "<space>sag", "sourcegraph_about_grep")
+-- map_tele("n", '<space>fz', 'sourcegraph_tips')
 
 -- Git
-map_tele("<Leader>gs", "git_status")
-map_tele("<Leader>gc", "git_commits")
+map_tele("n", "<Leader>gs", "git_status")
+map_tele("n", "<Leader>gc", "git_commits")
 
 -- Nvim
--- map_tele("<space>fb", "buffers")
--- map_tele("<space>fp", "my_plugins")
--- map_tele("<space>fa", "installed_plugins")
--- map_tele("<space>fi", "search_all_files")
--- map_tele("<space>ff", "curbuf")
--- map_tele("<space>fh", "help_tags")
--- map_tele("<space>vo", "vim_options")
+-- map_tele("n", "<space>fb", "buffers")
+-- map_tele("n", "<space>fp", "my_plugins")
+-- map_tele("n", "<space>fa", "installed_plugins")
+-- map_tele("n", "<space>fi", "search_all_files")
+-- map_tele("n", "<space>ff", "curbuf")
+-- map_tele("n", "<space>fh", "help_tags")
+-- map_tele("n", "<space>vo", "vim_options")
 -- 
 -- Telescope Meta
-map_tele("<LocalLeader>b", "builtin")
+map_tele("n", "<LocalLeader>b", "builtin")
 
 return map_tele

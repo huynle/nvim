@@ -171,9 +171,6 @@ require'telescope'.setup {
 require('telescope').load_extension('fzf')
 -- require('telescope').load_extension('fzf_writer')
 -- require('telescope').load_extension('fzy_native')
--- require('telescope').load_extension('project_files')
---   require'telescope'.load_extension('dotfiles')
---   require'telescope'.load_extension('gosource')
 
 -----##### COPIED FROM TJ ####
 --https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/lua/tj/telescope/init.lua
@@ -213,10 +210,34 @@ function M.edit_neovim()
     end,
   }
 
+
   opts_without_preview = vim.deepcopy(opts_with_preview)
   opts_without_preview.previewer = false
 
   require("telescope.builtin").find_files(opts_with_preview)
+end
+
+
+function M.edit_dotfiles()
+  require("telescope.builtin").find_files {
+    shorten_path = false,
+    cwd = "~/.dotfiles",
+    find_command = {
+      'rg',
+      '--smart-case',
+      '--ignore-vcs',
+      '--glob',
+      '!.git',
+      '--files',
+    },
+    prompt = "~ dotfiles ~",
+    hidden = true,
+
+    layout_strategy = "horizontal",
+    layout_config = {
+      preview_width = 0.55,
+    },
+  }
 end
 
 
@@ -244,13 +265,19 @@ end
 
 function M.live_grep()
   require('telescope.builtin').grep_string{
-
   }
   -- require("telescope").extensions.fzf_writer.staged_grep {
 --     shorten_path = false,
 --     previewer = true,
     -- fzf_separator = "|",
   -- }
+end
+
+
+function M.find_word()
+  require('telescope.builtin').grep_string{
+    search = vim.fn.expand("<cword>")
+  }
 end
 
 function M.grep_prompt()
