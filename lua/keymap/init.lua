@@ -51,8 +51,8 @@ local plug_map               = {
     ["n|<Leader>od"]         = map_cr('DBUIToggle'):with_noremap():with_silent(),
 
     -- Plugin Floaterm
-    ["n|<C-t>"]              = map_cu('Lspsaga open_floaterm'):with_noremap():with_silent(),
-    ["t|<C-t>"]              = map_cu([[<C-\><C-n>:Lspsaga close_floaterm<CR>]]):with_noremap():with_silent(),
+    -- ["n|<C-t>"]              = map_cu('Lspsaga open_floaterm'):with_noremap():with_silent(),
+    -- ["t|<C-t>"]              = map_cu([[<C-\><C-n>:Lspsaga close_floaterm<CR>]]):with_noremap():with_silent(),
 
     -- Far.vim
     ["n|<Leader>fz"]         = map_cr('Farf'):with_noremap():with_silent();
@@ -62,7 +62,7 @@ local plug_map               = {
 --     ["n|<LocalLeader>b"]     = map_cu('Telescope buffers'):with_noremap():with_silent(),
 --     ["n|<LocalLeader>g"]  = map_cu('Telescope live_grep'):with_noremap():with_silent(),
 --     ["n|<LocalLeader>g"]     = map_cu([[:lua require('telescope').extensions.fzf_writer.grep()]]):with_noremap():with_silent(),
---     ["v|<LocalLeader>g"]     = map_cu([[Telescope grep_string]]):with_noremap():with_silent(),
+    -- ["v|<LocalLeader>g"]     = map_cu([[Telescope grep_string]]):with_noremap():with_silent(),
     -- ["n|<Leader>fb"]      = map_cu('Telescope file_browser'):with_noremap():with_silent(),
 --     ["n|<LocalLeader>f"]  = map_cu('Telescope git_files'):with_noremap():with_silent(),
     -- ["n|<LocalLeader>f"]  = map_cu('Telescope find_files'):with_noremap():with_silent(),
@@ -106,10 +106,6 @@ local plug_map               = {
     ["n|sa"]                 = map_cmd("<Plug>(operator-surround-append)"):with_silent(),
     ["n|sd"]                 = map_cmd("<Plug>(operator-surround-delete)"):with_silent(),
     ["n|sr"]                 = map_cmd("<Plug>(operator-surround-replace)"):with_silent(),
-
-
-    ["n|<Leader>bg"]         = map_cmd("<cmd>lua require('material.functions').toggle_style()<CR>"),
-
 
    -- Plugin hrsh7th/vim-eft
 --     ["n|;"]               = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),

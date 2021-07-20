@@ -12,7 +12,6 @@ local def_map = {
     ["n|Y"]          = map_cmd('y$'),
     ["n|]w"]         = map_cu('WhitespaceNext'):with_noremap(),
     ["n|[w"]         = map_cu('WhitespacePrev'):with_noremap(),
-    ["n|<Space>cw"]  = map_cu([[silent! keeppatterns %substitute/\s\+$//e]]):with_noremap():with_silent(),
     ["n|F2"]         = map_cmd([[source $MYVIMRC<CR>]]):with_noremap(),
 
     -- terminal map
@@ -71,18 +70,10 @@ local def_map = {
     ["c|<C-h>"]      = map_cmd('<BS>'):with_noremap(),
     ["c|<C-t>"]      = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
 
-    -- copying and pasting with tmux
-    --     ["v|y"] = map_cmd('y :call writefile(getreg("*",1,1), expand("$HOME/.vbuf"))<CR>'),
-    --     ["v|d"] = map_cmd('d :call writefile(getreg("*",1,1), expand("$HOME/.vbuf"))<CR>'),
-    --   ["n|y"] = map_cmd(":.w! ~/.vbuf<CR>"),
-    --     ["n|p"] = map_cmd(":r ~/.vbuf<CR>"),
-    --
     -- Yank from cursor position to end-of-line
-    ['n|Y'] = map_cmd(':let @"=expand("%:p")<CR>:OSCYankReg "<CR>'),
-    ['n|YY'] = map_cmd(':let @"=expand("%:p:h")<CR>:OSCYankReg "<CR>'),
+    ['n|<leader>Y'] = map_cmd(':let @"=expand("%:p")<CR>:OSCYankReg "<CR>'),
+    ['n|<leader>YY'] = map_cmd(':let @"=expand("%:p:h")<CR>:OSCYankReg "<CR>'),
     ['v|<leader>y'] = map_cmd(':OSCYank<CR>'),
-
-
 
     -- select blocks after indent
     ["x|<"] = map_cmd("<gv"),
@@ -114,7 +105,7 @@ local def_map = {
 
     -- Window-control prefix
     ["n|[Window]|"] = map_cmd("<Nop>"):with_noremap(),
-    ["n|s"] = map_cmd("[Window]"),
+    ["n|w"] = map_cmd("[Window]"),
 
     -- Custom window movement
     ["n|[Window]g"] = map_cmd(":<C-u>split<CR>:wincmd p<CR>:e#<CR>"):with_noremap(),

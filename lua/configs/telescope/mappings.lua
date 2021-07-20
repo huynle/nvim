@@ -49,7 +49,7 @@ map_tele("n", "<leader>ed", "edit_dotfiles")
 map_tele("n", "<LocalLeader>gp", "grep_prompt")
 map_tele("n", "<LocalLeader>gq", "grep_quickfix")
 map_tele("n", "<LocalLeader>g", "live_grep")
-map_tele("v", "<LocalLeader>g", "find_word")
+map_tele("n", "<LocalLeader>*", "find_word")
 map_tele("n", "<LocalLeader>f", "find_files")
 -- map_tele("n", "<space>fo", "oldfiles")
 -- map_tele("n", "<space>fd", "fd")
@@ -67,10 +67,12 @@ map_tele("n", "<LocalLeader>gc",'git_commits')
 
 map_tele("n", "<Leader>fl", 'loclist')
 map_tele("n", "<Leader>g", 'current_buffer_fuzzy_find')
+
+
 map_tele("n", "<Leader>fi", "tbs_infrastructure_search")
 map_tele("n", "<Leader>gi", "tbs_infrastructure_live_grep")
-
-
+map_tele("v", "<Leader>gi", "tbs_infrastructure_grep_string")
+map_tele("n", "<Leader>gip", "tbs_infrastructure_live_grep")
 
 -- Sourcegraph
 -- map_tele("n", "<space>sf", "sourcegraph_find")

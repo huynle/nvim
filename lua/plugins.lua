@@ -146,6 +146,7 @@ return packer.startup( function()
     requires = {
       {'nvim-lua/popup.nvim'},
       {'nvim-lua/plenary.nvim'},
+
       -- using fzf port
       {'huynle/telescope-fzf-native.nvim', run = 'make'},
 
@@ -153,7 +154,7 @@ return packer.startup( function()
       -- {'nvim-telescope/telescope-fzy-native.nvim'},
       
       -- using system FZF?
-      -- {'nvim-telescope/telescope-fzf-writer.nvim'},
+      {'nvim-telescope/telescope-fzf-writer.nvim'},
       {'nvim-telescope/telescope-dap.nvim'},
     },
     config = function()
@@ -364,9 +365,9 @@ return packer.startup( function()
         auto_resize_height = false,
         preview = { auto_preview = true },
         func_map = {
-          tab = 'st',
-          split = 'sg',
-          vsplit = 'sv',
+          tab = 'wt',
+          split = 'wg',
+          vsplit = 'wv',
           ptoggleitem = 'p',
         },
       }
@@ -444,6 +445,7 @@ return packer.startup( function()
 
   use {
     'mfussenegger/nvim-dap',
+    opt = true,
     requires = {
       'rcarriga/nvim-dap-ui',
       'nvim-telescope/telescope-dap.nvim',
@@ -510,6 +512,7 @@ return packer.startup( function()
 
   use {
     'kristijanhusak/orgmode.nvim',
+    opt = true,
     config = function()
       require('orgmode').setup{
         -- org_agenda_files = {'~/docs/org/*', '~/my-orgs/**/*'},

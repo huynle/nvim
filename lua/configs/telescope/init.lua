@@ -2,7 +2,6 @@ if not pcall(require, "telescope") then
   return
 end
 
-
 local should_reload = true
 local reloader = function()
   if should_reload then
@@ -133,9 +132,9 @@ require'telescope'.setup {
         ["gg"] = actions.move_to_top,
         ["G"] = actions.move_to_bottom,
 
-        ["sv"] = actions.select_horizontal,
-        ["sg"] = actions.select_vertical,
-        ["st"] = actions.select_tab,
+        ["wv"] = actions.select_horizontal,
+        ["wg"] = actions.select_vertical,
+        ["wt"] = actions.select_tab,
 
         ["!"] = actions.edit_command_line,
         ["?"] = actions.edit_search_line,
@@ -169,7 +168,7 @@ require'telescope'.setup {
 }
 
 require('telescope').load_extension('fzf')
--- require('telescope').load_extension('fzf_writer')
+require('telescope').load_extension('fzf_writer')
 -- require('telescope').load_extension('fzy_native')
 
 -----##### COPIED FROM TJ ####
@@ -264,19 +263,37 @@ function M.search_only_certain_files()
 end
 
 function M.live_grep()
-  require('telescope.builtin').grep_string{
-  }
-  -- require("telescope").extensions.fzf_writer.staged_grep {
---     shorten_path = false,
---     previewer = true,
-    -- fzf_separator = "|",
+  -- require('telescope.builtin').live_grep{
   -- }
+  require("telescope").extensions.fzf_writer.staged_grep {
+    prompt_title = "Fzf-writer - Live Grep",
+    fzf_separator = "|",
+  }
+end
+
+function M.search_all_files()
+  require("telescope.builtin").find_files {
+    find_command = { "rg", "--no-ignore", "--files" },
+  }
+end
+
+
+function M.curbuf()
+  local opts = themes.get_dropdown {
+    winblend = 10,
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  }
+  require("telescope.builtin").current_buffer_fuzzy_find(opts)
 end
 
 
 function M.find_word()
+  -- find the word under the cursor in normal mode, then you can do your fuzzy
+  -- finding after
   require('telescope.builtin').grep_string{
-    search = vim.fn.expand("<cword>")
+    prompt_title = "<cword> Search - Fuzzy Grepping"
   }
 end
 
@@ -315,34 +332,30 @@ function M.grep_last_search(opts)
   require("telescope.builtin").grep_string(opts)
 end
 
--- 
--- function M.grep_quickfix(opts)
- -- NOT WORKING, trying to mimic telelscope builtin funbction for quickfix
---   local locations = vim.fn.getqflist()
--- 
---   if vim.tbl_isempty(locations) then
---     return
---   end
--- 
---   opts = {
---     prompt_title  = 'Quickfix',
---     finder    = finders.new_table {
---       results     = locations,
---       entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
---     },
---     previewer = conf.qflist_previewer(opts),
---     sorter = conf.generic_sorter(opts),
---   })
--- 
---   require("telescope.builtin").grep_string(opts_with_preview)
--- 
--- end
+ -- function M.grep_quickfix(opts)
+ --  -- NOT WORKING, trying to mimic telelscope builtin funbction for quickfix
+ --   local locations = vim.fn.getqflist()
+ 
+ --   if vim.tbl_isempty(locations) then
+ --     return
+ --   end
+ 
+ --   opts = {
+ --     prompt_title  = 'Quickfix',
+ --     finder    = finders.new_table {
+ --       results     = locations,
+ --       entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+ --     },
+ --     -- previewer = conf.qflist_previewer(opts),
+ --     -- sorter = conf.generic_sorter(opts),
+ --   }
+ 
+ --   require("telescope.builtin").grep_string(opts_with_preview)
+ 
+ -- end
 
-function M.find_files()
+function M.find_files_or_git_files()
   local opts = {
---     previewer = false,
---     layout_strategy = "vertical",
-    --     cwd = require("nvim_lsp.util").root_pattern ".git"(vim.fn.expand "%:p"),
     theme = "dropdown",
     previewer = false,
     layout_config = { width = 0.5, height = 0.7 },
@@ -360,6 +373,27 @@ function M.find_files()
 
   local ok = pcall(require'telescope.builtin'.git_files, opts)
   if not ok then require'telescope.builtin'.find_files(opts) end
+end
+
+
+function M.find_files()
+  local opts = {
+    theme = "dropdown",
+    previewer = false,
+    layout_config = { width = 0.5, height = 0.7 },
+    find_command = {
+      'rg',
+      '--smart-case',
+      '--hidden',
+      '--no-ignore-vcs',
+      '--glob',
+      '!.git',
+      '--files',
+    }
+
+  } -- define here if you want to define something
+
+  require'telescope.builtin'.find_files(opts)
 end
 
 
@@ -386,7 +420,23 @@ function M.tbs_infrastructure_live_grep()
   require("telescope.builtin").grep_string {
     prompt_title = [[\ TBS Infrastructure Live Grep /]],
     search_dirs = {vim.fn.getcwd() .. "/infrastructure",},
-    search = vim.fn.input "Grep String > ",
+    search = vim.fn.expand "<cword>",
+  }
+end
+
+function M.tbs_infrastructure_grep_string()
+  -- require("telescope").extensions.fzf_writer.staged_grep {
+  require("telescope.builtin").grep_string {
+    prompt_title = [[\ TBS Infrastructure Live Grep /]],
+    search_dirs = {vim.fn.getcwd() .. "/infrastructure",},
+  }
+end
+
+function M.tbs_infrastructure_puppet_live_grep()
+  -- require("telescope").extensions.fzf_writer.staged_grep {
+  require("telescope.builtin").grep_string {
+    prompt_title = [[\ TBS Infrastructure Puppet Live Grep /]],
+    search_dirs = {vim.fn.getcwd() .. "/infrastructure/puppet",},
   }
 end
 
