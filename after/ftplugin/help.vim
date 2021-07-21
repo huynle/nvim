@@ -19,8 +19,8 @@ function! s:setup_buffer()
 		\ . " | execute 'nunmap <buffer> F'"
 		\ . " | execute 'nunmap <buffer> t'"
 		\ . " | execute 'nunmap <buffer> T'"
-		\ . " | execute 'nunmap <buffer> <leader>j'"
-		\ . " | execute 'nunmap <buffer> <leader>k'"
+		\ . " | execute 'nunmap <buffer> <localleader>j'"
+		\ . " | execute 'nunmap <buffer> <localleader>k'"
 		\ . " | execute 'nunmap <buffer> q'"
 
 	setlocal nospell
@@ -66,8 +66,8 @@ function! s:setup_buffer()
 	nmap <buffer> T h?\*\S\+\*<CR>l
 
 	" Skip to next/prev quickfix list entry (from a helpgrep)
-	nmap <buffer> <leader>j :cnext<CR>
-	nmap <buffer> <leader>k :cprev<CR>
+	nmap <buffer> <localleader>j :cnext<CR>
+	nmap <buffer> <localleader>k :cprev<CR>
 endfunction
 
 " Count tab page windows

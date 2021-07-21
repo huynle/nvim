@@ -185,7 +185,7 @@ return packer.startup( function()
     config = function()
       -- you can configure Hop the way you like here; see :h hop-config
       require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-      vim.api.nvim_set_keymap('n', '<leader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+      vim.api.nvim_set_keymap('n', '<localleader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
     end
   }
 
@@ -394,22 +394,22 @@ return packer.startup( function()
     cmd = {'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gvdiffsplit'},
     config = function ()
       vim.cmd[[
-        nnoremap <silent> <leader>gb :<C-u>Git blame<CR>
-        nnoremap <leader>gd :Gvdiffsplit!<CR>
+        nnoremap <silent> <localleader>gb :<C-u>Git blame<CR>
+        nnoremap <localleader>gd :Gvdiffsplit!<CR>
         nnoremap gj :diffget //2<CR>
         nnoremap g; :diffget //3<CR>
         ]]
     end,
     keys = {
-      {'n', '<leader>gd'},
-      {'n', '<leader>gb'},
-      {'n', '<leader>hp'},
-      {'n', '<leader>hs'},
-      {'n', '<leader>hu'},
-      {'n', '<leader>hr'},
-      {'n', '<leader>hR'},
-      {'n', '<leader>hp'},
-      {'n', '<leader>hb'},
+      {'n', '<localleader>gd'},
+      {'n', '<localleader>gb'},
+      {'n', '<localleader>hp'},
+      {'n', '<localleader>hs'},
+      {'n', '<localleader>hu'},
+      {'n', '<localleader>hr'},
+      {'n', '<localleader>hR'},
+      {'n', '<localleader>hp'},
+      {'n', '<localleader>hb'},
     }
   }
 
@@ -432,7 +432,7 @@ return packer.startup( function()
       require('rmagatti.diffview')
     end,
     cmd = {'DiffviewOpen'},
-    keys = '<leader>ddo'
+    keys = '<localleader>ddo'
   }
 
   use {
@@ -442,9 +442,9 @@ return packer.startup( function()
     },
     config = function()
       require('telescope').load_extension("git_worktree")
-      vim.cmd[[nnoremap <leader>wt <cmd>Telescope git_worktree git_worktrees<CR>]]
+      vim.cmd[[nnoremap <localleader>wt <cmd>Telescope git_worktree git_worktrees<CR>]]
     end,
-    keys = '<leader>wt'
+    keys = '<localleader>wt'
   }
 
 
@@ -462,8 +462,8 @@ return packer.startup( function()
       require 'configs.dap'
     end,
     keys = {
-      {'n', '<leader>db'},
-      {'n', '<leader>dB'}
+      {'n', '<localleader>db'},
+      {'n', '<localleader>dB'}
     }
   }
 

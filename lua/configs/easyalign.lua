@@ -8,6 +8,6 @@ nmap ga <Plug>(EasyAlign)
 " Align GitHub-flavored Markdown tables
 augroup aligning
   au!
-  au FileType markdown vmap <leader><Bslash> :EasyAlign*<bar><CR>
+  au FileType markdown vmap <localleader><Bslash> :EasyAlign*<bar><CR>
 augroup end
 ]]

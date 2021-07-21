@@ -38,8 +38,8 @@ local def_map = {
 
     ["n|<A-[>"]      = map_cr('vertical resize -5'):with_silent(),
     ["n|<A-]>"]      = map_cr('vertical resize +5'):with_silent(),
-    ["n|<Leader>ss"] = map_cu('SessionSave'):with_noremap(),
-    ["n|<Leader>sl"] = map_cu('SessionLoad'):with_noremap(),
+    ["n|<localleader>ss"] = map_cu('SessionSave'):with_noremap(),
+    ["n|<localleader>sl"] = map_cu('SessionLoad'):with_noremap(),
 
     ["n|<Down>"]     = map_cr('resize +5'):with_silent(),
     ["n|<Up>"]       = map_cr('resize -5'):with_silent(),
@@ -71,9 +71,9 @@ local def_map = {
     ["c|<C-t>"]      = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
 
     -- Yank from cursor position to end-of-line
-    ['n|<leader>Y'] = map_cmd(':let @"=expand("%:p")<CR>:OSCYankReg "<CR>'),
-    ['n|<leader>YY'] = map_cmd(':let @"=expand("%:p:h")<CR>:OSCYankReg "<CR>'),
-    ['v|<leader>y'] = map_cmd(':OSCYank<CR>'),
+    ['n|<localleader>Y'] = map_cmd(':let @"=expand("%:p")<CR>:OSCYankReg "<CR>'),
+    ['n|<localleader>YY'] = map_cmd(':let @"=expand("%:p:h")<CR>:OSCYankReg "<CR>'),
+    ['v|<localleader>y'] = map_cmd(':OSCYank<CR>'),
 
     -- select blocks after indent
     ["x|<"] = map_cmd("<gv"),
@@ -98,8 +98,8 @@ local def_map = {
 
 
     -- duplicate line
-    ["n|<Leader>d"] = map_cmd("mzYP`z"),
-    ["v|<Leader>d"] = map_cmd("YPgv"),
+    ["n|<localleader>d"] = map_cmd("mzYP`z"),
+    ["v|<localleader>d"] = map_cmd("YPgv"),
 
 
 

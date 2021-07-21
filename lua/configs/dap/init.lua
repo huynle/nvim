@@ -6,14 +6,14 @@ vim.g.dap_virtual_text = true
 -- vim.g.dap_virtual_text = 'all frames'
 
 vim.cmd([[
-nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <leader>dk :lua require'dap'.step_over()<CR>
-nnoremap <silent> <leader>d; :lua require'dap'.step_into()<CR>
-nnoremap <silent> <leader>dj :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <localleader>dc :lua require'dap'.continue()<CR>
+nnoremap <silent> <localleader>dk :lua require'dap'.step_over()<CR>
+nnoremap <silent> <localleader>d; :lua require'dap'.step_into()<CR>
+nnoremap <silent> <localleader>dj :lua require'dap'.step_out()<CR>
+nnoremap <silent> <localleader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <localleader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <localleader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
 ]])
 
 -- Configs
@@ -93,7 +93,7 @@ M.debug_jest = function(_)
 end
 
 -- Hover mapping
-vim.cmd[[nnoremap <leader>dh <cmd>lua require('dap.ui.widgets').hover()<CR>]]
+vim.cmd[[nnoremap <localleader>dh <cmd>lua require('dap.ui.widgets').hover()<CR>]]
 
 -- Disabled, use nvim-dap widgets instead
 -- require('rmagatti.dap.dap-ui')

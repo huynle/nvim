@@ -151,12 +151,12 @@ local on_attach = function(client, bufnr)
 -- 	buf_set_keymap('n', ',rn', '<cmd>lua require("lspsaga.rename").rename()<CR>', opts)
 -- 	buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 -- 	buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
--- 	buf_set_keymap('n', '<Leader>f', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', opts)
-	-- buf_set_keymap('n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
--- 	buf_set_keymap('n', '<Leader>a', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
--- 	buf_set_keymap('v', '<Leader>a', ':<C-u>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
--- 	buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-	-- buf_set_keymap('n', '<Leader>q', ':lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+-- 	buf_set_keymap('n', '<localleader>f', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', opts)
+	-- buf_set_keymap('n', '<localleader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+-- 	buf_set_keymap('n', '<localleader>a', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
+-- 	buf_set_keymap('v', '<localleader>a', ':<C-u>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
+-- 	buf_set_keymap('n', '<localleader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+	-- buf_set_keymap('n', '<localleader>q', ':lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
 	-- Set some keybinds conditional on server capabilities
 	if client.resolved_capabilities.document_formatting then

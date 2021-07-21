@@ -43,5 +43,5 @@ require('which-key').setup {
 	hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
 	show_help = true, -- show help message on the command line when the popup is visible
 	triggers = "auto", -- automatically setup triggers
-	-- triggers = {"<leader>"} -- or specifiy a list manually
+	-- triggers = {"<localleader>"} -- or specifiy a list manually
 }

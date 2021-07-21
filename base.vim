@@ -31,7 +31,7 @@ nnoremap <silent> ;; :call ToggleQuickFix()<cr>
 "=================== general useful stuff
 
 " Smart wrap toggle (breakindent and colorcolumn toggle as-well)
-nmap <Leader>tw :execute('setlocal wrap! breakindent! colorcolumn=' .
+nmap <localleader>tw :execute('setlocal wrap! breakindent! colorcolumn=' .
 	\ (&colorcolumn == '' ? &textwidth : ''))<CR>
 "
 " The plugin rhysd/accelerated-jk moves through display-lines in normal mode,
@@ -40,18 +40,18 @@ vnoremap j gj
 vnoremap k gk
 
 " Change current word in a repeatable manner
-nnoremap <Leader>cn *``cgn
-nnoremap <Leader>cN *``cgN
+nnoremap <localleader>cn *``cgn
+nnoremap <localleader>cN *``cgN
 
 " Change selected word in a repeatable manner
-vnoremap <expr> <Leader>cn "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
-vnoremap <expr> <Leader>cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
+vnoremap <expr> <localleader>cn "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
+vnoremap <expr> <localleader>cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 
 " Duplicate paragraph
-nnoremap <Leader>cp yap<S-}>p
+nnoremap <localleader>cp yap<S-}>p
 
 " Remove spaces at the end of lines
-nnoremap <Leader>cw :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
+nnoremap <localleader>cw :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
 
 " }}}
 " Search & Replace {{{
@@ -105,8 +105,8 @@ cnoreabbrev bD bd
 
 
 " Source line and selection in vim
-vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
-nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+vnoremap <localleader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
+nnoremap <localleader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
 
 
 
