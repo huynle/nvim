@@ -288,7 +288,7 @@ return packer.startup( function()
 
   use {
     'editorconfig/editorconfig-vim',
-    ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
+    ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp', 'puppet'}
   }
 
   use {

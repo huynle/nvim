@@ -29,7 +29,7 @@ end
 -- Dotfiles
 map_tele("n", "<Leader>en", "edit_neovim")
 map_tele("n", "<Leader>ed", "edit_dotfiles")
--- 
+
 -- Search
 -- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG
 -- map_tele("n", "<space>gw", "grep_string", {
@@ -54,6 +54,7 @@ map_tele("n", "<Leader>G", "grep_last_search")
 
 map_tele("n", "**", "find_word")
 map_tele("n", "<Leader>f", "find_files")
+map_tele("n", "<Leader><leader>", "find_files")
 -- map_tele("n", "<space>fo", "oldfiles")
 -- map_tele("n", "<space>fd", "fd")
 -- map_tele("n", "<space>fv", "find_nvim_source")
@@ -66,6 +67,7 @@ map_tele("n", "<Leader>gg", "grep_in_path")
 map_tele("n", "<Leader>hh",'help_tags')
 map_tele("n", "<Leader>hk",'keymaps')
 map_tele("n", "<Leader>:",'commands')
+map_tele("n", "<LocalLeader>.",'lsp_document_symbols')
 
 map_tele("n", "<Leader>gc",'git_commits')
 

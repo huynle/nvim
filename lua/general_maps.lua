@@ -34,12 +34,8 @@ local def_map = {
     ["n|<C-j>"]      = map_cmd('<C-w>j'):with_noremap(),
     ["n|<C-k>"]      = map_cmd('<C-w>k'):with_noremap(),
 
-
-
-    ["n|<A-[>"]      = map_cr('vertical resize -5'):with_silent(),
-    ["n|<A-]>"]      = map_cr('vertical resize +5'):with_silent(),
-    ["n|<localleader>ss"] = map_cu('SessionSave'):with_noremap(),
-    ["n|<localleader>sl"] = map_cu('SessionLoad'):with_noremap(),
+    ["n|<leader>ss"] = map_cu('SessionSave'):with_noremap(),
+    ["n|<leader>sl"] = map_cu('SessionLoad'):with_noremap(),
 
     ["n|<Down>"]     = map_cr('resize +5'):with_silent(),
     ["n|<Up>"]       = map_cr('resize -5'):with_silent(),
@@ -100,8 +96,6 @@ local def_map = {
     -- duplicate line
     ["n|<localleader>d"] = map_cmd("mzYP`z"),
     ["v|<localleader>d"] = map_cmd("YPgv"),
-
-
 
     -- Window-control prefix
     ["n|[Window]|"] = map_cmd("<Nop>"):with_noremap(),

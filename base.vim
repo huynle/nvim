@@ -24,7 +24,7 @@ function! ToggleQuickFix()
     endif
 endfunction
 
-nnoremap <silent> ;; :call ToggleQuickFix()<cr>
+nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
 
 
 
