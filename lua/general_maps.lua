@@ -105,7 +105,7 @@ local def_map = {
 
     -- Window-control prefix
     ["n|[Window]|"] = map_cmd("<Nop>"):with_noremap(),
-    ["n|w"] = map_cmd("[Window]"),
+    ["n|s"] = map_cmd("[Window]"),
 
     -- Custom window movement
     ["n|[Window]g"] = map_cmd(":<C-u>split<CR>:wincmd p<CR>:e#<CR>"):with_noremap(),

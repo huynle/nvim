@@ -176,14 +176,16 @@ return packer.startup( function()
   }
 
 
+  -- disabling for now, conflict with 's' window movement key
+  -- tried: 's', 'w' and 'h'
+  -- all hadd conflict
   use {
     'phaazon/hop.nvim',
     as = 'hop',
     config = function()
       -- you can configure Hop the way you like here; see :h hop-config
       require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-      vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char2()<cr>", {})
-
+      vim.api.nvim_set_keymap('n', '<leader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
     end
   }
 
@@ -365,10 +367,15 @@ return packer.startup( function()
         auto_resize_height = false,
         preview = { auto_preview = true },
         func_map = {
-          tab = 'wt',
-          split = 'wg',
-          vsplit = 'wv',
+          tab = 'st',
+          split = 'sg',
+          vsplit = 'sv',
           ptoggleitem = 'p',
+          stoggledown = '<space>',
+          stogglevm = '<space>',
+          filter = '<space>f',
+          ffilter = '<space>F',
+          sclear = '<space>c'
         },
       }
     end

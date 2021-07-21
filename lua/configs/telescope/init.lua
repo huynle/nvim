@@ -104,7 +104,7 @@ require'telescope'.setup {
         ["<Tab>"] = actions.move_selection_next,
         ["<C-Tab>"] = actions.move_selection_previous,
 				["jk"] = { "<cmd>stopinsert<CR>", type = "command" },
-        ["<C-q>"] = actions.send_to_qflist, 
+        ["<C-q>"] = actions.send_to_qflist,
         ["<C-y>"] = set_prompt_to_entry_value,
 
 
@@ -123,18 +123,17 @@ require'telescope'.setup {
       n = {
         ["q"] = actions.close,
         ["<C-q>"] = actions.send_to_qflist,
-        ["<Space>"] = actions.toggle_selection,
+        ["<Space>"] = actions.toggle_selection + actions.move_selection_next,
         ["Q"] = actions.send_to_qflist + actions.open_qflist,
-        ["a"] = actions.add_to_qflist,
-				["w"] = myactions.smart_send_to_qflist,
+        ["a"] = actions.smart_add_to_qflist,
 				["e"] = myactions.send_to_qflist,
 
         ["gg"] = actions.move_to_top,
         ["G"] = actions.move_to_bottom,
 
-        ["wv"] = actions.select_horizontal,
-        ["wg"] = actions.select_vertical,
-        ["wt"] = actions.select_tab,
+        ["sv"] = actions.select_horizontal,
+        ["sg"] = actions.select_vertical,
+        ["st"] = actions.select_tab,
 
         ["!"] = actions.edit_command_line,
         ["?"] = actions.edit_search_line,
@@ -292,16 +291,25 @@ end
 function M.find_word()
   -- find the word under the cursor in normal mode, then you can do your fuzzy
   -- finding after
+  local search_word = vim.fn.expand "<cword>"
   require('telescope.builtin').grep_string{
-    prompt_title = "<cword> Search - Fuzzy Grepping"
+    prompt_title = "Grepped for '" .. search_word .. "'"
   }
 end
 
 function M.grep_prompt()
   -- grep for things prompt, then fuzzy find the file
   require("telescope.builtin").grep_string {
---     shorten_path = true,
-    search = vim.fn.input "Grep String > ",
+    search = vim.fn.input("Grep String > "),
+  }
+end
+
+function M.grep_prompt_visual()
+  -- grep for things prompt, then fuzzy find the file
+  local search_word = vim.fn.VisualSelection()
+  require("telescope.builtin").grep_string {
+    prompt_title = "Grepped for '" .. search_word .. "'",
+    search = vim.fn.input("Grep String > ", search_word),
   }
 end
 
