@@ -60,7 +60,6 @@ map_tele("n", "<Leader><leader>", "find_files")
 -- map_tele("n", "<space>fv", "find_nvim_source")
 -- map_tele("n", "<space>fe", "file_browser")
 map_tele("n", "<Leader>ff", "search_only_certain_files")
-map_tele("n", "<Leader>gg", "grep_in_path")
 
 -- map_tele("n", "<Leader>.", "symbol?")
 
@@ -68,8 +67,6 @@ map_tele("n", "<Leader>hh",'help_tags')
 map_tele("n", "<Leader>hk",'keymaps')
 map_tele("n", "<Leader>:",'commands')
 map_tele("n", "<LocalLeader>.",'lsp_document_symbols')
-
-map_tele("n", "<Leader>gc",'git_commits')
 
 map_tele("n", "<localleader>fl", 'loclist')
 map_tele("n", "<localleader>g", 'current_buffer_fuzzy_find')

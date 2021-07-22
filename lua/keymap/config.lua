@@ -1,3 +1,7 @@
+-- TERMINAL CODE
+-- read it here https://github.com/nanotee/nvim-lua-guide#vimapinvim_replace_termcodes
+
+
 local function check_back_space()
     local col = vim.fn.col('.') - 1
     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then

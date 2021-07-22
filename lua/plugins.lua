@@ -55,6 +55,7 @@ return packer.startup( function()
 
   use {
     'folke/lua-dev.nvim',
+    opt = true,
     requires = {
       {'nvim-lua/plenary.nvim',opt = true}
     }
@@ -223,6 +224,7 @@ return packer.startup( function()
 
   use {
     'junegunn/vim-easy-align',
+    cmd = {"EasyAlign"},
     config = function()
       require 'configs.easyalign'
     end,
@@ -423,8 +425,8 @@ return packer.startup( function()
     'TimUntersberger/neogit',
     opt = true,
     cmd = {'Neogit'},
-    keys = {'<leader>gs', '<leader>gc'},
-    requires = { 
+    keys = {'<leader>gs'},
+    requires = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim'
     },
@@ -439,8 +441,8 @@ return packer.startup( function()
     config = function()
       require('configs.diffview')
     end,
-    -- cmd = {'DiffviewOpen'},
-    -- keys = '<localleader>ddo'
+    cmd = {'DiffviewOpen'},
+    keys = {'<leader>do', '<leader>dm'},
   }
 
   use {
@@ -567,7 +569,7 @@ return packer.startup( function()
 
   use {
     'kyazdani42/nvim-tree.lua',
---     cmd = {'NvimTreeToggle','NvimTreeOpen'},
+    cmd = {'NvimTreeToggle','NvimTreeOpen', 'NvimTreeFindFile'},
     config = function()
       require 'configs.nvim-tree'
     end,

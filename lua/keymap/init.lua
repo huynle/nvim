@@ -62,9 +62,7 @@ local plug_map               = {
     ["v|<localleader>fz"]         = map_cr('Farf'):with_noremap():with_silent();
 
 
-    -- -- neogit.vim
-    -- ["n|<leader>gs"]         = map_cr('Neogit'):with_noremap():with_silent();
-    -- ["n|<leader>gc"]         = map_cr('Neogit commit'):with_noremap():with_silent();
+    -- neogit.vim
 
     -- Plugin Telescope
 --     ["n|<Leader>b"]     = map_cu('Telescope buffers'):with_noremap():with_silent(),

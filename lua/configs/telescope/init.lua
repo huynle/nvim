@@ -288,6 +288,12 @@ function M.grep_prompt_regex_filetype()
     look_in = vim.fn.getcwd()
   end
 
+  if isempty(look_for_type) then
+    look_for_type = ""
+  else
+    look_for_type = "--type "..look_for_type
+  end
+
 
   require("telescope.builtin").grep_string {
     vimgrep_arguments = {
@@ -297,30 +303,13 @@ function M.grep_prompt_regex_filetype()
       '--line-number',
       '--column',
       '--smart-case',
-      '--type', look_for_type
+      look_for_type
     },
-    prompt_title = look_in .. " : Grepped for '".. look_for .."' in " .. look_for_type,
+    prompt_title = look_in .. " : Grepped for '".. look_for .."' in filetype: '" .. look_for_type .. "'",
     search = look_for,
     search_dirs = {look_in},
     use_regex = true
   }
-  ---- require('telescope.builtin').live_grep{
-    ---- }
-    ----
-    --local look_for_type = vim.fn.input "File type > "
-    --require("telescope").extensions.fzf_writer.staged_grep {
-      --vimgrep_arguments = {
-        --'rg',
-        --'--no-heading',
-        --'--with-filename',
-        --'--line-number',
-        --'--column',
-        --'--smart-case',
-        --    '--type', look_for_type
-        --},
-        --  prompt_title = "Fzf-writer - Live Grep - REGEX",
-        --  fzf_separator = "|",
-        --}
 end
 
 

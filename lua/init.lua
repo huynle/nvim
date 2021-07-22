@@ -91,7 +91,7 @@ local function load_options()
     timeout        = true;
     ttimeout       = true;
     timeoutlen     = 500;
-    ttimeoutlen    = 10;
+    ttimeoutlen    = 30;
     updatetime     = 100;
     redrawtime     = 1500;
     ignorecase     = true;

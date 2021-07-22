@@ -15,6 +15,10 @@ neogit.setup {
 
 }
 
+vim.cmd[[
+nnoremap <leader>gs :Neogit<CR>
+]]
+
 -- local nnoremap = vim.keymap.nnoremap
 -- nnoremap { "<leader>gs", neogit.open }
 -- nnoremap { "<leader>gc", function()

@@ -33,6 +33,7 @@ require'diffview'.setup {
 }
 
 vim.cmd[[
-nnoremap <leader>ddo :DiffviewOpen<CR>
-nnoremap <leader>ddc :DiffviewClose<CR>
+nnoremap <leader>do :DiffviewOpen<CR>
+nnoremap <leader>dm :DiffviewOpen master<CR>
+nnoremap <leader>dc :DiffviewClose<CR>
 ]]
