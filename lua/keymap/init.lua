@@ -42,7 +42,7 @@ local plug_map               = {
     --
     -- Plugin nvim-tree
     ["n|<Leader>e"]     = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
-    ["n|<Leader>a"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
+    ["n|<Leader>ee"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
 
 
     ["n|<Leader>S"]     = map_cr('Scratch'):with_noremap():with_silent(),
@@ -60,6 +60,11 @@ local plug_map               = {
     -- Far.vim
     ["n|<localleader>fz"]         = map_cr('Farf'):with_noremap():with_silent();
     ["v|<localleader>fz"]         = map_cr('Farf'):with_noremap():with_silent();
+
+
+    -- -- neogit.vim
+    -- ["n|<leader>gs"]         = map_cr('Neogit'):with_noremap():with_silent();
+    -- ["n|<leader>gc"]         = map_cr('Neogit commit'):with_noremap():with_silent();
 
     -- Plugin Telescope
 --     ["n|<Leader>b"]     = map_cu('Telescope buffers'):with_noremap():with_silent(),

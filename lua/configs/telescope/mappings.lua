@@ -85,8 +85,8 @@ map_tele("n", "<localleader>gip", "tbs_infrastructure_live_grep")
 -- map_tele("n", '<space>fz', 'sourcegraph_tips')
 
 -- Git
-map_tele("n", "<localleader>gs", "git_status")
-map_tele("n", "<localleader>gc", "git_commits")
+-- map_tele("n", "<localleader>gs", "git_status")
+-- map_tele("n", "<localleader>gc", "git_commits")
 
 -- Nvim
 -- map_tele("n", "<space>fb", "buffers")

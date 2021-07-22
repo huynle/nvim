@@ -14,7 +14,6 @@ packer.init {
     end
   },
   git = {
-    cmd = '/home/e367212/git-test-inst/bin/git',
     clone_timeout = 600 -- Timeout, in seconds, for git clones
   }
 }
@@ -298,10 +297,10 @@ return packer.startup( function()
     ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp', 'puppet'}
   }
 
-  use {
-    'glepnir/prodoc.nvim',
-    event = 'BufReadPre'
-  }
+  -- use {
+  --   'glepnir/prodoc.nvim',
+  --   event = 'BufReadPre'
+  -- }
 
 
   use {
@@ -396,37 +395,38 @@ return packer.startup( function()
   --   }
 
   -- Git
-  use {
-    'tpope/vim-fugitive',
-    cmd = {'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gvdiffsplit'},
-    config = function ()
-      vim.cmd[[
-        nnoremap <silent> <localleader>gb :<C-u>Git blame<CR>
-        nnoremap <localleader>gd :Gvdiffsplit!<CR>
-        nnoremap gj :diffget //2<CR>
-        nnoremap g; :diffget //3<CR>
-        ]]
-    end,
-    keys = {
-      {'n', '<localleader>gd'},
-      {'n', '<localleader>gb'},
-      {'n', '<localleader>hp'},
-      {'n', '<localleader>hs'},
-      {'n', '<localleader>hu'},
-      {'n', '<localleader>hr'},
-      {'n', '<localleader>hR'},
-      {'n', '<localleader>hp'},
-      {'n', '<localleader>hb'},
-    }
-  }
+  -- use {
+  --   'tpope/vim-fugitive',
+  --   cmd = {'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gvdiffsplit'},
+  --   config = function ()
+  --     vim.cmd[[
+  --       nnoremap <silent> <localleader>gb :<C-u>Git blame<CR>
+  --       nnoremap <localleader>gd :Gvdiffsplit!<CR>
+  --       nnoremap gj :diffget //2<CR>
+  --       nnoremap g; :diffget //3<CR>
+  --       ]]
+  --   end,
+  --   keys = {
+  --     {'n', '<localleader>gd'},
+  --     {'n', '<localleader>gb'},
+  --     {'n', '<localleader>hp'},
+  --     {'n', '<localleader>hs'},
+  --     {'n', '<localleader>hu'},
+  --     {'n', '<localleader>hr'},
+  --     {'n', '<localleader>hR'},
+  --     {'n', '<localleader>hp'},
+  --     {'n', '<localleader>hb'},
+  --   }
+  -- }
 
   use {
     'TimUntersberger/neogit',
-    -- opt = true,
-    -- cmd = {'Neogit'},
+    opt = true,
+    cmd = {'Neogit'},
+    keys = {'<leader>gs', '<leader>gc'},
     requires = { 
       'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim' 
+      'sindrets/diffview.nvim'
     },
     config = function()
       require 'configs.neogit'
@@ -435,11 +435,12 @@ return packer.startup( function()
 
   use {
     'sindrets/diffview.nvim',
+    -- opt = true,
     config = function()
       require('configs.diffview')
     end,
-    cmd = {'DiffviewOpen'},
-    keys = '<localleader>ddo'
+    -- cmd = {'DiffviewOpen'},
+    -- keys = '<localleader>ddo'
   }
 
   use {

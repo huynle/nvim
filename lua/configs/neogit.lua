@@ -7,7 +7,6 @@ if not ok then
   return
 end
 
-local nnoremap = vim.keymap.nnoremap
 
 neogit.setup {
   integrations = {
@@ -16,8 +15,9 @@ neogit.setup {
 
 }
 
-nnoremap { "<leader>gs", neogit.open }
-nnoremap { "<leader>gc", function()
-  neogit.open { "commit" }
-end }
+-- local nnoremap = vim.keymap.nnoremap
+-- nnoremap { "<leader>gs", neogit.open }
+-- nnoremap { "<leader>gc", function()
+--   neogit.open { "commit" }
+-- end }
 
