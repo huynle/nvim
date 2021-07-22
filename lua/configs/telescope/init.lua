@@ -106,6 +106,8 @@ require'telescope'.setup {
 				["jk"] = { "<cmd>stopinsert<CR>", type = "command" },
         ["<C-q>"] = actions.send_to_qflist,
         ["<C-y>"] = set_prompt_to_entry_value,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
 
 
         -- insert_value
@@ -269,6 +271,58 @@ function M.live_grep()
     fzf_separator = "|",
   }
 end
+
+
+
+function M.grep_prompt_regex_filetype()
+  -- grep for things prompt, then fuzzy find the file
+  local look_in = vim.fn.input "Path > "
+  local look_for_type = vim.fn.input "File type > "
+  local look_for = vim.fn.input("REGEX > ")
+
+  local function isempty(s)
+    return s == nil or s == ''
+  end
+
+  if isempty(look_in) then
+    look_in = vim.fn.getcwd()
+  end
+
+
+  require("telescope.builtin").grep_string {
+    vimgrep_arguments = {
+      'rg',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--type', look_for_type
+    },
+    prompt_title = look_in .. " : Grepped for '".. look_for .."' in " .. look_for_type,
+    search = look_for,
+    search_dirs = {look_in},
+    use_regex = true
+  }
+  ---- require('telescope.builtin').live_grep{
+    ---- }
+    ----
+    --local look_for_type = vim.fn.input "File type > "
+    --require("telescope").extensions.fzf_writer.staged_grep {
+      --vimgrep_arguments = {
+        --'rg',
+        --'--no-heading',
+        --'--with-filename',
+        --'--line-number',
+        --'--column',
+        --'--smart-case',
+        --    '--type', look_for_type
+        --},
+        --  prompt_title = "Fzf-writer - Live Grep - REGEX",
+        --  fzf_separator = "|",
+        --}
+end
+
 
 function M.search_all_files()
   require("telescope.builtin").find_files {

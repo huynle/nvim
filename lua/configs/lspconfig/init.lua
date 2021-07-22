@@ -221,20 +221,33 @@ local function setup_servers()
   require'lspinstall'.setup()
   local lspinstalled_servers = require'lspinstall'.installed_servers()
   for _, server in pairs(lspinstalled_servers) do
-		local config = make_config()
---     if has_value(servers, server) then
---       require'lspconfig'[server].setup{}
+    local config = make_config()
+    --     if has_value(servers, server) then
+    --       require'lspconfig'[server].setup{}
     if server == 'lua' then
-			-- See https://github.com/folke/lua-dev.nvim
-			config.settings = lua_settings
-			config = require('lua-dev').setup({
-				lspconfig = config,
-				library = {
-					vimruntime = true, -- runtime path
-					types = true, -- full signature, docs and completion
-					plugins = { 'plenary.nvim' },
-				},
-			})
+      -- See https://github.com/folke/lua-dev.nvim
+      config.settings = lua_settings
+      config = require('lua-dev').setup({
+        lspconfig = config,
+        library = {
+          vimruntime = true, -- runtime path
+          types = true, -- full signature, docs and completion
+          plugins = { 'plenary.nvim' },
+        },
+      })
+    elseif server == 'solargraph' then
+      config.init_options = {
+        config = {
+          filetypes = {
+            "ruby", "puppet"
+          }
+          -- settings = {
+          --   solargraph = {
+          --     diagnostics = true
+          --   }
+          -- }
+        }
+      }
     end
 
 

@@ -44,6 +44,9 @@ local plug_map               = {
     ["n|<Leader>e"]     = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
     ["n|<Leader>a"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
 
+
+    ["n|<Leader>S"]     = map_cr('Scratch'):with_noremap():with_silent(),
+
     -- Plugin MarkdownPreview
     ["n|<localleader>om"]         = map_cu('MarkdownPreview'):with_noremap():with_silent(),
 

@@ -114,6 +114,13 @@ return packer.startup( function()
     end
   }
 
+  use {
+    'mtth/scratch.vim',
+    config = function()
+      vim.g.scratch_persistence_file = 1
+    end
+  }
+
 
   use {
     'folke/trouble.nvim',
@@ -228,13 +235,13 @@ return packer.startup( function()
     config = conf.vim_cursorword
   }
 
-  use {
-    'hrsh7th/vim-eft',
-    opt = true,
-    config = function()
-      vim.g.eft_ignorecase = true
-    end
-  }
+  -- use {
+  --   'hrsh7th/vim-eft',
+  --   opt = true,
+  --   config = function()
+  --     vim.g.eft_ignorecase = true
+  --   end
+  -- }
 
 
 --   use {
@@ -415,21 +422,21 @@ return packer.startup( function()
 
   use {
     'TimUntersberger/neogit',
-    opt = true,
-    cmd = {'Neogit'},
+    -- opt = true,
+    -- cmd = {'Neogit'},
+    requires = { 
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim' 
+    },
     config = function()
-      require('neogit').setup{
-        integrations = {
-          diffview = true
-        }
-      }
+      require 'configs.neogit'
     end
   }
 
   use {
     'sindrets/diffview.nvim',
     config = function()
-      require('rmagatti.diffview')
+      require('configs.diffview')
     end,
     cmd = {'DiffviewOpen'},
     keys = '<localleader>ddo'

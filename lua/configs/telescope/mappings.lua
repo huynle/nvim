@@ -47,10 +47,10 @@ map_tele("n", "<Leader>ed", "edit_dotfiles")
 -- Files
 -- map_tele("n", "<space>ft", "git_files")
 map_tele("n", "<Leader>gp", "grep_prompt")
-map_tele("v", "<Leader>gp", "grep_prompt_visual")
+map_tele("v", "<Leader>g", "grep_prompt_visual")
 map_tele("n", "<Leader>gq", "grep_quickfix")
 map_tele("n", "<Leader>g", "live_grep")
-map_tele("n", "<Leader>G", "grep_last_search")
+map_tele("n", "<Leader>G", "grep_prompt_regex_filetype")
 
 map_tele("n", "**", "find_word")
 map_tele("n", "<Leader>f", "find_files")
