@@ -21,3 +21,7 @@ require('todo-comments').setup{
 	--   default = { "Identifier", "#7C3AED" },
 	-- },
 }
+
+vim.cmd[[
+nnoremap <leader>tt <cmd>TodoTelescope<CR>
+]]

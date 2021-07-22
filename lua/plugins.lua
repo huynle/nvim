@@ -163,6 +163,7 @@ return packer.startup( function()
       -- using system FZF?
       {'nvim-telescope/telescope-fzf-writer.nvim'},
       {'nvim-telescope/telescope-dap.nvim'},
+      {'folke/todo-comments.nvim'},
     },
     config = function()
       require('configs.telescope')
@@ -389,12 +390,6 @@ return packer.startup( function()
     end
   }
 
-
-  -- use {
-  -- 'lambdalisue/gina.vim',
-  -- cmd = 'Gina',
-  -- ft = {'gitcommit', 'gitrebase'},
-  --   }
 
   -- Git
   -- use {

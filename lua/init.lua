@@ -90,8 +90,8 @@ local function load_options()
     shiftround     = true;
     timeout        = true;
     ttimeout       = true;
-    timeoutlen     = 500;
-    ttimeoutlen    = 30;
+    timeoutlen     = 300;
+    ttimeoutlen    = 50;
     updatetime     = 100;
     redrawtime     = 1500;
     ignorecase     = true;
@@ -176,6 +176,15 @@ local function load_options()
     vim.g.python_host_prog = '/usr/bin/python'
     vim.g.python3_host_prog = '/usr/local/bin/python3'
   end
+
+
+  if vim.fn.executable "rg" then
+    -- " When the --vimgrep flag is given to ripgrep, then the default value for the --color flag changes to 'never'.
+    vim.go.grepprg = "rg --no-heading --vimgrep --smart-case --follow"
+    vim.go.grepformat = "%f:%l:%c:%m"
+  end
+
+
   for name, value in pairs(global_local) do
     vim.o[name] = value
   end

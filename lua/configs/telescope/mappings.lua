@@ -47,19 +47,18 @@ map_tele("n", "<Leader>ed", "edit_dotfiles")
 -- Files
 -- map_tele("n", "<space>ft", "git_files")
 map_tele("n", "<Leader>gp", "grep_prompt")
-map_tele("v", "<Leader>g", "grep_prompt_visual")
+map_tele("v", "<Leader>gg", "grep_prompt_visual")
 map_tele("n", "<Leader>gq", "grep_quickfix")
-map_tele("n", "<Leader>g", "live_grep")
+map_tele("n", "<Leader>gg", "live_grep")
 map_tele("n", "<Leader>G", "grep_prompt_regex_filetype")
 
 map_tele("n", "**", "find_word")
-map_tele("n", "<Leader>f", "find_files")
+map_tele("n", "<Leader>fd", "find_files")
 map_tele("n", "<Leader><leader>", "find_files")
+map_tele("n", "<Leader>ft", "search_only_certain_files")
 -- map_tele("n", "<space>fo", "oldfiles")
--- map_tele("n", "<space>fd", "fd")
 -- map_tele("n", "<space>fv", "find_nvim_source")
--- map_tele("n", "<space>fe", "file_browser")
-map_tele("n", "<Leader>ff", "search_only_certain_files")
+map_tele("n", "<space>fe", "file_browser")
 
 -- map_tele("n", "<Leader>.", "symbol?")
 
@@ -69,7 +68,7 @@ map_tele("n", "<Leader>:",'commands')
 map_tele("n", "<LocalLeader>.",'lsp_document_symbols')
 
 map_tele("n", "<localleader>fl", 'loclist')
-map_tele("n", "<localleader>g", 'current_buffer_fuzzy_find')
+map_tele("n", "<localleader>g", 'curbuf')
 map_tele("n", "<localleader>fi", "tbs_infrastructure_search")
 map_tele("n", "<localleader>gi", "tbs_infrastructure_live_grep")
 map_tele("v", "<localleader>gi", "tbs_infrastructure_grep_string")
@@ -86,15 +85,14 @@ map_tele("n", "<localleader>gip", "tbs_infrastructure_live_grep")
 -- map_tele("n", "<localleader>gc", "git_commits")
 
 -- Nvim
--- map_tele("n", "<space>fb", "buffers")
+map_tele("n", "<leader>fb", "buffers")
 -- map_tele("n", "<space>fp", "my_plugins")
 -- map_tele("n", "<space>fa", "installed_plugins")
 -- map_tele("n", "<space>fi", "search_all_files")
--- map_tele("n", "<space>ff", "curbuf")
 -- map_tele("n", "<space>fh", "help_tags")
 -- map_tele("n", "<space>vo", "vim_options")
 -- 
 -- Telescope Meta
-map_tele("n", "<Leader>b", "builtin")
+map_tele("n", "<Leader>B", "builtin")
 
 return map_tele
