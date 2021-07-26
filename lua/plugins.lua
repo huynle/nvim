@@ -68,7 +68,6 @@ local function plugins(use)
 
   use {
     'folke/lua-dev.nvim',
-    opt = true,
     requires = {
       {'nvim-lua/plenary.nvim',opt = true}
     }
