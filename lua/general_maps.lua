@@ -1,4 +1,6 @@
 local bind = require('keymap.bind')
+local util = require('util')
+
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
@@ -6,6 +8,7 @@ local map_cmd = bind.map_cmd
 -- default map
 local def_map = {
     -- Vim map
+    -- TODO: Convert this to a new  mapping that uses utils
     ["n|<C-q>"]      = map_cmd(':wq<CR>'),
     ["n|<C-x>k"]     = map_cr('bdelete'):with_noremap():with_silent(),
     ["n|<C-s>"]      = map_cu('write'):with_noremap(),
@@ -14,13 +17,6 @@ local def_map = {
     ["n|[w"]         = map_cu('WhitespacePrev'):with_noremap(),
     ["n|F2"]         = map_cmd([[source $MYVIMRC<CR>]]):with_noremap(),
 
-    -- terminal map
-    ['t|<C-w><C-o>'] = map_cmd( '<C-\\><C-n> :MaximizerToggle!<CR>'):with_noremap(),
-    ['t|<C-h>']      = map_cmd( '<C-\\><C-n><C-w>h'):with_noremap(),
-    ['t|<C-j>']      = map_cmd( '<C-\\><C-n><C-w>j'):with_noremap(),
-    ['t|<C-k>']      = map_cmd( '<C-\\><C-n><C-w>k'):with_noremap(),
-    ['t|<C-l>']      = map_cmd( '<C-\\><C-n><C-w>l'):with_noremap(),
-    ['t|jk']         = map_cmd( '<C-\\><C-n>'):with_noremap(),
 
     -- quit, record macrocs
     ["n|q"]          = map_cu(':quit<CR>'):with_noremap():with_silent(),
@@ -29,10 +25,10 @@ local def_map = {
     ["n|qQ"]          = map_cmd('@q'):with_noremap(),
 
 
-    ["n|<C-h>"]      = map_cmd('<C-w>h'):with_noremap(),
-    ["n|<C-l>"]      = map_cmd('<C-w>l'):with_noremap(),
-    ["n|<C-j>"]      = map_cmd('<C-w>j'):with_noremap(),
-    ["n|<C-k>"]      = map_cmd('<C-w>k'):with_noremap(),
+    -- ["n|<C-h>"]      = map_cmd('<C-w>h'):with_noremap(),
+    -- ["n|<C-l>"]      = map_cmd('<C-w>l'):with_noremap(),
+    -- ["n|<C-j>"]      = map_cmd('<C-w>j'):with_noremap(),
+    -- ["n|<C-k>"]      = map_cmd('<C-w>k'):with_noremap(),
 
     ["n|<leader>ss"] = map_cu('SessionSave'):with_noremap(),
     ["n|<leader>sl"] = map_cu('SessionLoad'):with_noremap(),
@@ -122,3 +118,62 @@ local def_map = {
 }
 
 bind.nvim_load_mapping(def_map)
+
+
+-- ========================= NEW METHOD OF MAPPING HERE
+-- TODO- remap things here
+
+-- Move to window using the <ctrl> movement keys
+util.nmap("<left>", "<C-w>h")
+util.nmap("<down>", "<C-w>j")
+util.nmap("<up>", "<C-w>k")
+util.nmap("<right>", "<C-w>l")
+
+
+-- Resize window using <ctrl> arrow keys
+util.nnoremap("<S-Up>", ":resize +2<CR>")
+util.nnoremap("<S-Down>", ":resize -2<CR>")
+util.nnoremap("<S-Left>", ":vertical resize -2<CR>")
+util.nnoremap("<S-Right>", ":vertical resize +2<CR>")
+
+-- terminal map
+util.tnoremap('<C-w><C-o>' , '<C-\\><C-n> :MaximizerToggle!<CR>')
+util.tnoremap('<C-h>'      , '<C-\\><C-n><C-w>h')
+util.tnoremap('<C-j>'      , '<C-\\><C-n><C-w>j')
+util.tnoremap('<C-k>'      , '<C-\\><C-n><C-w>k')
+util.tnoremap('<C-l>'      , '<C-\\><C-n><C-w>l')
+util.tnoremap('jk'         , '<C-\\><C-n>')
+
+-- Clear search with <esc>
+util.map("", "<esc>", ":noh<cr>")
+util.nnoremap("gw", "*N")
+util.xnoremap("gw", "*N")
+
+-- Move Lines
+util.nnoremap("<A-j>", ":m .+1<CR>==")
+util.vnoremap("<A-j>", ":m '>+1<CR>gv=gv")
+util.inoremap("<A-j>", "<Esc>:m .+1<CR>==gi")
+util.nnoremap("<A-k>", ":m .-2<CR>==")
+util.vnoremap("<A-k>", ":m '<-2<CR>gv=gv")
+util.inoremap("<A-k>", "<Esc>:m .-2<CR>==gi")
+
+-- better indenting
+util.vnoremap("<", "<gv")
+util.vnoremap(">", ">gv")
+
+
+-- makes * and # work on visual mode too.
+vim.api.nvim_exec(
+  [[
+  function! g:VSetSearch(cmdtype)
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+    let @s = temp
+  endfunction
+
+  xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+  xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+]],
+  false
+)

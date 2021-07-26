@@ -104,6 +104,7 @@ require'telescope'.setup {
         ["<Tab>"] = actions.move_selection_next,
         ["<C-Tab>"] = actions.move_selection_previous,
 				["jk"] = { "<cmd>stopinsert<CR>", type = "command" },
+				-- ["<CR>"] = { "<cmd>stopinsert<CR>", type = "command" },
         ["<C-q>"] = actions.send_to_qflist,
         ["<C-y>"] = set_prompt_to_entry_value,
         ["<C-j>"] = actions.move_selection_next,
@@ -181,7 +182,7 @@ function M.edit_neovim()
   local opts_with_preview, opts_without_preview
 
   opts_with_preview = {
-    prompt_title = "~ configs ~",
+    prompt_title = "~ Nvim configs ~",
     shorten_path = false,
     cwd = "~/.config/nvim",
 
@@ -328,6 +329,10 @@ function M.curbuf()
     shorten_path = false,
   }
   require("telescope.builtin").current_buffer_fuzzy_find(opts)
+end
+
+function M.keymaps()
+  require("telescope.builtin").keymaps()
 end
 
 
@@ -490,6 +495,7 @@ function M.tbs_infrastructure_puppet_live_grep()
     search_dirs = {vim.fn.getcwd() .. "/infrastructure/puppet",},
   }
 end
+
 
 return setmetatable({}, {
   __index = function(_, k)

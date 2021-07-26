@@ -1,13 +1,16 @@
+local packer = require('util.packer')
+local util = require("util")
+
 local has = function(x)
   return vim.fn.has(x) == 1
 end
 
+local config = {
 
-local packer = require("packer")
-
-local conf = require('configs.all')
-
-packer.init {
+  profile = {
+    enable = true,
+    threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+  },
   display = {
     open_fn = function()
       return require("packer.util").float {border = "single"}
@@ -15,14 +18,24 @@ packer.init {
   },
   git = {
     clone_timeout = 600 -- Timeout, in seconds, for git clones
-  }
+  },
+
+  -- list of plugins that should be taken from ~/projects
+  -- this is NOT packer functionality!
+  local_plugins = {
+    -- folke = true,
+    -- ["nvim-compe"] = false,
+    -- ["null-ls.nvim"] = false,
+    -- ["nvim-lspconfig"] = false,
+    -- ["nvim-treesitter"] = true,
+  },
+
 }
 
 
-return packer.startup( function()
+local conf = require('configs.all')
 
-  local use = packer.use
-
+local function plugins(use)
   use {"nvim-lua/popup.nvim"}
 
   use {"nvim-lua/plenary.nvim"}
@@ -94,25 +107,20 @@ return packer.startup( function()
     end,
   }
 
--- -- casuing Packer trouble right now
---   use {
---     'folke/which-key.nvim',
---     event = 'WhichKey',
---     config = function()
---       require "configs.which-key"
---     end,
---   }
-
+-- casuing Packer trouble right now
   use {
-    "folke/which-key.nvim",
+    'folke/which-key.nvim',
     config = function()
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
+      require "configs.keys"
+    end,
   }
+
+  -- use {
+  --   "folke/which-key.nvim",
+  --   config = function()
+  --     require "configs.keys"
+  --   end
+  -- }
 
   use {
     'mtth/scratch.vim',
@@ -124,7 +132,14 @@ return packer.startup( function()
 
   use {
     'folke/trouble.nvim',
-    cmd = {'Trouble', 'TroubleToggle'}
+    cmd = {'Trouble', 'TroubleToggle'},
+    -- event = "BufReadPre",
+    keys = {"<leader>xx","<leader>xt"},
+    config = function()
+      util.nnoremap("<leader>xx", "<cmd>TroubleToggle<CR>")
+      util.nnoremap("<leader>xt", "<cmd>Trouble todo<CR>")
+      require("trouble").setup({ auto_open = false })
+    end
   } 
 
 
@@ -189,12 +204,21 @@ return packer.startup( function()
   -- all hadd conflict
   use {
     'phaazon/hop.nvim',
-    as = 'hop',
+
+    keys = { "gh" },
+    cmd = { "HopWord", "HopChar1" },
     config = function()
+      require("util").nnomap("gh", "<cmd>HopWord<CR>")
+      -- require("util").nmap("s", "<cmd>HopChar1<CR>")
       -- you can configure Hop the way you like here; see :h hop-config
-      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-      vim.api.nvim_set_keymap('n', '<localleader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+      require("hop").setup({})
     end
+    -- as = 'hop',
+    -- config = function()
+    --   -- you can configure Hop the way you like here; see :h hop-config
+    --   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    --   vim.api.nvim_set_keymap('n', '<localleader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+    -- end
   }
 
 
@@ -308,7 +332,10 @@ return packer.startup( function()
 
   use {
     'folke/todo-comments.nvim',
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "BufReadPost",
     requires = "nvim-lua/plenary.nvim",
+    keys = {"<leader>tt"},
     config = function()
       require('configs.todo-comments')
     end
@@ -535,14 +562,14 @@ return packer.startup( function()
   }
 
 
+  -- Statusline
   use {
-    'glepnir/galaxyline.nvim',
-    branch = 'main',
-    config = function()
-      require 'configs.galaxyline'
-    end,
-    requires = 'kyazdani42/nvim-web-devicons'
+    "hoob3rt/lualine.nvim",
+    event = "VimEnter",
+    config = [[require('configs.lualine')]],
+    wants = "nvim-web-devicons",
   }
+
 
   use {
     'lukas-reineke/indent-blankline.nvim',
@@ -550,17 +577,6 @@ return packer.startup( function()
     branch = 'master',
     config = conf.indent_blankline
   }
-
---   use {
---     'norcalli/nvim-base16.lua',
-   --   config = conf.base16
---   }
-
-  -- use {
-  -- 'akinsho/nvim-bufferline.lua',
-  --   config = conf.nvim_bufferline,
-  --   requires = 'kyazdani42/nvim-web-devicons'
-  -- }
 
   use {
     'kyazdani42/nvim-tree.lua',
@@ -582,13 +598,32 @@ return packer.startup( function()
     }
   }
 
+  use {'dbeniamine/cheat.sh-vim'}
+
 
   use {
     'navarasu/onedark.nvim',
     config = function()
       vim.g.onedark_style = 'deep'
+      vim.g.onedark_transparent_background = true -- By default it is false
       require('onedark').setup()
     end,
   }
 
-end)
+  -- use {
+  --   'monsonjeremy/onedark.nvim',
+  --   config = function()
+  --     -- Example config in Lua
+  --     -- vim.g.onedark_italic_functions = true
+  --     -- vim.g.onedark_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+  --     -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+  --     -- vim.g.onedark_colors = { hint = "orange", error = "#ff0000" }
+  --     -- Load the colorscheme
+  --     vim.g.onedark_transparent = true
+  --     vim.cmd[[colorscheme onedark]]
+  --   end,
+  -- }
+
+end
+
+return packer.setup(config, plugins)
