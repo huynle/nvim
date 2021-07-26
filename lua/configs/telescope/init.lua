@@ -281,8 +281,28 @@ function M.grep_prompt_regex_filetype()
   local look_for_type = vim.fn.input "File type > "
   local look_for = vim.fn.input("REGEX > ")
 
+  local my_vimgrep_arguments = {
+    'rg',
+    '--no-heading',
+    '--with-filename',
+    '--line-number',
+    '--column',
+    '--smart-case',
+  }
+
   local function isempty(s)
     return s == nil or s == ''
+  end
+
+  function mysplit (inputstr, sep)
+    if sep == nil then
+      sep = "%s"
+    end
+    local t={}
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+      table.insert(t, str)
+    end
+    return t
   end
 
   if isempty(look_in) then
@@ -292,20 +312,17 @@ function M.grep_prompt_regex_filetype()
   if isempty(look_for_type) then
     look_for_type = ""
   else
-    look_for_type = "--type "..look_for_type
+    types = mysplit(look_for_type, " ")
+
+    for i, v in ipairs(types) do
+      table.insert(my_vimgrep_arguments, "--type")
+      table.insert(my_vimgrep_arguments, v)
+    end
   end
 
 
   require("telescope.builtin").grep_string {
-    vimgrep_arguments = {
-      'rg',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
-      look_for_type
-    },
+    vimgrep_arguments = my_vimgrep_arguments,
     prompt_title = look_in .. " : Grepped for '".. look_for .."' in filetype: '" .. look_for_type .. "'",
     search = look_for,
     search_dirs = {look_in},
@@ -349,6 +366,7 @@ function M.grep_prompt()
   -- grep for things prompt, then fuzzy find the file
   require("telescope.builtin").grep_string {
     search = vim.fn.input("Grep String > "),
+    use_regex = true
   }
 end
 

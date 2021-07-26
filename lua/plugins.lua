@@ -207,7 +207,7 @@ local function plugins(use)
     keys = { "gh" },
     cmd = { "HopWord", "HopChar1" },
     config = function()
-      require("util").nnomap("gh", "<cmd>HopWord<CR>")
+      require("util").nnoremap("gh", "<cmd>HopWord<CR>")
       -- require("util").nmap("s", "<cmd>HopChar1<CR>")
       -- you can configure Hop the way you like here; see :h hop-config
       require("hop").setup({})
