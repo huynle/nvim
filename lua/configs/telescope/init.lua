@@ -276,20 +276,6 @@ end
 
 
 function M.grep_prompt_regex_filetype()
-  -- grep for things prompt, then fuzzy find the file
-  local look_in = vim.fn.input "Path > "
-  local look_for_type = vim.fn.input "File type > "
-  local look_for = vim.fn.input("REGEX > ")
-
-  local my_vimgrep_arguments = {
-    'rg',
-    '--no-heading',
-    '--with-filename',
-    '--line-number',
-    '--column',
-    '--smart-case',
-  }
-
   local function isempty(s)
     return s == nil or s == ''
   end
@@ -304,6 +290,20 @@ function M.grep_prompt_regex_filetype()
     end
     return t
   end
+
+  local my_vimgrep_arguments = {
+    'rg',
+    '--no-heading',
+    '--with-filename',
+    '--line-number',
+    '--column',
+    '--smart-case',
+  }
+
+  -- grep for things prompt, then fuzzy find the file
+  local look_in = vim.fn.input "Path > "
+  local look_for_type = vim.fn.input "File type > "
+  local look_for = vim.fn.input("REGEX > ")
 
   if isempty(look_in) then
     look_in = vim.fn.getcwd()
@@ -366,7 +366,6 @@ function M.grep_prompt()
   -- grep for things prompt, then fuzzy find the file
   require("telescope.builtin").grep_string {
     search = vim.fn.input("Grep String > "),
-    use_regex = true
   }
 end
 
