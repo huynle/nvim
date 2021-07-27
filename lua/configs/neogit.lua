@@ -1,27 +1,22 @@
-
--- vim.fn["gina#custom#command#option"]('status', '--opener', 'vsplit')
--- nnoremap { '<leader>gs', '<cmd>Gina status<CR>' }
-
-local ok, neogit = pcall(require, "neogit")
-if not ok then
-  return
-end
-
+local util = require 'util'
+local neogit = require('neogit')
 
 neogit.setup {
+  disable_commit_confirmation = true,
   integrations = {
     diffview = true
+  },
+  -- override/add mappings
+  mappings = {
+    -- modify status buffer mappings
+    status = {
+      -- Adds a mapping with "B" as key that does the "BranchPopup" command
+      ["B"] = "BranchPopup",
+      ["="] = "Toggle",
+    }
   }
-
 }
 
-vim.cmd[[
-nnoremap <leader>gs :Neogit<CR>
-]]
 
--- local nnoremap = vim.keymap.nnoremap
--- nnoremap { "<leader>gs", neogit.open }
--- nnoremap { "<leader>gc", function()
---   neogit.open { "commit" }
--- end }
-
+util.nnoremap("<leader>gs", ":Neogit<CR>")
+util.nnoremap("<leader>gc", ":Neogit commit<CR>")

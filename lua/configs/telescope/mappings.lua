@@ -59,7 +59,8 @@ map_tele("n", "<Leader><leader>", "find_files")
 map_tele("n", "<Leader>ft", "search_only_certain_files")
 -- map_tele("n", "<space>fo", "oldfiles")
 -- map_tele("n", "<space>fv", "find_nvim_source")
-map_tele("n", "<space>fe", "file_browser")
+map_tele("n", "<leader>fe", "file_browser")
+map_tele("n", "<leader>fr", 'registers')
 
 -- map_tele("n", "<Leader>.", "symbol?")
 
@@ -84,7 +85,7 @@ map_tele("n", "<localleader>gip", "tbs_infrastructure_live_grep")
 
 -- Git
 -- map_tele("n", "<localleader>gs", "git_status")
--- map_tele("n", "<localleader>gc", "git_commits")
+map_tele("n", "<leader>wt", "git_worktrees")
 
 -- Nvim
 map_tele("n", "<leader>fb", "buffers")

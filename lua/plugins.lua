@@ -16,6 +16,7 @@ local config = {
       return require("packer.util").float {border = "single"}
     end
   },
+  opt_default = false, -- Default to using opt (as opposed to start) plugins
   git = {
     clone_timeout = 600 -- Timeout, in seconds, for git clones
   },
@@ -444,9 +445,8 @@ local function plugins(use)
 
   use {
     'TimUntersberger/neogit',
-    opt = true,
-    cmd = {'Neogit'},
-    keys = {'<leader>gs'},
+    cmd ='Neogit',
+    keys = {"<leader>gs", "<leader>gc"},
     requires = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim'
@@ -456,14 +456,14 @@ local function plugins(use)
     end
   }
 
+
   use {
     'sindrets/diffview.nvim',
-    -- opt = true,
     config = function()
       require('configs.diffview')
     end,
-    cmd = {'DiffviewOpen'},
-    keys = {'<leader>do', '<leader>dm'},
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    keys = {"<leader>do", "<leader>dmo", "<leader>dm"}
   }
 
   use {
@@ -471,11 +471,6 @@ local function plugins(use)
     requires = {
       'nvim-telescope/telescope.nvim'
     },
-    config = function()
-      require('telescope').load_extension("git_worktree")
-      vim.cmd[[nnoremap <localleader>wt <cmd>Telescope git_worktree git_worktrees<CR>]]
-    end,
-    keys = '<localleader>wt'
   }
 
 
@@ -550,6 +545,7 @@ local function plugins(use)
 
   use {
     'kristijanhusak/orgmode.nvim',
+    ft = "org",
     opt = true,
     config = function()
       require('orgmode').setup{

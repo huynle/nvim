@@ -32,7 +32,8 @@ require('gitsigns').setup {
   },
   numhl = false,
   linehl = false,
-  current_line_blame = false,
+  current_line_blame = true,
+  current_line_blame_delay = 500,
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default

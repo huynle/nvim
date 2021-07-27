@@ -172,6 +172,7 @@ require'telescope'.setup {
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('fzf_writer')
 -- require('telescope').load_extension('fzy_native')
+require('telescope').load_extension("git_worktree")
 
 -----##### COPIED FROM TJ ####
 --https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/lua/tj/telescope/init.lua
@@ -273,6 +274,10 @@ function M.live_grep()
   }
 end
 
+function M.git_worktrees()
+  require('telescope').extensions.git_worktree.git_worktrees()
+end
+
 
 
 function M.grep_prompt_regex_filetype()
@@ -350,6 +355,10 @@ end
 
 function M.keymaps()
   require("telescope.builtin").keymaps()
+end
+
+function M.registers()
+  require("telescope.builtin").registers()
 end
 
 
