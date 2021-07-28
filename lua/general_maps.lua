@@ -88,10 +88,9 @@ local def_map = {
     ["v|[<space>"] =  map_cmd(":<c-u>put! =repeat(nr2char(10), v:count1)<cr>"),
     ["v|]<space>"] =  map_cmd(":<c-u>put =repeat(nr2char(10), v:count1)<cr>"),
 
-
-    -- duplicate line
-    ["n|<localleader>d"] = map_cmd("mzYP`z"),
-    ["v|<localleader>d"] = map_cmd("YPgv"),
+    -- -- duplicate line
+    -- ["n|<localleader>d"] = map_cmd("mzYP`z"),
+    -- ["v|<localleader>d"] = map_cmd("YPgv"),
 
     -- Window-control prefix
     ["n|[Window]|"] = map_cmd("<Nop>"):with_noremap(),

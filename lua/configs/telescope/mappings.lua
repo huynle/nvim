@@ -51,6 +51,7 @@ map_tele("v", "<Leader>gg", "grep_prompt_visual")
 map_tele("n", "<Leader>gq", "grep_quickfix")
 map_tele("n", "<Leader>gg", "live_grep")
 map_tele("n", "<Leader>G", "grep_prompt_regex_filetype")
+map_tele("n", "<Leader>GG", "grep_prompt_regex_filetype_add_args")
 map_tele("v", "<Leader>G", "grep_prompt_regex_filetype")
 
 map_tele("n", "**", "find_word")

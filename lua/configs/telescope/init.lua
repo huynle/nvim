@@ -8,6 +8,7 @@ local reloader = function()
     RELOAD "plenary"
     RELOAD "popup"
     RELOAD "telescope"
+    RELOAD "telescope.mappings"
   end
 end
 
@@ -101,6 +102,7 @@ require'telescope'.setup {
 
     mappings = {
       i = {
+        ["<C-c>"] = actions.close,
         ["<Tab>"] = actions.move_selection_next,
         ["<C-Tab>"] = actions.move_selection_previous,
 				["jk"] = { "<cmd>stopinsert<CR>", type = "command" },
@@ -125,6 +127,7 @@ require'telescope'.setup {
       },
       n = {
         ["q"] = actions.close,
+        ["<C-c>"] = actions.close,
         ["<C-q>"] = actions.send_to_qflist,
         ["<Space>"] = actions.toggle_selection + actions.move_selection_next,
         ["p"] = actions.toggle_selection + actions.move_selection_next,
@@ -174,6 +177,19 @@ require('telescope').load_extension('fzf')
 require('telescope').load_extension('fzf_writer')
 -- require('telescope').load_extension('fzy_native')
 require('telescope').load_extension("git_worktree")
+
+
+
+local function mysplit (inputstr, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t={}
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
 
 -----##### COPIED FROM TJ ####
 --https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/lua/tj/telescope/init.lua
@@ -279,23 +295,27 @@ function M.git_worktrees()
   require('telescope').extensions.git_worktree.git_worktrees()
 end
 
+function M.grep_prompt_regex_filetype_add_args()
+  local addl_args = vim.fn.input "Addition Ripgrep Args > "
+  args = mysplit(addl_args, " ")
+  M.grep_prompt_regex_filetype(args)
+end
 
 
-function M.grep_prompt_regex_filetype()
+function M.grep_prompt_regex_filetype(add_args)
+  add_args = add_args or {}
+
   local function isempty(s)
     return s == nil or s == ''
   end
 
-  function mysplit (inputstr, sep)
-    if sep == nil then
-      sep = "%s"
+  function TableConcat(t1,t2)
+    for i=1,#t2 do
+      t1[#t1+1] = t2[i]
     end
-    local t={}
-    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-      table.insert(t, str)
-    end
-    return t
+    return t1
   end
+
 
   local my_vimgrep_arguments = {
     'rg',
@@ -305,6 +325,8 @@ function M.grep_prompt_regex_filetype()
     '--column',
     '--smart-case',
   }
+
+  my_vimgrep_arguments = TableConcat(my_vimgrep_arguments, add_args)
 
   -- grep for things prompt, then fuzzy find the file
   local look_in = vim.fn.input "Path > "
@@ -319,7 +341,6 @@ function M.grep_prompt_regex_filetype()
     look_for_type = ""
   else
     types = mysplit(look_for_type, " ")
-
     for i, v in ipairs(types) do
       table.insert(my_vimgrep_arguments, "--type")
       table.insert(my_vimgrep_arguments, v)

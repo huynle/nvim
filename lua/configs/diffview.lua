@@ -38,9 +38,15 @@ require'diffview'.setup {
   }
 }
 
+vim.cmd[[command! DiffviewFile execute("DiffviewOpen -- " . expand("%")) | DiffviewToggleFiles]]
+
+util.nnoremap("<localleader>dd", ":DiffviewOpen master -- " .. vim.fn.expand("%") .. "<CR>")
+util.nnoremap("<localleader>dm", ":DiffviewOpen master -- " .. vim.fn.expand("%") .. "<CR>")
+util.nnoremap("<localleader>dr", ":DiffviewOpen HEAD~1 -- " .. vim.fn.expand("%") .. "<CR>")
 
 
+util.nnoremap("<leader>dd", ":DiffviewOpen ") -- add branch info here
 util.nnoremap("<leader>do", ":DiffviewOpen<CR>")
-util.nnoremap("<leader>dmo", ":DiffviewOpen master -- " .. vim.fn.expand("%:p") .. "<CR>")
 util.nnoremap("<leader>dm", ":DiffviewOpen master<CR>")
+util.nnoremap("<leader>dr", ":DiffviewOpen HEAD~1<CR>")
 util.nnoremap("<leader>dc", ":DiffviewClose<CR>")
