@@ -64,22 +64,48 @@ local function plugins(use)
     'neovim/nvim-lspconfig',
     requires = { 'kabouzeid/nvim-lspinstall'},
     event = 'BufReadPre',
-    config = function()
-      require "configs.lspconfig"
-    end,
   }
 
   use {
     'kabouzeid/nvim-lspinstall',
+    after = 'nvim-lspconfig',
+    event = 'BufReadPost',
+    config = function()
+      require "configs.lspconfig"
+    end,
     -- opt = true,
     -- cmd = {'LspInstall'}
   }
 
 
+
+  -- -- LSP
+  -- -- from rMagatti
+  -- use {
+  --   'neovim/nvim-lspconfig',
+  --   event = 'BufReadPre'
+  -- }
+  -- use {
+  --   'kabouzeid/nvim-lspinstall',
+  --   requires = {'neovim/nvim-lspconfig'},
+  --   config = function()
+  --     require('rmagatti.lsp-server-configs')
+  --   end,
+  --   event = 'BufReadPost',
+  --   after = 'nvim-lspconfig'
+  -- }
+
+  -- use {
+  --   "ray-x/lsp_signature.nvim",
+  --   module = {'lsp_signature'}
+  -- }
+
+
+
   use {
     'folke/lua-dev.nvim',
     requires = {
-      {'nvim-lua/plenary.nvim',opt = true}
+      {'nvim-lua/plenary.nvim', opt = true}
     }
   }
 
@@ -136,6 +162,19 @@ local function plugins(use)
       require("trouble").setup({ auto_open = false })
     end
   } 
+
+
+  -- Diagnostics
+  use {
+    disable = true,
+    'folke/lsp-trouble.nvim',
+    config = function()
+      require("trouble").setup()
+      vim.cmd[[nnoremap <leader>xx <cmd>LspTrouble<CR>]]
+    end,
+    keys = '<leader>xx',
+    cmd = {'LspTrouble'}
+  }
 
 
   use {
@@ -198,24 +237,47 @@ local function plugins(use)
   -- disabling for now, conflict with 's' window movement key
   -- tried: 's', 'w' and 'h'
   -- all hadd conflict
-  use {
-    'phaazon/hop.nvim',
+  -- use {
+  --   'phaazon/hop.nvim',
 
-    keys = { "gh" },
-    cmd = { "HopWord", "HopChar1" },
-    config = function()
-      require("util").nnoremap("gh", "<cmd>HopWord<CR>")
-      -- require("util").nmap("s", "<cmd>HopChar1<CR>")
-      -- you can configure Hop the way you like here; see :h hop-config
-      require("hop").setup({})
-    end
-    -- as = 'hop',
-    -- config = function()
-    --   -- you can configure Hop the way you like here; see :h hop-config
-    --   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-    --   vim.api.nvim_set_keymap('n', '<localleader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
-    -- end
+  --   keys = { "gh" },
+  --   cmd = { "HopWord", "HopChar1" },
+  --   config = function()
+  --     require("util").nnoremap("gh", "<cmd>HopWord<CR>")
+  --     -- require("util").nmap("s", "<cmd>HopChar1<CR>")
+  --     -- you can configure Hop the way you like here; see :h hop-config
+  --     require("hop").setup({})
+  --   end
+  --   -- as = 'hop',
+  --   -- config = function()
+  --   --   -- you can configure Hop the way you like here; see :h hop-config
+  --   --   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+  --   --   vim.api.nvim_set_keymap('n', '<localleader>s', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+  --   -- end
+  -- }
+
+  use {
+    'ggandor/lightspeed.nvim',
+    config = function ()
+      require('lightspeed').setup {
+        jump_to_first_match = true,
+        jump_on_partial_input_safety_timeout = 400,
+        highlight_unique_chars = false,
+        grey_out_search_area = true,
+        match_only_the_start_of_same_char_seqs = true,
+        limit_ft_matches = 5,
+        full_inclusive_prefix_key = '<c-x>',
+      }
+    end,
+    module = {'lightspeed'},
+    keys = {
+      {'n', 's'},
+      {'n', 'S'},
+      {'n', 'f'},
+      {'n', 'F'},
+    }
   }
+
 
 
   --   use {
@@ -275,17 +337,6 @@ local function plugins(use)
 --     end,
 --     requires = 'kana/vim-operator-user'
 --   }
-
-  use {
-    'rhysd/vim-operator-surround',
-    event = 'BufRead',
-    requires = 'kana/vim-operator-user',
-    -- config = function()
-    --   util.nnoremap("sa", "<Plug>(operator-surround-append)")
-    --   util.nnoremap("sd", "<Plug>(operator-surround-delete)")
-    --   util.nnoremap("sr", "<Plug>(operator-surround-replace)")
-    -- end
-  }
 
 --   use {
 --     'kana/vim-niceblock',
@@ -354,6 +405,20 @@ local function plugins(use)
   --     ]]
   --   end
   -- }
+  
+  use {
+    'tpope/vim-surround',
+    keys = {
+      {'n', 'cs'},
+      {'n', 'ds'},
+      {'x', 'S'},
+      {'n', 'ys'}
+    }
+  }
+
+  use {
+    'tpope/vim-repeat'
+  }
 
 
   use {
@@ -614,7 +679,15 @@ local function plugins(use)
     }
   }
 
-  use {'dbeniamine/cheat.sh-vim'}
+  use {
+    'dbeniamine/cheat.sh-vim',
+    keys = {
+      {'n', '<leader>KB'},
+      {'n', '<leader>KK'},
+      {'n', '<leader>KP'},
+    },
+    cmd = {'Cheat', 'CheatPaste'}
+  }
 
 
   use {
@@ -630,10 +703,20 @@ local function plugins(use)
   -- Terminal
   use({
     "akinsho/nvim-toggleterm.lua",
-    keys = "<M-`>",
     config = function()
       require("configs.terminal")
     end,
+    keys = {
+      {'n', [[<M-`>]]},
+      {'i', [[<M-`]]},
+      {'n', [[<leader>2s]]},
+      {'n', [[<leader>3s]]},
+      {'n', [[<leader>4s]]},
+      {'n', [[<leader>2v]]},
+      {'n', [[<leader>3v]]},
+      {'n', [[<leader>4v]]},
+    },
+    cmd = {'ToggleTerm', 'ToggleTermOpenAll', 'ToggleTermCloseAll'}
   })
 
   -- make terminal a little more pretty
@@ -647,6 +730,13 @@ local function plugins(use)
 
 
   use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
+
+  use {
+    disable = true,
+    'nvim-lua/lsp-status.nvim'
+    -- FIXME: needs to add to lualine, dont even know if this is necessary
+    -- sections = {lualine_c = {require'lsp-status'.status}}
+  }
 
   -- use {
   --   'monsonjeremy/onedark.nvim',
