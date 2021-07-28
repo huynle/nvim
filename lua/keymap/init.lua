@@ -41,8 +41,8 @@ local plug_map               = {
     ["n|<localleader>ct"]         = map_args("Template"),
     --
     -- Plugin nvim-tree
-    ["n|<Leader>e"]     = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
-    ["n|<Leader>ee"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
+    ["n|<localleader>e"]     = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
+    ["n|<localleader>a"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
 
 
     ["n|<Leader>S"]     = map_cr('Scratch'):with_noremap():with_silent(),

@@ -33,11 +33,6 @@ nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
 " Smart wrap toggle (breakindent and colorcolumn toggle as-well)
 nmap <localleader>tw :execute('setlocal wrap! breakindent! colorcolumn=' .
 	\ (&colorcolumn == '' ? &textwidth : ''))<CR>
-"
-" The plugin rhysd/accelerated-jk moves through display-lines in normal mode,
-" these mappings will move through display-lines in visual mode too.
-vnoremap j gj
-vnoremap k gk
 
 " Change current word in a repeatable manner
 nnoremap <localleader>cn *``cgn
@@ -109,4 +104,8 @@ vnoremap <localleader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
 nnoremap <localleader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
 
 
-
+function ClearQuickfixList()
+  call setqflist([])
+endfunction
+command! ClearQuickfixList call ClearQuickfixList()
+nmap <leader>qc :ClearQuickfixList<cr>

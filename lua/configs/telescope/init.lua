@@ -127,6 +127,7 @@ require'telescope'.setup {
         ["q"] = actions.close,
         ["<C-q>"] = actions.send_to_qflist,
         ["<Space>"] = actions.toggle_selection + actions.move_selection_next,
+        ["p"] = actions.toggle_selection + actions.move_selection_next,
         ["Q"] = actions.send_to_qflist + actions.open_qflist,
         ["a"] = actions.smart_add_to_qflist,
 				["e"] = myactions.send_to_qflist,

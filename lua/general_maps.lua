@@ -121,14 +121,7 @@ bind.nvim_load_mapping(def_map)
 
 
 -- ========================= NEW METHOD OF MAPPING HERE
--- TODO- remap things here
-
--- Move to window using the <ctrl> movement keys
-util.nmap("<left>", "<C-w>h")
-util.nmap("<down>", "<C-w>j")
-util.nmap("<up>", "<C-w>k")
-util.nmap("<right>", "<C-w>l")
-
+-- TODO: remap things here
 
 -- Resize window using <ctrl> arrow keys
 util.nnoremap("<S-Up>", ":resize +2<CR>")
@@ -142,7 +135,9 @@ util.tnoremap('<C-h>'      , '<C-\\><C-n><C-w>h')
 util.tnoremap('<C-j>'      , '<C-\\><C-n><C-w>j')
 util.tnoremap('<C-k>'      , '<C-\\><C-n><C-w>k')
 util.tnoremap('<C-l>'      , '<C-\\><C-n><C-w>l')
-util.tnoremap('jk'         , '<C-\\><C-n>')
+-- much better to exit, since you could be in a nvim terminal inside the
+-- terminal
+util.tnoremap('<A-j><A-k>'         , '<C-\\><C-n>')
 
 -- Clear search with <esc>
 util.map("", "<esc>", ":noh<cr>")
