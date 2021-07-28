@@ -16,7 +16,7 @@ local config = {
       return require("packer.util").float {border = "single"}
     end
   },
-  opt_default = false, -- Default to using opt (as opposed to start) plugins
+
   git = {
     clone_timeout = 600 -- Timeout, in seconds, for git clones
   },
@@ -42,6 +42,15 @@ local function plugins(use)
   use {"nvim-lua/plenary.nvim"}
 
   use {"wbthomason/packer.nvim"}
+
+
+-- here is all the mapping
+  use {
+    'folke/which-key.nvim',
+    config = function()
+      require "configs.keys"
+    end,
+  }
 
   use {
     'rmagatti/auto-session',
@@ -82,38 +91,24 @@ local function plugins(use)
     end
   }
 
-
-  use {
-    'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup()
-    end
-  }
-
   use {
     'hrsh7th/nvim-compe',
+    opt = true,
     event = 'InsertEnter',
-    after = 'nvim-autopairs',
     config = function()
       require "configs.compe"
-      -- vim.cmd[[
-      -- augroup user_plugin_compe
-      -- autocmd!
-      -- autocmd FileType denite-filter,clap_input,TelescopePrompt
-      -- \ call compe#setup({'enabled': v:false}, 0)
-      -- augroup END
-      -- ]]
-
     end,
+    requires = {
+      {
+        "windwp/nvim-autopairs",
+        config = function()
+          require('nvim-autopairs').setup()
+        end,
+      },
+    },
   }
 
--- casuing Packer trouble right now
-  use {
-    'folke/which-key.nvim',
-    config = function()
-      require "configs.keys"
-    end,
-  }
+
 
   -- use {
   --   "folke/which-key.nvim",
@@ -144,6 +139,7 @@ local function plugins(use)
 
 
   use {
+    event = "VimEnter",
     'embear/vim-localvimrc',
     config = function()
       local cwd = vim.fn.getcwd()
@@ -244,6 +240,7 @@ local function plugins(use)
   }
 
   use {
+    keys = {"[", "]"},
     'tpope/vim-unimpaired',
   }
 
@@ -282,7 +279,12 @@ local function plugins(use)
   use {
     'rhysd/vim-operator-surround',
     event = 'BufRead',
-    requires = 'kana/vim-operator-user'
+    requires = 'kana/vim-operator-user',
+    -- config = function()
+    --   util.nnoremap("sa", "<Plug>(operator-surround-append)")
+    --   util.nnoremap("sd", "<Plug>(operator-surround-delete)")
+    --   util.nnoremap("sr", "<Plug>(operator-surround-replace)")
+    -- end
   }
 
 --   use {
@@ -342,15 +344,25 @@ local function plugins(use)
   }
 
 
+  -- use {
+  --   -- TODO: Eventually move this out to its own lua config
+  --   'tpope/vim-commentary',
+  --   config = function()
+  --     vim.cmd[[
+  --     xmap <Leader>v  <Plug>Commentary
+  --     nmap <Leader>v  <Plug>CommentaryLine
+  --     ]]
+  --   end
+  -- }
+
+
   use {
-    -- TODO: Eventually move this out to its own lua config
-    'tpope/vim-commentary',
+    "b3nj5m1n/kommentary",
+    opt = true,
+    keys = { "<leader>v"},
     config = function()
-      vim.cmd[[
-      xmap <Leader>v  <Plug>Commentary
-      nmap <Leader>v  <Plug>CommentaryLine
-      ]]
-    end
+      require("configs.comments")
+    end,
   }
 
   -- Symbols
@@ -534,13 +546,13 @@ local function plugins(use)
   --   requires = {"vim-test/vim-test"}
   -- }
 
-  use {
-    'brooth/far.vim',
-    cmd = {'Far','Farp'},
-    config = function ()
-      vim.g['far#source'] = 'rg'
-    end
-  }
+  -- use {
+  --   'brooth/far.vim',
+  --   cmd = {'Far','Farp'},
+  --   config = function ()
+  --     vim.g['far#source'] = 'rg'
+  --   end
+  -- }
 
   use {
     'iamcco/markdown-preview.nvim',
@@ -592,10 +604,11 @@ local function plugins(use)
 
   use {
     'lewis6991/gitsigns.nvim',
-    event = {'BufRead','BufNewFile'},
+    event = {'BufReadPre','BufNewFile'},
     config = function()
       require 'configs.gitsigns'
     end,
+    wants = "plenary.nvim",
     requires = {
       'nvim-lua/plenary.nvim'
     }
@@ -612,6 +625,28 @@ local function plugins(use)
       require('onedark').setup()
     end,
   }
+
+
+  -- Terminal
+  use({
+    "akinsho/nvim-toggleterm.lua",
+    keys = "<M-`>",
+    config = function()
+      require("configs.terminal")
+    end,
+  })
+
+  -- make terminal a little more pretty
+  use({
+    "norcalli/nvim-terminal.lua",
+    ft = "terminal",
+    config = function()
+      require("terminal").setup()
+    end,
+  })
+
+
+  use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
 
   -- use {
   --   'monsonjeremy/onedark.nvim',

@@ -1,21 +1,3 @@
-function! CompilePacker()
-  echo "Removing packer_compiled.vim"
-  exec "!rm ~/.config/nvim/plugin/packer_compiled.lua"
-  echo "Compiling packer..."
-  exec ":PackerCompile"
-  echo "Compiling done!"
-endfunction
-
-augroup plugins
-  au!
-  autocmd BufWritePost *.lua :call CompilePacker()
-augroup end
-
-" disable status line for nvimtree
-au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
-
-au FileType TelescopePrompt let b:delimitMate_autoclose = 0
-
 function! ToggleQuickFix()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
         copen
@@ -25,7 +7,6 @@ function! ToggleQuickFix()
 endfunction
 
 nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
-
 
 
 "=================== general useful stuff
@@ -52,22 +33,9 @@ nnoremap <localleader>cw :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
 " Search & Replace {{{
 " ----------------
 
-" Use backspace key for matching parens
-nmap <BS> %
-xmap <BS> %
-
 " Repeat latest f, t, F or T
 nnoremap \ ;
 
-" Select last paste
-nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
-
-" Quick substitute within selected area
-xnoremap sg :s/\v/g<Left><Left>
-xnoremap sc :s/\v/gc<Left><Left><Left>
-
-" C-r: Easier search and replace visual/select mode
-xnoremap <C-r> :<C-u>%s/\V<C-R>=<SID>get_selection()<CR>//gc<Left><Left><Left>
 
 " Returns visually selected text
 function! s:get_selection() abort "{{{
@@ -84,11 +52,6 @@ endfunction "}}}
 " Command & History {{{
 " -----------------
 
-" Start an external command with a single bang
-nnoremap ! :!
-
-" Put vim command output into buffer
-nnoremap g! :<C-u>put=execute('')<Left><Left>
 
 " Allow misspellings
 cnoreabbrev qw wq

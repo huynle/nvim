@@ -136,27 +136,53 @@ local on_attach = function(client, bufnr)
 
 	-- Mappings.
 	buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
--- 	buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
 	buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+	buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 -- 	buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 -- 	buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	-- buf_set_keymap('n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>', opts)
--- 	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+	buf_set_keymap('n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>', opts)
+	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 -- 	buf_set_keymap('n', ',s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	-- buf_set_keymap('n', ',s', '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>', opts)
+	buf_set_keymap('n', ',s', '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>', opts)
 	buf_set_keymap('n', ',wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 	buf_set_keymap('n', ',wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
 	buf_set_keymap('n', ',wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 	-- buf_set_keymap('n', ',rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
--- 	buf_set_keymap('n', ',rn', '<cmd>lua require("lspsaga.rename").rename()<CR>', opts)
--- 	buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
--- 	buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
--- 	buf_set_keymap('n', '<localleader>f', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', opts)
+	buf_set_keymap('n', ',rn', '<cmd>lua require("lspsaga.rename").rename()<CR>', opts)
+	buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+	buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+	buf_set_keymap('n', '<localleader>f', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', opts)
 	-- buf_set_keymap('n', '<localleader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
--- 	buf_set_keymap('n', '<localleader>a', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
--- 	buf_set_keymap('v', '<localleader>a', ':<C-u>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
--- 	buf_set_keymap('n', '<localleader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+	buf_set_keymap('n', '<localleader>a', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
+	buf_set_keymap('v', '<localleader>a', ':<C-u>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
+	buf_set_keymap('n', '<localleader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<localleader>s', "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
 	-- buf_set_keymap('n', '<localleader>q', ':lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  --
+  
+  
+  ---- Lsp mapp work when insertenter and lsp start
+  --["n|<localleader>li"]         = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
+  --["n|<localleader>ll"]         = map_cr("LspLog"):with_noremap():with_silent():with_nowait(),
+  --["n|<localleader>lr"]         = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
+  --["n|<C-f>"]              = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"):with_silent():with_noremap():with_nowait(),
+  --["n|<C-b>"]              = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"):with_silent():with_noremap():with_nowait(),
+  --["n|]e"]                 = map_cr('Lspsaga diagnostic_jump_next'):with_noremap():with_silent(),
+  --["n|[e"]                 = map_cr('Lspsaga diagnostic_jump_prev'):with_noremap():with_silent(),
+  --["n|K"]                  = map_cr("Lspsaga hover_doc"):with_noremap():with_silent(),
+  --["n|<localleader>a"]                 = map_cr("Lspsaga code_action"):with_noremap():with_silent(),
+  --["v|<localleader>a"]                 = map_cu("Lspsaga range_code_action"):with_noremap():with_silent(),
+  --["n|gd"]                 = map_cr('Lspsaga preview_definition'):with_noremap():with_silent(),
+  ---- ["n|gD"]                 = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
+  ---- ["n|,s"]                 = map_cr('Lspsaga signature_help'):with_noremap():with_silent(),
+  ---- ["n|rn"]                 = map_cr('Lspsaga rename'):with_noremap():with_silent(),
+  --["n|<localleader>f"]                 = map_cr('Lspsaga lsp_finder'):with_noremap():with_silent(),
+  ---- ["n|gt"]                 = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
+  ---- ["n|<localleader>s"]          = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
+  ---- ["n|<localleader>e"]          = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
+  --["n|<localleader>ct"]         = map_args("Template"),
+  ----
 
 	-- Set some keybinds conditional on server capabilities
 	if client.resolved_capabilities.document_formatting then

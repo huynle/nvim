@@ -84,8 +84,6 @@ vim.opt.smarttab       = true;
 vim.opt.shiftround     = true;
 vim.opt.timeout        = true;
 vim.opt.ttimeout       = true;
-vim.opt.timeoutlen     = 300;
-vim.opt.ttimeoutlen    = 50;
 vim.opt.updatetime     = 100;
 vim.opt.redrawtime     = 1500;
 vim.opt.ignorecase     = true;
@@ -201,32 +199,6 @@ local bw_local  = {
   concealcursor  = "niv";
 }
 
-
-
-
-
-  bind_option(bw_local)
-
-
--- 
--- local load_core =function()
---   local pack = require('core.pack')
---   createdir()
---   disable_distribution_plugins()
---   leader_map()
--- 
---   pack.ensure_plugins()
---   require('core.options')
---   require('core.mapping')
---   require('keymap')
---   require('core.event')
---   pack.load_compile()
--- end
-
-
--- pack.load_compile()
--- 
--- local base16 = require('base16')
--- base16(base16.themes['onedark'], true)
+bind_option(bw_local)
 
 

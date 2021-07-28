@@ -14,7 +14,6 @@ end
 
 reloader()
 
-
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local action_mt = require "telescope.actions.mt"
@@ -200,7 +199,7 @@ function M.edit_neovim()
   local opts_with_preview, opts_without_preview
 
   opts_with_preview = {
-    prompt_title = "~ Nvim configs ~",
+    prompt_title = "~ Nvim Configs ~",
     shorten_path = false,
     cwd = "~/.config/nvim",
 

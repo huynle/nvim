@@ -15,9 +15,6 @@ end
 
 function autocmd.load_autocmds()
   local definitions = {
-    packer = {
-      -- {"BufWritePost","*.lua","lua require('pack').auto_compile()"};
-    },
     bufs = {
       -- Reload vim config automatically
       {"BufWritePost",[[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]};
@@ -31,6 +28,7 @@ function autocmd.load_autocmds()
       {"BufWritePre","*.bak","setlocal noundofile"};
       {"BufWritePre","*.tsx","lua vim.api.nvim_command('Format')"};
       {"BufWritePre","*.go","lua require('internal.golines').golines_format()"};
+      {"BufReadPost", "*", [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]]}
     };
 
     wins = {
@@ -45,20 +43,27 @@ function autocmd.load_autocmds()
       {"FocusGained", "* checktime"};
     };
 
+    -- ftdetect
     ft = {
       {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"};
       {"BufNewFile,BufRead","*.toml"," setf toml"};
       {"BufNewFile,BufRead",".localrc"," setf sh"};
+      {"BufRead,BufNewFile", "*.pp", " setf puppet"};
+      {"FileType", "markdown", "setlocal spell"};
+      -- windows to close with "q"
+      {"FileType","help,startuptime,qf,lspinfo", "nnoremap <buffer><silent> q :close<CR>"};
+      {"FileType", "man", "nnoremap <buffer><silent> q :quit<CR>"};
     };
 
     yank = {
---       {"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]};
---
---       Something is going on with this ODCUsnk? something is going on with
---       tmux and screwing up 'x' 'd' keybinds
---       {"TextYankPost", "*", [[OSCYank]]};
+      {"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=50})]]};
     };
-  }
+
+    nvimtree = {
+      -- disable status line for nvimtree
+      {"BufEnter,BufWinEnter,WinEnter,CmdwinEnter", "*", [[if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif]]};
+    };
+  };
 
   autocmd.nvim_create_augroups(definitions)
 end

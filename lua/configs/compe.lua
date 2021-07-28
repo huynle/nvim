@@ -25,10 +25,10 @@ local check_back_space = function()
 	end
 end
 
-local npairs = require('nvim-autopairs')
 
 _G.confirm_completion = function()
 	-- compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
+  local npairs = require('nvim-autopairs')
 	if vim.fn.pumvisible() == 0 then
 		return npairs.autopairs_cr()
 		-- return t '<Plug>delimitMateCR'

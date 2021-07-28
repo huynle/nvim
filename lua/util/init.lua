@@ -1,3 +1,12 @@
+if pcall(require, "plenary") then
+  RELOAD = require("plenary.reload").reload_module
+  R = function(name)
+    RELOAD(name)
+    return require(name)
+  end
+end
+
+
 -- selene: allow(global_usage)
 _G.dump = function(...)
   print(vim.inspect(...))
@@ -19,6 +28,12 @@ _G.profile = function(cmd, times)
     end
   end
   print(((vim.loop.hrtime() - start) / 1000000 / times) .. "ms")
+end
+
+
+_G.P = function(v)
+  print(vim.inspect(v))
+  return v
 end
 
 local M = {}
@@ -78,6 +93,9 @@ end
 function M.smap(key, cmd, opts)
   return map("s", key, cmd, opts)
 end
+function M.cmap(key, cmd, opts)
+  return map("c", key, cmd, opts)
+end
 
 function M.nnoremap(key, cmd, opts)
   return map("n", key, cmd, opts, { noremap = true })
@@ -99,6 +117,9 @@ function M.onoremap(key, cmd, opts)
 end
 function M.snoremap(key, cmd, opts)
   return map("s", key, cmd, opts, { noremap = true })
+end
+function M.cnoremap(key, cmd, opts)
+  return map("c", key, cmd, opts, { noremap = true })
 end
 
 function M.t(str)
@@ -179,6 +200,30 @@ function M.lsp_config()
     ret[client.name] = { root_dir = client.config.root_dir, settings = client.config.settings }
   end
   dump(ret)
+end
+
+-- blankline config
+M.blankline = function()
+    vim.g.indentLine_enabled = 1
+    vim.g.indent_blankline_char = "▏"
+
+    vim.g.indent_blankline_filetype_exclude = {"help", "terminal", "dashboard"}
+    vim.g.indent_blankline_buftype_exclude = {"terminal"}
+
+    vim.g.indent_blankline_show_trailing_blankline_indent = false
+    vim.g.indent_blankline_show_first_indent_level = false
+end
+
+-- hide line numbers , statusline in specific buffers!
+M.hideStuff = function()
+  vim.api.nvim_exec(
+  [[
+  au BufEnter term://* setlocal nonumber
+  au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
+  au BufEnter term://* set laststatus=0 
+  ]],
+  false
+  )
 end
 
 return M
