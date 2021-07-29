@@ -541,15 +541,6 @@ local function plugins(use)
       require('configs.diffview')
     end,
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
-    keys = {
-      "<leader>do",
-      "<leader>dm",
-      "<leader>dd",
-      "<leader>dc",
-      "<localleader>dm",
-      "<localleader>dr",
-      "<localleader>dd",
-    }
   }
 
   use {
@@ -563,10 +554,10 @@ local function plugins(use)
       require('telescope').load_extension('dap')
       require 'configs.dap'
     end,
-    keys = {
-      {'n', '<localleader>db'},
-      {'n', '<localleader>dB'}
-    }
+    -- keys = {
+    --   {'n', '<localleader>db'},
+    --   {'n', '<localleader>dB'}
+    -- }
   }
 
 

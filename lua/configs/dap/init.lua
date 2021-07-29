@@ -5,16 +5,16 @@ vim.g.dap_virtual_text = true
 -- request variable values for all frames (experimental)
 -- vim.g.dap_virtual_text = 'all frames'
 
-vim.cmd([[
-nnoremap <silent> <localleader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <localleader>dk :lua require'dap'.step_over()<CR>
-nnoremap <silent> <localleader>d; :lua require'dap'.step_into()<CR>
-nnoremap <silent> <localleader>dj :lua require'dap'.step_out()<CR>
-nnoremap <silent> <localleader>db :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <localleader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <localleader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
-]])
+-- vim.cmd([[
+-- nnoremap <silent> <localleader>dc :lua require'dap'.continue()<CR>
+-- nnoremap <silent> <localleader>dk :lua require'dap'.step_over()<CR>
+-- nnoremap <silent> <localleader>d; :lua require'dap'.step_into()<CR>
+-- nnoremap <silent> <localleader>dj :lua require'dap'.step_out()<CR>
+-- nnoremap <silent> <localleader>db :lua require'dap'.toggle_breakpoint()<CR>
+-- nnoremap <silent> <localleader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+-- nnoremap <silent> <localleader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+-- nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
+-- ]])
 
 -- Configs
 dap.adapters.node2 = {

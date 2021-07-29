@@ -3,8 +3,8 @@
 local wk = require("which-key")
 local util = require("util")
 
-vim.opt.timeoutlen = 500
-vim.opt.ttimeoutlen = 50;
+vim.opt.timeoutlen = 100
+vim.opt.ttimeoutlen = 50
 
 -- run before calling setup
 local presets = require("which-key.plugins.presets")
@@ -230,6 +230,7 @@ local normal_opts = {
   nowait = false, -- use `nowait` when creating keymaps
 }
 
+
 local localleader = {
   l = {
     name = "+LSP",
@@ -246,12 +247,52 @@ local localleader = {
   c = {
     name = "+clear",
     w = {[[:<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>]], "Clear empty space"},
-  }
+  },
+  d = {
+    name = "+diff",
+    d = {
+      function()
+        local branch  = vim.fn.input("branch > ")
+        local filepath = vim.fn.expand("%")
+        local exec_cmd = "DiffviewOpen ".. branch .. " -- ".. filepath
+        P(exec_cmd)
+        vim.cmd(exec_cmd)
+      end, "Against <branch>"
+    },
+    r = {
+      function()
+        local filepath = vim.fn.expand("%")
+        local exec_cmd = "DiffviewOpen HEAD~1 -- ".. filepath
+        P(exec_cmd)
+        vim.cmd(exec_cmd)
+      end, "Against most recent"
+    },
+  },
+  a = {"<cmd>NvimTreeFindFile<CR>", 'NvimTree File'},
+  e = {"<cmd>NvimTreeToggle<CR>", 'NvimTree Toggle'},
 }
 
+
+
+
+-- #############
+
+
 local leader = {
-  a = {"<cmd>:NvimTreeFindFile<CR>", 'NvimTree File'},
-  e = {"<cmd>:NvimTreeToggle<CR>", 'NvimTree Toggle'},
+  d = {
+    name = "+Diff",
+    d = {
+      function()
+        local branch  = vim.fn.input("branch > ")
+        vim.cmd("DiffviewOpen ".. branch)
+      end, "DiffOpen <branch>"
+    },
+    o={"<cmd>DiffviewOpen<CR>", "DiffOpen"},
+    m={"<cmd>DiffviewOpen master<CR>", "DiffOpen master"},
+    r={"<cmd>DiffviewOpen HEAD~1<CR>", "DiffOpen HEAD~1"},
+    c={"<cmd>DiffviewClose<CR>", "DiffClose"},
+  },
+
   p = {
     name = "+Packer",
     p = { "<cmd>PackerSync<cr>", "Sync" },
@@ -259,8 +300,11 @@ local leader = {
     i = { "<cmd>PackerInstall<cr>", "Install" },
     c = { "<cmd>PackerCompile<cr>", "Compile" },
   },
+
   S = {"<cmd>Scratch<CR>", "Scratch Pad"},
+
   R = {"<cmd>:source $MYVIMRC<CR>"},
+
   t = {
     name = "+toggle",
     o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
@@ -276,6 +320,7 @@ local leader = {
       end,
       "Spelling",
     },
+    t = {"<cmd>TodoTelescope<CR>", "Telescope Todo"},
     w = {
       function()
         util.toggle("wrap")
@@ -290,6 +335,7 @@ local leader = {
       "Line Numbers",
     },
   },
+
   g = {
     name = "+git",
     s = { "<cmd>Neogit<CR>", "NeoGit" },
@@ -416,6 +462,37 @@ local leader = {
 for i = 0, 10 do
   leader[tostring(i)] = "which_key_ignore"
 end
+
+
+-- #############
+util.vnoremap("<leader>*",
+function()
+  R('configs.telescope')['find_word']()
+end
+)
+
+-- FIXME: visual mode is not working
+-- local visual_opts = {
+--   mode = "v", -- VISUAL mode
+--   prefix = "",
+--   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+--   silent = true, -- use `silent` when creating keymaps
+--   noremap = true, -- use `noremap` when creating keymaps
+--   nowait = false, -- use `nowait` when creating keymaps
+-- }
+
+-- local v_leader = {
+--   ["*"] = {
+--     function()
+--       R('configs.telescope')['find_word']()
+--     end,
+--     "Find Word"
+--   },
+-- }
+
+-- wk.register(v_leader, { prefix = "<leader>" }, visual_opts)
+
+
 
 wk.register(leader, { prefix = "<leader>" }, normal_opts)
 wk.register(localleader, { prefix = "<localleader>" }, normal_opts)

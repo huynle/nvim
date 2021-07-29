@@ -30,7 +30,6 @@ endif
 let &cpoptions = s:save_cpo
 finish
 
-" TODO:
 " -------------------------------------------------------------------------
 
 " Is this redundant?
