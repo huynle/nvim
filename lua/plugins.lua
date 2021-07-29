@@ -166,7 +166,7 @@ local function plugins(use)
       -- util.nnoremap("<leader>xt", "<cmd>Trouble todo<CR>")
       require("trouble").setup({ auto_open = false })
     end
-  } 
+  }
 
 
   -- Diagnostics
@@ -214,7 +214,7 @@ local function plugins(use)
 
       -- using fzf lua
       -- {'nvim-telescope/telescope-fzy-native.nvim'},
-      
+
       -- using system FZF?
       {'nvim-telescope/telescope-fzf-writer.nvim'},
       {'nvim-telescope/telescope-dap.nvim'},
@@ -262,6 +262,7 @@ local function plugins(use)
   -- }
 
   use {
+    disable = false,
     'ggandor/lightspeed.nvim',
     config = function ()
       require('lightspeed').setup {
@@ -408,7 +409,7 @@ local function plugins(use)
       ]]
     end
   }
-  
+
   use {
     'tpope/vim-surround',
     keys = {
