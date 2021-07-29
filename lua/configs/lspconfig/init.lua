@@ -1,6 +1,4 @@
-local api = vim.api
 local lspconfig = require 'lspconfig'
-local format = require('configs.lspconfig.format')
 
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
@@ -41,12 +39,12 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     update_in_insert = false,
 })
 
-local enhance_attach = function(client,bufnr)
-  if client.resolved_capabilities.document_formatting then
-    format.lsp_before_save()
-  end
-  api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-end
+-- local enhance_attach = function(client,bufnr)
+--   if client.resolved_capabilities.document_formatting then
+--     format.lsp_before_save()
+--   end
+--   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+-- end
 
 -- lspconfig.gopls.setup {
 --   cmd = {"gopls","--remote=auto"},
@@ -160,7 +158,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<localleader>s', "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
 	-- buf_set_keymap('n', '<localleader>q', ':lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   --
-  
+
   
   ---- Lsp mapp work when insertenter and lsp start
   --["n|<localleader>li"]         = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),

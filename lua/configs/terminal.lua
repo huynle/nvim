@@ -1,4 +1,5 @@
 local util = require "util"
+local Terminal  = require('toggleterm.terminal').Terminal
 toggleterm = require 'toggleterm'
 
 toggleterm.setup{
@@ -23,6 +24,31 @@ toggleterm.setup{
   end,
 }
 
+-- local lazygit = Terminal:new({ cmd = "top", count = 1 })
+local lazygit = Terminal:new({
+  -- cmd = "top",
+  count = 2,
+  dir = "git_dir",
+  direction = "float",
+  float_opts = {
+    border = "double",
+  },
+  -- -- function to run on opening the terminal
+  -- on_open = function(term)
+  --   vim.cmd("startinsert!")
+  --   vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+  -- end,
+  -- -- function to run on closing the terminal
+  -- on_close = function(term)
+  --   vim.cmd("Closing terminal")
+  -- end,
+})
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+
 -- Hide number column for
 vim.cmd [[au TermOpen * setlocal nonumber norelativenumber]]
 
@@ -30,10 +56,9 @@ vim.cmd [[au TermOpen * setlocal nonumber norelativenumber]]
 util.tnoremap('<esc><esc>', '<C-\\><C-N>')
 util.tnoremap('<C-o><C-i>', '<C-\\><C-n>')
 
-util.nnoremap([[<M-1>]], "<cmd>2ToggleTerm direction='horizontal'<CR>")
-util.nnoremap([[<M-2>]], "<cmd>3ToggleTerm direction='horizontal'<CR>")
-util.nnoremap([[<M-3>]], "<cmd>4ToggleTerm direction='horizontal'<CR>")
-
-util.nnoremap([[<M-1>v]], "<cmd>2ToggleTerm direction='vertical'<CR>")
-util.nnoremap([[<leader>3v]], "<cmd>3ToggleTerm direction='vertical'<CR>")
-util.nnoremap([[<leader>4v]], "<cmd>4ToggleTerm direction='vertical'<CR>")
+-- NOTE: can be toggled with M-` also
+util.nnoremap([[<M-w>]], "<cmd>lua _lazygit_toggle()<CR>")
+-- util.nnoremap([[<M-1>]], "<cmd>3ToggleTerm direction='horizontal'<CR>")
+-- util.nnoremap([[<M-2>]], "<cmd>4ToggleTerm direction='horizontal'<CR>")
+-- util.nnoremap([[<leader>4v]], "<cmd>4ToggleTerm direction='vertical'<CR>")
+--

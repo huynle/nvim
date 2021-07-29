@@ -1,7 +1,3 @@
-if not pcall(require, "telescope") then
-  return
-end
-
 local should_reload = true
 local reloader = function()
   if should_reload then
@@ -175,7 +171,6 @@ require'telescope'.setup {
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('fzf_writer')
 -- require('telescope').load_extension('fzy_native')
-require('telescope').load_extension("git_worktree")
 
 
 
@@ -288,10 +283,6 @@ function M.live_grep()
     prompt_title = "Fzf-writer - Live Grep",
     fzf_separator = "|",
   }
-end
-
-function M.git_worktrees()
-  require('telescope').extensions.git_worktree.git_worktrees()
 end
 
 function M.grep_prompt_regex_filetype_add_args()

@@ -11,24 +11,6 @@ nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
 
 "=================== general useful stuff
 
-" Smart wrap toggle (breakindent and colorcolumn toggle as-well)
-nmap <localleader>tw :execute('setlocal wrap! breakindent! colorcolumn=' .
-	\ (&colorcolumn == '' ? &textwidth : ''))<CR>
-
-" Change current word in a repeatable manner
-nnoremap <localleader>cn *``cgn
-nnoremap <localleader>cN *``cgN
-
-" Change selected word in a repeatable manner
-vnoremap <expr> <localleader>cn "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
-vnoremap <expr> <localleader>cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
-
-" Duplicate paragraph
-nnoremap <localleader>cp yap<S-}>p
-
-" Remove spaces at the end of lines
-nnoremap <localleader>cw :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
-
 " }}}
 " Search & Replace {{{
 " ----------------

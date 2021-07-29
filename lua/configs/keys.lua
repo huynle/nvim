@@ -197,13 +197,50 @@ local leader = {
     i = { "<cmd>PackerInstall<cr>", "Install" },
     c = { "<cmd>PackerCompile<cr>", "Compile" },
   },
-  S = {"<cmd>Scratch<CR>"},
+  S = {"<cmd>Scratch<CR>", "Scratch Pad"},
+  R = {"<cmd>:source $MYVIMRC<CR>"},
   t = {
     name = "+toggle",
-    s = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
+    o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
     d = {'<cmd>DBUIToggle<CR>', "DadbodUI"},
-    m = {"<cmd>MarkdownPreview<CR>", 'MarkdownPreview'}
+    m = {"<cmd>MarkdownPreview<CR>", 'MarkdownPreview'},
+    f = {
+      require("configs.lspconfig.formatting").toggle,
+      "Format on Save",
+    },
+    s = {
+      function()
+        util.toggle("spell")
+      end,
+      "Spelling",
+    },
+    w = {
+      function()
+        util.toggle("wrap")
+      end,
+      "Word Wrap",
+    },
+    n = {
+      function()
+        util.toggle("relativenumber", true)
+        util.toggle("number")
+      end,
+      "Line Numbers",
+    },
   },
+  x = {
+    name = "+errors",
+    x = { "<cmd>TroubleToggle<cr>", "Trouble" },
+    w = { "<cmd>TroubleWorkspaceToggle<cr>", "Workspace Trouble" },
+    d = { "<cmd>TroubleDocumentToggle<cr>", "Document Trouble" },
+    t = { "<cmd>TodoTrouble<cr>", "Todo Trouble" },
+    T = { "<cmd>TodoTelescope<cr>", "Todo Telescope" },
+    l = { "<cmd>lopen<cr>", "Open Location List" },
+    q = { "<cmd>copen<cr>", "Open Quickfix List" },
+  }
+
+--   t = {
+--     name = "toggle",
 }
 
 -- local leader = {
@@ -359,16 +396,6 @@ local leader = {
 --     s = { [[<cmd>lua require("persistence").load()<cr>]], "Restore Session" },
 --     l = { [[<cmd>lua require("persistence").load({last=true})<cr>]], "Restore Last Session" },
 --     d = { [[<cmd>lua require("persistence").stop()<cr>]], "Stop Current Session" },
---   },
---   x = {
---     name = "+errors",
---     x = { "<cmd>TroubleToggle<cr>", "Trouble" },
---     w = { "<cmd>TroubleWorkspaceToggle<cr>", "Workspace Trouble" },
---     d = { "<cmd>TroubleDocumentToggle<cr>", "Document Trouble" },
---     t = { "<cmd>TodoTrouble<cr>", "Todo Trouble" },
---     T = { "<cmd>TodoTelescope<cr>", "Todo Telescope" },
---     l = { "<cmd>lopen<cr>", "Open Location List" },
---     q = { "<cmd>copen<cr>", "Open Quickfix List" },
 --   },
 --   Z = { [[<cmd>lua require("zen-mode").reset()<cr>]], "Zen Mode" },
 --   z = { [[<cmd>ZenMode<cr>]], "Zen Mode" },

@@ -2,6 +2,7 @@ local function clock()
   return " " .. os.date("%H:%M")
 end
 
+-- show lsp progress in statusline
 local function lsp_progress()
   local messages = vim.lsp.util.get_progress_messages()
   if #messages == 0 then
@@ -34,7 +35,7 @@ local config = {
     lualine_c = { { "diagnostics", sources = { "nvim_lsp" } }, "filename" },
     lualine_x = { "filetype", lsp_progress},
     lualine_y = { "progress" },
-    -- lualine_z = { clock },
+    -- lualine_z = {cock },
   },
   inactive_sections = {
     lualine_a = {},

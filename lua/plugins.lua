@@ -1,6 +1,7 @@
 local packer = require('util.packer')
 local util = require("util")
 
+
 local has = function(x)
   return vim.fn.has(x) == 1
 end
@@ -41,7 +42,10 @@ local function plugins(use)
 
   use {"nvim-lua/plenary.nvim"}
 
-  use {"wbthomason/packer.nvim"}
+  use {
+    "wbthomason/packer.nvim",
+    cmd = {"PackerSync", "PackerStatus", "PackerInstall", "PackerCompile"}
+  }
 
 
 -- here is all the mapping
@@ -145,9 +149,11 @@ local function plugins(use)
 
   use {
     'mtth/scratch.vim',
+    cmd = "Scratch",
+    -- keys = "<leader>S",
     config = function()
       vim.g.scratch_persistence_file = 1
-    end
+    end,
   }
 
 
@@ -155,10 +161,9 @@ local function plugins(use)
     'folke/trouble.nvim',
     cmd = {'Trouble', 'TroubleToggle'},
     -- event = "BufReadPre",
-    keys = {"<leader>xx","<leader>xt"},
     config = function()
-      util.nnoremap("<leader>xx", "<cmd>TroubleToggle<CR>")
-      util.nnoremap("<leader>xt", "<cmd>Trouble todo<CR>")
+      -- util.nnoremap("<leader>xx", "<cmd>TroubleToggle<CR>")
+      -- util.nnoremap("<leader>xt", "<cmd>Trouble todo<CR>")
       require("trouble").setup({ auto_open = false })
     end
   } 
@@ -388,7 +393,6 @@ local function plugins(use)
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = "BufReadPost",
     requires = "nvim-lua/plenary.nvim",
-    keys = {"<leader>tt"},
     config = function()
       require('configs.todo-comments')
     end
@@ -417,14 +421,18 @@ local function plugins(use)
   }
 
   use {
-    'tpope/vim-repeat'
+    'tpope/vim-repeat',
+    keys = "."
   }
 
 
   use {
     "b3nj5m1n/kommentary",
     opt = true,
-    keys = { "<leader>v"},
+    keys = {
+      {"v", "<leader>v"},
+      {"n", "<leader>v"},
+    },
     config = function()
       require("configs.comments")
     end,
@@ -550,16 +558,6 @@ local function plugins(use)
       "<localleader>dd",
     }
   }
-
-  use {
-    'ThePrimeagen/git-worktree.nvim',
-    requires = {
-      'nvim-telescope/telescope.nvim'
-    },
-  }
-
-
-
 
   use {
     'mfussenegger/nvim-dap',
@@ -708,13 +706,9 @@ local function plugins(use)
     end,
     keys = {
       {'n', [[<M-`>]]},
-      {'i', [[<M-`]]},
-      {'n', [[<leader>2s]]},
-      {'n', [[<leader>3s]]},
-      {'n', [[<leader>4s]]},
-      {'n', [[<leader>2v]]},
-      {'n', [[<leader>3v]]},
-      {'n', [[<leader>4v]]},
+      {'i', [[<M-`>]]},
+      {'n', [[<M-w>]]},
+      {'i', [[<M-w>]]},
     },
     cmd = {'ToggleTerm', 'ToggleTermOpenAll', 'ToggleTermCloseAll'}
   })
