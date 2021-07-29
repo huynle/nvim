@@ -166,8 +166,8 @@ util.cnoremap("<C-h>", '<BS>')
 util.cnoremap("<C-t>", [[<C-R>=expand("%:p:h") . "/" <CR>]])
 
 -- -- Yank from cursor position to end-of-line
--- util.nnoremap("<localleader>Y", ':let @"=expand("%:p")<CR>:OSCYankReg "<CR>')
--- util.nnoremap("<localleader>YY", ':let @"=expand("%:p:h")<CR>:OSCYankReg "<CR>')
+util.nnoremap("<localleader>Y", ':let @"=expand("%:p")<CR>:OSCYankReg "<CR>')
+util.nnoremap("<localleader>YY", ':let @"=expand("%:p:h")<CR>:OSCYankReg "<CR>')
 util.vnoremap('<localleader>y', ':OSCYank<CR>')
 
 -- Tabs
@@ -421,8 +421,6 @@ local leader = {
     o = { "<cmd>:Telescope vim_options<cr>", "Options" },
     a = { "<cmd>:Telescope autocommands<cr>", "Auto Commands" },
   },
-
-
 
   --
   ["c"] = {
