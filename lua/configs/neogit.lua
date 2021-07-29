@@ -1,4 +1,3 @@
-local util = require 'util'
 local neogit = require('neogit')
 
 neogit.setup {
@@ -16,7 +15,3 @@ neogit.setup {
     }
   }
 }
-
-
-util.nnoremap("<leader>gs", ":Neogit<CR>")
-util.nnoremap("<leader>gc", ":Neogit commit<CR>")

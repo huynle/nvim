@@ -26,9 +26,9 @@ local map_tele = function(mode, key, f, options, buffer)
   end
 end
 
--- Dotfiles
-map_tele("n", "<Leader>en", "edit_neovim")
-map_tele("n", "<Leader>ed", "edit_dotfiles")
+-- -- Dotfiles
+-- map_tele("n", "<Leader>en", "edit_neovim")
+-- map_tele("n", "<Leader>ed", "edit_dotfiles")
 
 -- Search
 -- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG
@@ -46,30 +46,30 @@ map_tele("n", "<Leader>ed", "edit_dotfiles")
 
 -- Files
 -- map_tele("n", "<space>ft", "git_files")
-map_tele("n", "<Leader>gp", "grep_prompt")
+-- map_tele("n", "<Leader>gp", "grep_prompt")
 map_tele("v", "<Leader>gg", "grep_prompt_visual")
-map_tele("n", "<Leader>gq", "grep_quickfix")
-map_tele("n", "<Leader>gg", "live_grep")
-map_tele("n", "<Leader>G", "grep_prompt_regex_filetype")
-map_tele("n", "<Leader>GG", "grep_prompt_regex_filetype_add_args")
+-- map_tele("n", "<Leader>gq", "grep_quickfix")
+-- map_tele("n", "<Leader>gg", "live_grep")
+-- map_tele("n", "<Leader>G", "grep_prompt_regex_filetype")
+-- map_tele("n", "<Leader>GG", "grep_prompt_regex_filetype_add_args")
 map_tele("v", "<Leader>G", "grep_prompt_regex_filetype")
 
-map_tele("n", "**", "find_word")
-map_tele("n", "<Leader>fd", "find_files")
-map_tele("n", "<Leader><leader>", "find_files")
-map_tele("n", "<Leader>ft", "search_only_certain_files")
+-- map_tele("n", "**", "find_word")
+-- map_tele("n", "<Leader>fd", "find_files")
+-- map_tele("n", "<Leader><leader>", "find_files")
+-- map_tele("n", "<Leader>ft", "search_only_certain_files")
 -- map_tele("n", "<space>fo", "oldfiles")
 -- map_tele("n", "<space>fv", "find_nvim_source")
-map_tele("n", "<leader>fe", "file_browser")
-map_tele("n", "<leader>fr", 'registers')
+-- map_tele("n", "<leader>fe", "file_browser")
+-- map_tele("n", "<leader>fr", 'registers')
 
 -- map_tele("n", "<Leader>.", "symbol?")
 
-map_tele("n", "<Leader>hh",'help_tags')
-map_tele("n", "<Leader>hk",'keymaps')
-map_tele("n", "<Leader>:",'commands')
+-- map_tele("n", "<Leader>hh",'help_tags')
+-- map_tele("n", "<Leader>hk",'keymaps')
+-- map_tele("n", "<Leader>:",'commands')
+--
 map_tele("n", "<LocalLeader>.",'lsp_document_symbols')
-
 map_tele("n", "<localleader>fl", 'loclist')
 map_tele("n", "<localleader>g", 'curbuf')
 map_tele("n", "<localleader>fi", "tbs_infrastructure_search")
@@ -77,22 +77,5 @@ map_tele("n", "<localleader>gi", "tbs_infrastructure_live_grep")
 map_tele("v", "<localleader>gi", "tbs_infrastructure_grep_string")
 map_tele("n", "<localleader>gip", "tbs_infrastructure_live_grep")
 
-
--- Sourcegraph
--- map_tele("n", "<space>sf", "sourcegraph_find")
--- map_tele("n", "<space>saf", "sourcegraph_about_find")
--- map_tele("n", "<space>sag", "sourcegraph_about_grep")
--- map_tele("n", '<space>fz', 'sourcegraph_tips')
-
--- Nvim
-map_tele("n", "<leader>fb", "buffers")
--- map_tele("n", "<space>fp", "my_plugins")
--- map_tele("n", "<space>fa", "installed_plugins")
--- map_tele("n", "<space>fi", "search_all_files")
--- map_tele("n", "<space>fh", "help_tags")
--- map_tele("n", "<space>vo", "vim_options")
--- 
--- Telescope Meta
-map_tele("n", "<Leader>B", "builtin")
 
 return map_tele

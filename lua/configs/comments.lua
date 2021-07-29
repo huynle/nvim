@@ -4,5 +4,5 @@ require("kommentary.config").configure_language("default", { prefer_single_line_
 
 vim.g.kommentary_create_default_mappings = false
 
-util.nmap("<leader>v", "<Plug>kommentary_line_default")
-util.vmap("<leader>v", "<Plug>kommentary_visual_default")
+util.nnomap("<leader>v", "<Plug>kommentary_line_default")
+util.vnomap("<leader>v", "<Plug>kommentary_visual_default")

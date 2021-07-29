@@ -52,9 +52,11 @@ end
 -- Hide number column for
 vim.cmd [[au TermOpen * setlocal nonumber norelativenumber]]
 
+-- much better to exit, since you could be in a nvim terminal inside the
 -- Esc twice to get to normal mode
 util.tnoremap('<esc><esc>', '<C-\\><C-N>')
 util.tnoremap('<C-o><C-i>', '<C-\\><C-n>')
+util.tnoremap('<A-j><A-k>', '<C-\\><C-n>')
 
 -- NOTE: can be toggled with M-` also
 util.nnoremap([[<M-w>]], "<cmd>lua _lazygit_toggle()<CR>")

@@ -398,17 +398,16 @@ local function plugins(use)
     end
   }
 
-
-  -- use {
-  --   -- TODO: Eventually move this out to its own lua config
-  --   'tpope/vim-commentary',
-  --   config = function()
-  --     vim.cmd[[
-  --     xmap <Leader>v  <Plug>Commentary
-  --     nmap <Leader>v  <Plug>CommentaryLine
-  --     ]]
-  --   end
-  -- }
+  use {
+    -- TODO: Eventually move this out to its own lua config
+    'tpope/vim-commentary',
+    config = function()
+      vim.cmd[[
+      xmap <Leader>v  <Plug>Commentary
+      nmap <Leader>v  <Plug>CommentaryLine
+      ]]
+    end
+  }
   
   use {
     'tpope/vim-surround',
@@ -420,23 +419,17 @@ local function plugins(use)
     }
   }
 
-  use {
-    'tpope/vim-repeat',
-    keys = "."
-  }
-
-
-  use {
-    "b3nj5m1n/kommentary",
-    opt = true,
-    keys = {
-      {"v", "<leader>v"},
-      {"n", "<leader>v"},
-    },
-    config = function()
-      require("configs.comments")
-    end,
-  }
+  -- use {
+  --   "b3nj5m1n/kommentary",
+  --   opt = true,
+  --   keys = {
+  --     {"v", "<leader>v"},
+  --     {"n", "<leader>v"},
+  --   },
+  --   config = function()
+  --     require("configs.comments")
+  --   end,
+  -- }
 
   -- Symbols
   use {
@@ -531,7 +524,6 @@ local function plugins(use)
   use {
     'TimUntersberger/neogit',
     cmd ='Neogit',
-    keys = {"<leader>gs", "<leader>gc"},
     requires = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim'
