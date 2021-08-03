@@ -63,6 +63,10 @@ function autocmd.load_autocmds()
       -- disable status line for nvimtree
       {"BufEnter,BufWinEnter,WinEnter,CmdwinEnter", "*", [[if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif]]};
     };
+
+    custom_ui = {
+      {"BufWinEnter,BufNew,BufNewFile,VimEnter", "*", [[if ! mapcheck('q', 'n') | nnoremap <silent><buffer> q :<C-u>quit<CR> | endif]]};
+    }
   };
 
   autocmd.nvim_create_augroups(definitions)

@@ -488,9 +488,9 @@ local function plugins(use)
           ptoggleitem = 'p',
           stoggledown = '<space>',
           stogglevm = '<space>',
-          filter = '<space>f',
-          ffilter = '<space>F',
-          sclear = '<space>c'
+          filter = 'f',
+          ffilter = 'F',
+          sclear = 'c'
         },
       }
     end
@@ -554,10 +554,6 @@ local function plugins(use)
       require('telescope').load_extension('dap')
       require 'configs.dap'
     end,
-    -- keys = {
-    --   {'n', '<localleader>db'},
-    --   {'n', '<localleader>dB'}
-    -- }
   }
 
 
@@ -671,6 +667,28 @@ local function plugins(use)
     cmd = {'Cheat', 'CheatPaste'}
   }
 
+
+  use {'andrewstuart/vim-kubernetes'}
+
+
+  use {
+    'vimwiki/vimwiki',
+    branch = 'dev',
+    setup = function()
+        -- let gwiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'typescript': 'typescript'}
+      vim.cmd("let g:vimwiki_list = [{'path': '~/docs/wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes':{'python': 'python', 'c++': 'cpp', 'typescript': 'typescript'}}]")
+      vim.cmd[[
+        let g:vimwiki_listsyms = '✗○◐●✓'
+      ]]
+    end,
+    keys = {
+      {'n', '<leader>ww'},
+      {'n', '<leader>wi'},
+      {'n', '<leader>w<leader>w'},
+      {'n', '<leader>ws'},
+    },
+    ft = {'vimwiki', 'markdown'},
+  }
 
   use {
     'navarasu/onedark.nvim',

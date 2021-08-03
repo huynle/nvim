@@ -124,7 +124,7 @@ util.onoremap("N", "'nN'[v:searchforward]", { expr = true })
 -- util.nnoremap("[Window]K","<C-w>K")
 -- util.nnoremap("[Window]L","<C-w>L")
 -- util.nnoremap("[Window]z","<C-w>z")
--- util.nnoremap("[Window]e","<cmd>enew<cr>")
+util.nnoremap("[Window]e","<cmd>enew<cr>")
 
 
 -- better indenting
@@ -133,7 +133,7 @@ util.vnoremap(">", ">gv")
 
 
 -- quit, record macrocs
-util.nnoremap("q", "<C-u>:quit<CR>")
+-- util.nnoremap("q", ":<C-u>quit<CR>", {nowait = true})
 util.nnoremap("Q", "q")
 util.nnoremap("qQ", "@q")
 
@@ -144,6 +144,7 @@ util.nmap("Y", "y$")
 
 -- Insert
 util.imap("jk", '<ESC>')
+util.inoremap('<C-c>', '<esc>')
 util.inoremap("<C-w>", '<C-[>diwa')
 util.inoremap("<C-h>", '<BS>')
 util.inoremap("<C-d>", '<Del>')
@@ -248,6 +249,16 @@ local localleader = {
     name = "+clear",
     w = {[[:<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>]], "Clear empty space"},
   },
+
+  t = {
+    name = "+toggle",
+    w = {
+      function()
+        util.toggle("wrap")
+      end,
+      "Word Wrap",
+    },
+  },
   d = {
     name = "+diff",
     d = {
@@ -284,7 +295,8 @@ local leader = {
     d = {
       function()
         local branch  = vim.fn.input("branch > ")
-        vim.cmd("DiffviewOpen ".. branch)
+        local path = vim.fn.input("path > ")
+        vim.cmd("DiffviewOpen ".. branch .. " -- " .. path)
       end, "DiffOpen <branch>"
     },
     o={"<cmd>DiffviewOpen<CR>", "DiffOpen"},
@@ -321,12 +333,6 @@ local leader = {
       "Spelling",
     },
     t = {"<cmd>TodoTelescope<CR>", "Telescope Todo"},
-    w = {
-      function()
-        util.toggle("wrap")
-      end,
-      "Word Wrap",
-    },
     n = {
       function()
         util.toggle("relativenumber", true)

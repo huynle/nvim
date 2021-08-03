@@ -54,3 +54,5 @@ function ClearQuickfixList()
 endfunction
 command! ClearQuickfixList call ClearQuickfixList()
 nmap <leader>qc :ClearQuickfixList<cr>
+
+

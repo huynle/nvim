@@ -15,10 +15,12 @@ require'diffview'.setup {
       ["<localleader>a"] = cb("focus_files"),        -- Bring focus to the files panel
       ["<localleader>e"] = cb("toggle_files"),       -- Toggle the files panel.
 			['q']         = '<cmd>DiffviewClose<CR>',
+			['<C-c>']         = '<cmd>DiffviewClose<CR>',
 
     },
     file_panel = {
 			['q']         = '<cmd>DiffviewClose<CR>',
+			['<C-c>']         = '<cmd>DiffviewClose<CR>',
       ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
       ["<down>"]        = cb("next_entry"),
       ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
