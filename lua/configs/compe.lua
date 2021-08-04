@@ -7,6 +7,7 @@ require'compe'.setup({
 		nvim_lua = true,
 		vsnip = {kind = '*'},  -- ﬌
 		orgmode = true,
+		-- norg = true,
 		-- tmux = true,
 		-- tmux = { all_panes = true }
 	},

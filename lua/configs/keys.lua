@@ -320,6 +320,8 @@ local leader = {
   t = {
     name = "+toggle",
     o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
+    q = {"<cmd>call ToggleList('Quickfix List', 'c')<CR>", "Quickfix"},
+    l = {"<cmd>call ToggleList('Location List', 'l')<CR>", "Location"},
     d = {'<cmd>DBUIToggle<CR>', "DadbodUI"},
     m = {"<cmd>MarkdownPreview<CR>", 'MarkdownPreview'},
     f = {
@@ -370,6 +372,12 @@ local leader = {
         R('configs.telescope')['grep_quickfix']()
       end,
       "Qf Grep"
+    },
+    w = {
+      function()
+        R('configs.telescope')['live_grep_wiki']()
+      end,
+      "Vimwiki Live Grep"
     },
     g = {
       function()

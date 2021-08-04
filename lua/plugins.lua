@@ -238,6 +238,9 @@ local function plugins(use)
     ft = 'puppet'
   }
 
+  use {
+    'towolf/vim-helm',
+  }
 
   -- disabling for now, conflict with 's' window movement key
   -- tried: 's', 'w' and 'h'
@@ -619,6 +622,41 @@ local function plugins(use)
     end
   }
 
+  use {
+    'michal-h21/vim-zettel',
+    config = function()
+      vim.g.nv_search_paths = {'/docs/wiki'}
+    end
+  }
+
+  -- use {
+  --   "vhyrro/neorg",
+  --   config = function()
+  --     require('neorg').setup {
+  --       -- Tell Neorg what modules to load
+  --       load = {
+  --         ["core.defaults"] = {}, -- Load all the default modules
+  --         ["core.norg.concealer"] = {}, -- Allows for use of icons
+  --         ["core.keybinds"] = {
+  --           config = {
+  --             default_keybinds = true,
+  --             neorg_leader = "<leader>o",
+  --           }
+  --         },
+  --         ["core.norg.dirman"] = {
+  --           -- Manage your directories with Neorg
+  --           config = {
+  --             workspaces = {
+  --               my_workspace = "~/docs/neorg"
+  --             }
+  --           }
+  --         }
+  --       },
+  --     }
+  --   end,
+  --   requires = "nvim-lua/plenary.nvim"
+  -- }
+
 
   -- Statusline
   use {
@@ -666,10 +704,6 @@ local function plugins(use)
     },
     cmd = {'Cheat', 'CheatPaste'}
   }
-
-
-  use {'andrewstuart/vim-kubernetes'}
-
 
   use {
     'vimwiki/vimwiki',

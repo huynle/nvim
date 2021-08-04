@@ -145,10 +145,12 @@ require'telescope'.setup {
 
   },
   extensions = {
+    -- configuration for fzy_native
     fzy_native = {
       override_generic_sorter = true,
       override_file_sorter = true,
     },
+    -- configuration for fzf-native
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
@@ -156,6 +158,7 @@ require'telescope'.setup {
       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
+    -- configuration for fzf-writer
     fzf_writer = {
       minimum_grep_characters = 2,
       minimum_files_characters = 2,
@@ -168,8 +171,11 @@ require'telescope'.setup {
   }
 }
 
+-- uses c port of fzf
 require('telescope').load_extension('fzf')
+-- uses system fzf and rg
 require('telescope').load_extension('fzf_writer')
+-- uses lua built version of fzf
 -- require('telescope').load_extension('fzy_native')
 
 
@@ -230,6 +236,19 @@ function M.edit_neovim()
   require("telescope.builtin").find_files(opts_with_preview)
 end
 
+function M.live_grep_wiki()
+  -- require('telescope.builtin').live_grep{
+  -- require("telescope").extensions.fzf_writer.staged_grep{
+  --   prompt_title = "Live Grep wiki",
+  --   search_dirs = {"~/docs/wiki"},
+  -- }
+  require("telescope").extensions.fzf_writer.staged_grep {
+    prompt_title = "Fzf-writer - Live Grep wiki",
+    fzf_separator = "|",
+    search_dirs = {"~/docs/wiki"},
+  }
+end
+
 
 function M.edit_dotfiles()
   require("telescope.builtin").find_files {
@@ -259,11 +278,30 @@ function M.builtin()
 end
 
 
+local open_dif = function()
+  local selected_entry = action_state.get_selected_entry()
+  local value = selected_entry['value']
+  -- close Telescope window properly prior to switching windows
+  vim.api.nvim_win_close(0, true)
+  local cmd = 'DiffviewOpen ' .. value
+  vim.cmd(cmd)
+end
+
 function M.git_commits()
-  require("telescope.builtin").git_commits {
-    winblend = 5,
+  -- hle: not working yet
+    require('telescope.builtin').git_commits{
+      attach_mappings = function(_, map)
+        map('n', '<c-o>', open_dif)
+        return true
+      end
   }
 end
+
+-- function M.git_commits()
+  -- require("telescope.builtin").git_commits {
+  --   winblend = 5,
+  -- }
+-- end
 
 function M.search_only_certain_files()
   require("telescope.builtin").find_files {
@@ -277,12 +315,20 @@ function M.search_only_certain_files()
 end
 
 function M.live_grep()
-  -- require('telescope.builtin').live_grep{
-  -- }
-  require("telescope").extensions.fzf_writer.staged_grep {
-    prompt_title = "Fzf-writer - Live Grep",
-    fzf_separator = "|",
-  }
+  -- require('telescope.builtin').grep_string{
+  --     prompt_title = "Live Grepper",
+  --     search = "",
+  --   }
+
+    ----
+    --require("telescope").extensions.fzf_writer.grep{
+    --  prompt_title = "Live Grepper",
+    --}
+
+    require("telescope").extensions.fzf_writer.staged_grep {
+        prompt_title = "Fzf-writer - Live Grep",
+        fzf_separator = "|",
+      }
 end
 
 function M.grep_prompt_regex_filetype_add_args()

@@ -29,10 +29,48 @@ local config = {
     -- component_separators = { "", "" },
     icons_enabled = true,
   },
+  tabline = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {
+      {
+        'filename',
+        file_status = true, -- displays file status (readonly status, modified status)
+        path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
+      }
+    },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
   sections = {
-    lualine_a = { "mode" },
+    lualine_a = {
+      {
+        'mode',
+        icon = nil, -- displays icon in front of the component
+        separator = nil, -- overwrites component_separators for component
+        condition = nil, -- condition function, component is loaded when function returns true
+        -- custom color for component in format
+        -- color = {fg = '#rrggbb', bg= '#rrggbb', gui='style'}
+        -- or highlight group
+        -- color = "WarningMsg"
+        color = nil
+      }
+    },
     lualine_b = { "branch" },
-    lualine_c = { { "diagnostics", sources = { "nvim_lsp" } }, "filename" },
+    lualine_c = {
+      { "diagnostics", sources = { "nvim_lsp" } },
+      {
+        'diff',
+        colored = false, -- displays diff status in color if set to true
+        -- all colors are in format #rrggbb
+        color_added = nil, -- changes diff's added foreground color
+        color_modified = nil, -- changes diff's modified foreground color
+        color_removed = nil, -- changes diff's removed foreground color
+        symbols = {added = '+', modified = '~', removed = '-'} -- changes diff symbols
+      },
+      "filename",
+    },
     lualine_x = { "filetype", lsp_progress},
     lualine_y = { "progress" },
     -- lualine_z = {cock },
