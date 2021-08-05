@@ -216,7 +216,7 @@ local function plugins(use)
       -- {'nvim-telescope/telescope-fzy-native.nvim'},
 
       -- using system FZF?
-      {'nvim-telescope/telescope-fzf-writer.nvim'},
+      {'huynle/telescope-fzf-writer.nvim'},
       {'nvim-telescope/telescope-dap.nvim'},
       {'folke/todo-comments.nvim'},
     },
@@ -419,6 +419,7 @@ local function plugins(use)
       {'n', 'cs'},
       {'n', 'ds'},
       {'x', 'S'},
+      {'v', 'S'},
       {'n', 'ys'}
     }
   }
@@ -479,15 +480,20 @@ local function plugins(use)
     'kevinhwang91/nvim-bqf',
     requires = {{'junegunn/fzf', opt = true}, {'junegunn/fzf.vim', opt = true}},
     ft = {'qf'},
+    event =  {"QuickFixCmdPost"},
+    cmd =  {"BqfAutoToggle"},
     config = function()
       require('bqf').setup {
         auto_enable = true,
         auto_resize_height = false,
         preview = { auto_preview = true },
         func_map = {
-          tab = 'st',
-          split = 'sg',
-          vsplit = 'sv',
+          -- tab = 'st',
+          -- split = 'sg',
+          -- vsplit = 'sv',
+          tab = '<c-t>',
+          split = '<c-x>',
+          vsplit = '<c-v>',
           ptoggleitem = 'p',
           stoggledown = '<space>',
           stogglevm = '<space>',
@@ -495,6 +501,19 @@ local function plugins(use)
           ffilter = 'F',
           sclear = 'c'
         },
+        preview = {
+          auto_preview = true,
+          should_preview_cb = function(bufnr)
+            local ret = true
+            local filename = vim.api.nvim_buf_get_name(bufnr)
+            local fsize = vim.fn.getfsize(filename)
+            -- file size greater than 10k can't be previewed automatically
+            if fsize > 100 * 1024 then
+              ret = false
+            end
+            return ret
+          end
+        }
       }
     end
   }
@@ -544,6 +563,7 @@ local function plugins(use)
       require('configs.diffview')
     end,
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    ft = "NeogitStatus"
   }
 
   use {

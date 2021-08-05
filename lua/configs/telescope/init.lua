@@ -102,10 +102,14 @@ require'telescope'.setup {
         ["<C-Tab>"] = actions.move_selection_previous,
 				["jk"] = { "<cmd>stopinsert<CR>", type = "command" },
 				-- ["<CR>"] = { "<cmd>stopinsert<CR>", type = "command" },
-        ["<C-q>"] = actions.send_to_qflist,
+        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
         ["<C-y>"] = set_prompt_to_entry_value,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
+
+        ["<c-x>"] = actions.select_horizontal,
+        ["<c-v>"] = actions.select_vertical,
+        ["<c-t>"] = actions.select_tab,
 
 
         -- insert_value
@@ -114,7 +118,7 @@ require'telescope'.setup {
         -- add_selected_to_qflist
         -- send_selected_to_qflist
         -- add_to_qflist
-        -- send_to_qflist
+       -- send_to_qflist
         -- smart_send_to_qflist
         -- smart_add_to_qflist
         -- complete_tag
@@ -123,7 +127,7 @@ require'telescope'.setup {
       n = {
         ["q"] = actions.close,
         ["<C-c>"] = actions.close,
-        ["<C-q>"] = actions.send_to_qflist,
+        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
         ["<Space>"] = actions.toggle_selection + actions.move_selection_next,
         ["p"] = actions.toggle_selection + actions.move_selection_next,
         ["Q"] = actions.send_to_qflist + actions.open_qflist,
@@ -133,9 +137,13 @@ require'telescope'.setup {
         ["gg"] = actions.move_to_top,
         ["G"] = actions.move_to_bottom,
 
-        ["sv"] = actions.select_horizontal,
-        ["sg"] = actions.select_vertical,
+        ["sg"] = actions.select_horizontal,
+        ["sv"] = actions.select_vertical,
         ["st"] = actions.select_tab,
+
+        ["<c-x>"] = actions.select_horizontal,
+        ["<c-v>"] = actions.select_vertical,
+        ["<c-t>"] = actions.select_tab,
 
         ["!"] = actions.edit_command_line,
         ["?"] = actions.edit_search_line,
@@ -160,8 +168,8 @@ require'telescope'.setup {
     },
     -- configuration for fzf-writer
     fzf_writer = {
-      minimum_grep_characters = 2,
-      minimum_files_characters = 2,
+      minimum_grep_characters = 4,
+      minimum_files_characters = 0,
 
       -- Disabled by default.
       -- Will probably slow down some aspects of the sorter, but can make color highlights.
@@ -173,8 +181,10 @@ require'telescope'.setup {
 
 -- uses c port of fzf
 require('telescope').load_extension('fzf')
+
 -- uses system fzf and rg
 require('telescope').load_extension('fzf_writer')
+
 -- uses lua built version of fzf
 -- require('telescope').load_extension('fzy_native')
 
@@ -238,14 +248,16 @@ end
 
 function M.live_grep_wiki()
   -- require('telescope.builtin').live_grep{
-  -- require("telescope").extensions.fzf_writer.staged_grep{
+  -- -- require("telescope").extensions.fzf_writer.staged_grep{
   --   prompt_title = "Live Grep wiki",
   --   search_dirs = {"~/docs/wiki"},
   -- }
   require("telescope").extensions.fzf_writer.staged_grep {
     prompt_title = "Fzf-writer - Live Grep wiki",
     fzf_separator = "|",
-    search_dirs = {"~/docs/wiki"},
+    -- TODO: not working yet, for specific directory. forked fzf-writer top play
+    -- with
+    -- search_dir = "~/docs/wiki"
   }
 end
 
@@ -314,10 +326,9 @@ function M.search_only_certain_files()
   }
 end
 
-function M.live_grep()
-  -- require('telescope.builtin').grep_string{
+function M.my_live_grep()
+  -- require('telescope.builtin').live_grep{
   --     prompt_title = "Live Grepper",
-  --     search = "",
   --   }
 
     ----
@@ -325,9 +336,12 @@ function M.live_grep()
     --  prompt_title = "Live Grepper",
     --}
 
+    -- NOTE: a good use is to just start typing with "| <fzf_here>"
+    -- so it loads all the lines without running rg
     require("telescope").extensions.fzf_writer.staged_grep {
         prompt_title = "Fzf-writer - Live Grep",
         fzf_separator = "|",
+        -- search = ".*|"
       }
 end
 

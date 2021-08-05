@@ -3,7 +3,7 @@
 local wk = require("which-key")
 local util = require("util")
 
-vim.opt.timeoutlen = 100
+vim.opt.timeoutlen = 80
 vim.opt.ttimeoutlen = 50
 
 -- run before calling setup
@@ -104,11 +104,17 @@ util.nnoremap("N", "'nN'[v:searchforward]", { expr = true })
 util.xnoremap("N", "'nN'[v:searchforward]", { expr = true })
 util.onoremap("N", "'nN'[v:searchforward]", { expr = true })
 
+-- TODO: allow to move when line is wrapped
+util.nnoremap("j", "gj")
+util.nnoremap("k", "gk")
+util.vnoremap("j", "gj")
+util.vnoremap("k", "gk")
+
 
 -- INFO: removed window to use lightspeed
 -- Window-control prefix
 -- util.nnoremap("[Window]", "<Nop>")
--- util.nmap("s", "[Window]")
+-- util.nnoremap("<c-w>", "[Window]")
 -- -- Custom window movement
 -- util.nnoremap("[Window]g",":<C-u>split<CR>:wincmd p<CR>:e#<CR>")
 -- util.nnoremap("[Window]v",":<C-u>vsplit<CR>:wincmd p<CR>:e#<CR>")
@@ -124,7 +130,7 @@ util.onoremap("N", "'nN'[v:searchforward]", { expr = true })
 -- util.nnoremap("[Window]K","<C-w>K")
 -- util.nnoremap("[Window]L","<C-w>L")
 -- util.nnoremap("[Window]z","<C-w>z")
-util.nnoremap("[Window]e","<cmd>enew<cr>")
+-- util.nnoremap("<c-w>e","<cmd>enew<cr>")
 
 
 -- better indenting
@@ -320,8 +326,10 @@ local leader = {
   t = {
     name = "+toggle",
     o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
-    q = {"<cmd>call ToggleList('Quickfix List', 'c')<CR>", "Quickfix"},
-    l = {"<cmd>call ToggleList('Location List', 'l')<CR>", "Location"},
+    -- q = {"<cmd>call ToggleList('Quickfix List', 'c')<CR>", "Quickfix"},
+    -- l = {"<cmd>call ToggleList('Location List', 'l')<CR>", "Location"},
+    q = {require'util.user'.qflist.toggle, "Quickfix"},
+    l = {require'util.user'.loclist.toggle, "Location"},
     d = {'<cmd>DBUIToggle<CR>', "DadbodUI"},
     m = {"<cmd>MarkdownPreview<CR>", 'MarkdownPreview'},
     f = {
@@ -354,7 +362,7 @@ local leader = {
     h = { name = "+hunk" },
     g = {
       function()
-        R('configs.telescope')['live_grep']()
+        R('configs.telescope')['my_live_grep']()
       end,
       "Live Grep"
     },
@@ -434,6 +442,7 @@ local leader = {
     f = { "<cmd>:Telescope filetypes<cr>", "File Types" },
     o = { "<cmd>:Telescope vim_options<cr>", "Options" },
     a = { "<cmd>:Telescope autocommands<cr>", "Auto Commands" },
+    r = { "<cmd>:Telescope reloader<cr>", "Reloader" },
   },
 
   --

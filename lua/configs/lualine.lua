@@ -71,9 +71,9 @@ local config = {
       },
       "filename",
     },
-    lualine_x = { "filetype", lsp_progress},
-    lualine_y = { "progress" },
-    -- lualine_z = {cock },
+    lualine_x = { "filetype", "progress"},
+    lualine_y = {},
+    lualine_z = {lsp_progress},
   },
   inactive_sections = {
     lualine_a = {},

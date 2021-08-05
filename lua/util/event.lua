@@ -51,8 +51,8 @@ function autocmd.load_autocmds()
       {"BufRead,BufNewFile", "*.pp", " setf puppet"};
       {"FileType", "markdown", "setlocal spell"};
       -- windows to close with "q"
-      {"FileType","help,startuptime,qf,lspinfo", "nnoremap <buffer><silent> q :close<CR>"};
-      {"FileType", "man", "nnoremap <buffer><silent> q :quit<CR>"};
+      {"FileType","help,startuptime,qf,lspinfo,man", "nnoremap <buffer><silent> q :close<CR>"};
+      {"FileType","help,startuptime,qf,lspinfo,man", "nnoremap <buffer><silent> <C-c> :close<CR>"};
     };
 
     yank = {
@@ -66,7 +66,15 @@ function autocmd.load_autocmds()
 
     custom_ui = {
       {"BufWinEnter,BufNew,BufNewFile,VimEnter", "*", [[if ! mapcheck('q', 'n') | nnoremap <silent><buffer> q :<C-u>quit<CR> | endif]]};
-    }
+    };
+
+    persistent_folding = {
+      -- needs set foldmethod=manual
+      {"BufWinLeave", "*.*", "mkview"};
+      {"BufWinEnter", "*.*", "silent! loadview"}
+    };
+
+
   };
 
   autocmd.nvim_create_augroups(definitions)
