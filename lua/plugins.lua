@@ -368,9 +368,9 @@ local function plugins(use)
   -- use {
   --   'nvim-treesitter/nvim-treesitter-textobjects',
   --   after = 'nvim-treesitter',
-  --   config = function()
-  --     require 'configs.textobjects'
-  --   end
+  --   -- config = function()
+  --   --   require 'configs.textobjects'
+  --   -- end
   -- }
 
 
@@ -379,9 +379,16 @@ local function plugins(use)
     event = "BufRead",
     after = 'telescope.nvim',
     requires = {
-      -- { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "RRethy/nvim-treesitter-textsubjects",
+      --  TODO: something odd is going on here, the loading is not in correct
+      --   -- { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter"
+      },
+      {
+        "RRethy/nvim-treesitter-textsubjects",
+        after = "nvim-treesitter"
+      },
     },
     config = function()
       require('configs.treesitter')
