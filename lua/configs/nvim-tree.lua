@@ -10,6 +10,8 @@ vim.g.nvim_tree_hide_dotfiles = 1
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_auto_close = 1 -- closes tree when it's the last window
 vim.g.nvim_tree_quit_on_open = 1 -- closes tree when file's opened
+vim.g.nvim_tree_auto_resize = 1
+
 
 vim.g.nvim_tree_disable_default_keybindings = 1
 

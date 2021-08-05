@@ -356,20 +356,35 @@ local function plugins(use)
     'christoomey/vim-tmux-navigator'
   }
 
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    event = 'BufRead',
-    after = 'telescope.nvim',
-    config = function()
-      require 'configs.treesitter'
-    end
-  }
+  -- use {
+  --   'nvim-treesitter/nvim-treesitter',
+  --   event = 'BufRead',
+  --   after = 'telescope.nvim',
+  --   config = function()
+  --     require 'configs.treesitter'
+  --   end
+  -- }
 
-  use {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
+  -- use {
+  --   'nvim-treesitter/nvim-treesitter-textobjects',
+  --   after = 'nvim-treesitter',
+  --   config = function()
+  --     require 'configs.textobjects'
+  --   end
+  -- }
+
+
+  use{
+    "nvim-treesitter/nvim-treesitter",
+    event = "BufRead",
+    after = 'telescope.nvim',
+    requires = {
+      -- { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "RRethy/nvim-treesitter-textsubjects",
+    },
     config = function()
-      require 'configs.textobjects'
+      require('configs.treesitter')
     end
   }
 
@@ -748,10 +763,30 @@ local function plugins(use)
     'navarasu/onedark.nvim',
     config = function()
       vim.g.onedark_style = 'deep'
-      vim.g.onedark_transparent_background = true -- By default it is false
+      vim.g.onedark_transparent_background = true-- By default it is false
       require('onedark').setup()
     end,
   }
+
+  -- use {
+  --   'Th3Whit3Wolf/one-nvim',
+  --   config = function()
+  --     vim.cmd('colorscheme one-nvim')
+  --     vim.g.one_nvim_transparent_bg = false -- By default it is false
+  --   end,
+  -- }
+  
+  -- use {
+  --   'monsonjeremy/onedark.nvim',
+  --   config = function()
+  --     require'onedark'.setup{
+  --       transparent = true,
+  --       sidebars = {"qf", "vista_kind", "terminal", "packer"},
+  --       -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+  --       colors = {hint = "orange", error = "#ff0000"}
+  --     }
+  --   end,
+  -- }
 
 
   -- Terminal
@@ -788,19 +823,6 @@ local function plugins(use)
     -- sections = {lualine_c = {require'lsp-status'.status}}
   }
 
-  -- use {
-  --   'monsonjeremy/onedark.nvim',
-  --   config = function()
-  --     -- Example config in Lua
-  --     -- vim.g.onedark_italic_functions = true
-  --     -- vim.g.onedark_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-  --     -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-  --     -- vim.g.onedark_colors = { hint = "orange", error = "#ff0000" }
-  --     -- Load the colorscheme
-  --     vim.g.onedark_transparent = true
-  --     vim.cmd[[colorscheme onedark]]
-  --   end,
-  -- }
 
 end
 
