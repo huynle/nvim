@@ -3,7 +3,7 @@ local Terminal  = require('toggleterm.terminal').Terminal
 toggleterm = require 'toggleterm'
 
 toggleterm.setup{
-  size = 20,
+  -- size = 20,
   hide_numbers = true,
   open_mapping = [[<M-`>]],
   shade_filetypes = {},

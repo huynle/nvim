@@ -245,7 +245,7 @@ local localleader = {
     l = {"<cmd>LspLog<CR>", "LspLog"},
     r = {"<cmd>LspRestart<CR>", "LspRestart"}
   },
-  t = {"<cmd>Template<CR>"},
+  -- t = {"<cmd>Template<CR>"},
   y = {
     name = "+yanking",
     f = {':let @"=expand("%:p")<CR>:OSCYankReg "<CR>', "File Path"},

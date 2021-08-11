@@ -1,10 +1,10 @@
 local packer = require('util.packer')
-local util = require("util")
+-- local util = require("util")
 
 
-local has = function(x)
-  return vim.fn.has(x) == 1
-end
+-- local has = function(x)
+--   return vim.fn.has(x) == 1
+-- end
 
 local config = {
 
@@ -44,7 +44,7 @@ local function plugins(use)
 
   use {
     "wbthomason/packer.nvim",
-    cmd = {"PackerSync", "PackerStatus", "PackerInstall", "PackerCompile"}
+    -- cmd = {"PackerSync", "PackerStatus", "PackerInstall", "PackerCompile"}
   }
 
 
@@ -186,7 +186,7 @@ local function plugins(use)
     event = "VimEnter",
     'embear/vim-localvimrc',
     config = function()
-      local cwd = vim.fn.getcwd()
+      -- local cwd = vim.fn.getcwd()
       vim.g.localvimrc_enable = 1
       vim.g.localvimrc_ask = 0
       vim.g.localvimrc_sandbox = 0
@@ -508,7 +508,6 @@ local function plugins(use)
       require('bqf').setup {
         auto_enable = true,
         auto_resize_height = false,
-        preview = { auto_preview = true },
         func_map = {
           -- tab = 'st',
           -- split = 'sg',
@@ -782,7 +781,7 @@ local function plugins(use)
   --     vim.g.one_nvim_transparent_bg = false -- By default it is false
   --   end,
   -- }
-  
+
   -- use {
   --   'monsonjeremy/onedark.nvim',
   --   config = function()

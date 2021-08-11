@@ -159,7 +159,7 @@ local on_attach = function(client, bufnr)
 	-- buf_set_keymap('n', '<localleader>q', ':lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   --
 
-  
+
   ---- Lsp mapp work when insertenter and lsp start
   --["n|<localleader>li"]         = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
   --["n|<localleader>ll"]         = map_cr("LspLog"):with_noremap():with_silent():with_nowait(),

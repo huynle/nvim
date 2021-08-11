@@ -12,8 +12,6 @@ reloader()
 
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
-local action_mt = require "telescope.actions.mt"
-local sorters = require "telescope.sorters"
 local themes = require "telescope.themes"
 local transform_mod = require('telescope.actions.mt').transform_mod
 
@@ -347,7 +345,7 @@ end
 
 function M.grep_prompt_regex_filetype_add_args()
   local addl_args = vim.fn.input "Addition Ripgrep Args > "
-  args = mysplit(addl_args, " ")
+  local args = mysplit(addl_args, " ")
   M.grep_prompt_regex_filetype(args)
 end
 
@@ -390,8 +388,8 @@ function M.grep_prompt_regex_filetype(add_args)
   if isempty(look_for_type) then
     look_for_type = ""
   else
-    types = mysplit(look_for_type, " ")
-    for i, v in ipairs(types) do
+    local types = mysplit(look_for_type, " ")
+    for _, v in ipairs(types) do
       table.insert(my_vimgrep_arguments, "--type")
       table.insert(my_vimgrep_arguments, v)
     end
@@ -489,11 +487,11 @@ end
  -- function M.grep_quickfix(opts)
  --  -- NOT WORKING, trying to mimic telelscope builtin funbction for quickfix
  --   local locations = vim.fn.getqflist()
- 
+
  --   if vim.tbl_isempty(locations) then
  --     return
  --   end
- 
+
  --   opts = {
  --     prompt_title  = 'Quickfix',
  --     finder    = finders.new_table {
@@ -503,9 +501,9 @@ end
  --     -- previewer = conf.qflist_previewer(opts),
  --     -- sorter = conf.generic_sorter(opts),
  --   }
- 
+
  --   require("telescope.builtin").grep_string(opts_with_preview)
- 
+
  -- end
 
 function M.find_files_or_git_files()
