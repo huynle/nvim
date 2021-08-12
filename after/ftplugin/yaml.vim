@@ -45,5 +45,5 @@ let b:undo_ftplugin =
       \ . 'setlocal foldexpr< foldmethod< foldtext<'
 
 
-nmap <buffer> <Tab> zo
-nmap <buffer> <S-Tab> zc
+" nmap <buffer> <Tab> zo
+" nmap <buffer> <S-Tab> zc

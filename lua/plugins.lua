@@ -304,6 +304,25 @@ local function plugins(use)
 
   }
 
+  use {
+    'arecarn/vim-fold-cycle',
+    config = function()
+
+      vim.cmd[[
+      "disable default mappings
+      let g:fold_cycle_default_mapping = 0
+      nmap <Tab> <Plug>(fold-cycle-open)
+      nmap <S-Tab> <Plug>(fold-cycle-close)
+
+      " Won't close when max fold is opened
+      let g:fold_cycle_toggle_max_open  = 0
+
+      " Won't open when max fold is closed
+      let g:fold_cycle_toggle_max_close = 0
+      ]]
+    end
+  }
+
   -- use {
   --   keys = {"[", "]"},
   --   'tpope/vim-unimpaired',
