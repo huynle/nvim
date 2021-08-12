@@ -1,7 +1,6 @@
 local packer = require('util.packer')
 -- local util = require("util")
 
-
 -- local has = function(x)
 --   return vim.fn.has(x) == 1
 -- end
@@ -31,22 +30,20 @@ local config = {
     -- ["nvim-lspconfig"] = false,
     -- ["nvim-treesitter"] = true,
   },
-
 }
-
 
 local conf = require('configs.all')
 
 local function plugins(use)
+  -- packer to manage itself, packadd is done in util/packer
+  use {
+    "wbthomason/packer.nvim",
+    opt = true
+  }
+
   use {"nvim-lua/popup.nvim"}
 
   use {"nvim-lua/plenary.nvim"}
-
-  use {
-    "wbthomason/packer.nvim",
-    -- cmd = {"PackerSync", "PackerStatus", "PackerInstall", "PackerCompile"}
-  }
-
 
 -- here is all the mapping
   use {
@@ -238,9 +235,6 @@ local function plugins(use)
     ft = 'puppet'
   }
 
-  use {
-    'towolf/vim-helm',
-  }
 
   -- disabling for now, conflict with 's' window movement key
   -- tried: 's', 'w' and 'h'
@@ -310,10 +304,10 @@ local function plugins(use)
 
   }
 
-  use {
-    keys = {"[", "]"},
-    'tpope/vim-unimpaired',
-  }
+  -- use {
+  --   keys = {"[", "]"},
+  --   'tpope/vim-unimpaired',
+  -- }
 
   use {
     'junegunn/vim-easy-align',
@@ -653,14 +647,21 @@ local function plugins(use)
   use {
     'kristijanhusak/orgmode.nvim',
     ft = "org",
+    keys = {
+      {'n', '<Leader>oa'},
+      {'n', '<Leader>oc'},
+    },
     opt = true,
     config = function()
-      require('orgmode').setup{
-        -- org_agenda_files = {'~/docs/org/*', '~/my-orgs/**/*'},
-        org_agenda_files = {'~/docs/org/*'},
-        org_default_notes_file = '~/docs/org/refile.org',
-      }
-    end
+      require 'configs.orgmode'
+    end,
+    -- config = function()
+    --   require('orgmode').setup{
+    --     -- -- org_agenda_files = {'~/docs/org/*', '~/my-orgs/**/*'},
+    --     -- org_agenda_files = {'~/docs/org/*'},
+    --     -- org_default_notes_file = '~/docs/org/refile.org',
+    --   }
+    -- end
   }
 
   use {

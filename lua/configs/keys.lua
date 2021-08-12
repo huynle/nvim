@@ -1,5 +1,4 @@
 -- NOTE: if a function is used, there has to be a name associated to it
-
 local wk = require("which-key")
 local util = require("util")
 
@@ -371,7 +370,7 @@ local leader = {
     name = "+find",
     p = {
       function()
-        R('configs.telescope')['grep_promp']()
+        R('configs.telescope')['grep_prompt']()
       end,
       "Grep Prompt"
     },
@@ -405,12 +404,7 @@ local leader = {
       end,
       "Registers"
     },
-    t = {
-      function()
-        R('configs.telescope')['search_only_certain_files']()
-      end,
-      "Ft Grep"
-    },
+    t = {"<cmd>TodoTelescope<CR>", "Find Trouble"},
     f = {
       function()
         R('configs.telescope')['find_files']()
@@ -429,6 +423,7 @@ local leader = {
     T = { "<cmd>TodoTelescope<cr>", "Todo Telescope" },
     l = { "<cmd>lopen<cr>", "Open Location List" },
     q = { "<cmd>copen<cr>", "Open Quickfix List" },
+    -- ["?"] = { "<cmd>", "Open Quickfix List" },
   },
 
   ["h"] = {
