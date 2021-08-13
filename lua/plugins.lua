@@ -601,10 +601,26 @@ local function plugins(use)
   }
 
   use {
+    'Pocco81/DAPInstall.nvim',
+    cmd = {"DIInstall", "DIList"},
+    config = function()
+      local dap_install = require("dap-install")
+
+      dap_install.setup {
+        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+        verbosely_call_debuggers = false,
+      }
+    end
+  }
+
+  use {
     'mfussenegger/nvim-dap',
     opt = true,
+    keys = {
+      {'n', '<localleader>db'},
+      {'n', '<localleader>dc'},
+    },
     requires = {
-      'rcarriga/nvim-dap-ui',
       'nvim-telescope/telescope-dap.nvim',
     },
     config = function()
@@ -616,13 +632,30 @@ local function plugins(use)
 
   use {
     'mfussenegger/nvim-dap-python',
-    after = 'nvim-dap'
+    after = 'nvim-dap',
+    config = function()
+      require('dap-python').setup(vim.fn.stdpath("data") .. "/dapinstall/python_dbg/bin/python")
+      require('dap-python').test_runner = 'pytest'
+-- nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
+-- nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>
+-- vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+    end
   }
 
+  use {
+    'rcarriga/nvim-dap-ui',
+    after = 'nvim-dap',
+    -- requires = {
+    --   'nvim-dap',
+    -- },
+    config = function()
+      require 'configs.dap.dap-ui'
+    end,
+  }
 
   use {
     'theHamsta/nvim-dap-virtual-text',
-    after = 'nvim-dap'
+    after = 'nvim-dap',
   }
 
   use {

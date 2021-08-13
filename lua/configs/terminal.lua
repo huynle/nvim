@@ -8,7 +8,7 @@ toggleterm.setup{
   open_mapping = [[<M-`>]],
   shade_filetypes = {},
   shade_terminals = true,
-  shading_factor = 0.3, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+  shading_factor = 3, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
   start_in_insert = false,
   insert_mappings = true,
   persist_size = true,
@@ -28,7 +28,7 @@ toggleterm.setup{
 local lazygit = Terminal:new({
   -- cmd = "top",
   count = 2,
-  dir = "git_dir",
+  -- dir = "git_dir",
   direction = "float",
   float_opts = {
     border = "double",

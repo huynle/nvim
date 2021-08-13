@@ -51,8 +51,9 @@ function autocmd.load_autocmds()
       {"BufRead,BufNewFile", "*.pp", " setf puppet"};
       {"FileType", "markdown", "setlocal spell"};
       -- windows to close with "q"
-      {"FileType","help,startuptime,qf,lspinfo,man,trouble,orgagenda,org", "nnoremap <buffer><silent> q :close<CR>"};
-      {"FileType","help,startuptime,qf,lspinfo,man,trouble,orgagenda,org", "nnoremap <buffer><silent> <C-c> :close<CR>"};
+      {"FileType","help,startuptime,qf,lspinfo,man,Trouble,orgagenda,org", "nnoremap <buffer><silent> q :close<CR>"};
+      {"FileType","help,startuptime,qf,lspinfo,man,Trouble,orgagenda,org", "nnoremap <buffer><silent> <C-c> :close<CR>"};
+      {"BufEnter", "_cheat", "nnoremap <buffer><silent> <C-c> :close<CR>"};
     };
 
     yank = {

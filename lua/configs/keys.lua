@@ -2,7 +2,7 @@
 local wk = require("which-key")
 local util = require("util")
 
-vim.opt.timeoutlen = 80
+vim.opt.timeoutlen = 200
 vim.opt.ttimeoutlen = 50
 
 -- run before calling setup
