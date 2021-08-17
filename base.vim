@@ -97,3 +97,17 @@ nmap <S-Tab> <Plug>(fold-cycle-close)
 let g:fold_cycle_toggle_max_open  = 1
 " Won't open when max fold is closed
 let g:fold_cycle_toggle_max_close = 1
+
+
+function! HeaderToggle()
+    let filename = expand("%:t")
+    if filename =~ ".cpp"
+        execute "e %:r.h"
+    else
+        execute "e %:r.cpp"
+    endif
+endfunction
+
+
+
+nnoremap <M-o> :call HeaderToggle()<cr>
