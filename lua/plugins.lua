@@ -856,9 +856,17 @@ local function plugins(use)
     end,
     keys = {
       {'n', [[<M-`>]]},
-      {'i', [[<M-`>]]},
       {'n', [[<M-w>]]},
+      {'n', [[<M-1>]]},
+      {'n', [[<M-2>]]},
+      {'n', [[<M-3>]]},
+      {'n', [[<M-4>]]},
+      {'i', [[<M-`>]]},
       {'i', [[<M-w>]]},
+      {'i', [[<M-1>]]},
+      {'i', [[<M-2>]]},
+      {'i', [[<M-3>]]},
+      {'i', [[<M-4>]]},
     },
     cmd = {'ToggleTerm', 'ToggleTermOpenAll', 'ToggleTermCloseAll'}
   })

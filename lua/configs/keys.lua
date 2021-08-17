@@ -1,3 +1,15 @@
+
+-- local should_reload = true
+-- local reloader = function()
+--   if should_reload then
+--     RELOAD "plenary"
+--     RELOAD "popup"
+--     RELOAD "which-key.nvim"
+--   end
+-- end
+-- reloader()
+
+
 -- NOTE: if a function is used, there has to be a name associated to it
 local wk = require("which-key")
 local util = require("util")
@@ -8,6 +20,8 @@ vim.opt.ttimeoutlen = 50
 -- run before calling setup
 local presets = require("which-key.plugins.presets")
 presets.objects["a("] = nil
+--= disabling these operators
+presets.operators["v"] = nil
 
 wk.setup {
   plugins = {
@@ -59,7 +73,8 @@ wk.setup {
   ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
-  triggers = "auto", -- automatically setup triggers
+  -- triggers = "auto", -- automatically setup triggers
+  triggers = {}, -- setting empty to disable
   -- triggers = {"<leader>"} -- or specify a list manually
   triggers_blacklist = {
     -- list of mode / prefixes that should never be hooked by WhichKey

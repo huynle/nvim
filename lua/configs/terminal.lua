@@ -27,7 +27,7 @@ toggleterm.setup{
 -- local lazygit = Terminal:new({ cmd = "top", count = 1 })
 local lazygit = Terminal:new({
   -- cmd = "top",
-  count = 2,
+  count = 5,
   -- dir = "git_dir",
   direction = "float",
   float_opts = {
@@ -57,10 +57,13 @@ vim.cmd [[au TermOpen * setlocal nonumber norelativenumber]]
 util.tnoremap('<esc><esc>', '<C-\\><C-N>')
 util.tnoremap('<C-o><C-i>', '<C-\\><C-n>')
 util.tnoremap('<A-j><A-k>', '<C-\\><C-n>')
+util.tnoremap('<C-j><C-k>', '<C-\\><C-n>')
 
 -- NOTE: can be toggled with M-` also
 util.nnoremap([[<M-w>]], "<cmd>lua _lazygit_toggle()<CR>")
--- util.nnoremap([[<M-1>]], "<cmd>3ToggleTerm direction='horizontal'<CR>")
--- util.nnoremap([[<M-2>]], "<cmd>4ToggleTerm direction='horizontal'<CR>")
+util.nnoremap([[<M-1>]], "<cmd>1ToggleTerm direction='horizontal'<CR>")
+util.nnoremap([[<M-2>]], "<cmd>2ToggleTerm direction='horizontal'<CR>")
+util.nnoremap([[<M-3>]], "<cmd>3ToggleTerm direction='horizontal'<CR>")
+util.nnoremap([[<M-4>]], "<cmd>4ToggleTerm direction='horizontal'<CR>")
 -- util.nnoremap([[<leader>4v]], "<cmd>4ToggleTerm direction='vertical'<CR>")
 --
