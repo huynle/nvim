@@ -83,15 +83,15 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 --   end
 -- }
 
-lspconfig.clangd.setup {
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--suggest-missing-includes",
-    "--clang-tidy",
-    "--header-insertion=iwyu",
-  },
-}
+-- lspconfig.clangd.setup {
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "--suggest-missing-includes",
+--     "--clang-tidy",
+--     "--header-insertion=iwyu",
+--   },
+-- }
 
 lspconfig.rust_analyzer.setup {
   capabilities = capabilities,
