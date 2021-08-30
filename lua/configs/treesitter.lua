@@ -11,7 +11,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'c',
     'cmake',
-    'comment',
+    -- 'comment',
     'python',
     'cpp',
     'lua',
@@ -22,8 +22,8 @@ require'nvim-treesitter.configs'.setup {
     'json',
     'regex',
     'go',
-    'javascript',
-    'typescript'
+    -- 'javascript',
+    -- 'typescript'
   },
   highlight = { enable = true, use_languagetree = true },
   indent = { enable = false },
