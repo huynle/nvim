@@ -818,14 +818,48 @@ local function plugins(use)
     ft = {'vimwiki', 'markdown'},
   }
 
-  use {
-    'navarasu/onedark.nvim',
+  -- use {
+  --   'navarasu/onedark.nvim',
+  --   config = function()
+  --     vim.g.onedark_style = 'deep'
+  --     vim.g.onedark_transparent_background = true-- By default it is false
+  --     require('onedark').setup()
+  --   end,
+  -- }
+
+  -- Theme: color schemes
+  -- use("tjdevries/colorbuddy.vim")
+  use({
+    -- "shaunsingh/nord.nvim",
+    -- "shaunsingh/moonlight.nvim",
+    -- { "olimorris/onedark.nvim", requires = "rktjmp/lush.nvim" },
+    -- "joshdick/onedark.vim",
+    -- "wadackel/vim-dogrun",
+    -- { "npxbr/gruvbox.nvim", requires = "rktjmp/lush.nvim" },
+    -- "bluz71/vim-nightfly-guicolors",
+    -- { "marko-cerovac/material.nvim" },
+    -- "sainnhe/edge",
+    -- { "embark-theme/vim", as = "embark" },
+    -- "norcalli/nvim-base16.lua",
+    -- "RRethy/nvim-base16",
+    -- "novakne/kosmikoa.nvim",
+    -- "glepnir/zephyr-nvim",
+    -- "ghifarit53/tokyonight-vim"
+    -- "sainnhe/sonokai",
+    -- "morhetz/gruvbox",
+    -- "arcticicestudio/nord-vim",
+    -- "drewtempelmeyer/palenight.vim",
+    -- "Th3Whit3Wolf/onebuddy",
+    -- "christianchiarulli/nvcode-color-schemes.vim",
+    "Th3Whit3Wolf/one-nvim",
+    -- 'navarasu/onedark.nvim',
+
+    -- "folke/tokyonight.nvim",
+    -- event = "VimEnter",
     config = function()
-      vim.g.onedark_style = 'deep'
-      vim.g.onedark_transparent_background = true-- By default it is false
-      require('onedark').setup()
+      require("configs.theme")
     end,
-  }
+  })
 
   -- use {
   --   'Th3Whit3Wolf/one-nvim',
