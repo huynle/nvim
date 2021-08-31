@@ -12,7 +12,7 @@ vim.g.sonokai_diagnostic_virtual_text = "colored"
 vim.g.edge_style = "neon"
 vim.g.edge_enable_italic = 1
 vim.g.edge_disable_italic_comment = 0
-vim.g.edge_transparent_background = 0
+vim.g.edge_transparent_background = 1
 
 vim.g.one_nvim_transparent_bg = true
 
@@ -55,6 +55,10 @@ vim.o.background = "dark"
 -- =======
 -- require("tokyonight").colorscheme()
 
-vim.cmd("colorscheme one-nvim") -- Put your favorite colorscheme here
+-- vim.cmd("colorscheme one-nvim") -- Put your favorite colorscheme here
+-- vim.cmd("colorscheme edge") -- Put your favorite colorscheme here
 
--- require('onedark').setup()
+-- require('material').set()
+-- vim.cmd('colorscheme base16-onedark')
+
+require('onedark').setup()

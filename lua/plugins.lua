@@ -851,8 +851,8 @@ local function plugins(use)
     -- "drewtempelmeyer/palenight.vim",
     -- "Th3Whit3Wolf/onebuddy",
     -- "christianchiarulli/nvcode-color-schemes.vim",
-    "Th3Whit3Wolf/one-nvim",
-    -- 'navarasu/onedark.nvim',
+    -- "Th3Whit3Wolf/one-nvim",
+    'navarasu/onedark.nvim',
 
     -- "folke/tokyonight.nvim",
     -- event = "VimEnter",
