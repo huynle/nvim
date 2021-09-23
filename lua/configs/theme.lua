@@ -1,8 +1,5 @@
-vim.g.material_style = "palenight"
-vim.g.material_italic_comments = 1
-vim.g.material_italic_keywords = 1
-vim.g.material_italic_functions = 1
-vim.g.material_lsp_underline = 1
+vim.g.material_style = "deep ocean"
+-- vim.g.material_style = "lighter"
 
 vim.g.sonokai_style = "atlantis"
 vim.g.sonokai_enable_italic = 1
@@ -50,15 +47,56 @@ vim.g.tokyonight_colors = {}
 vim.g.onedark_style = 'deep'
 vim.g.onedark_transparent_background = true-- By default it is false
 
-vim.o.background = "dark"
 
 -- =======
 -- require("tokyonight").colorscheme()
 
 -- vim.cmd("colorscheme one-nvim") -- Put your favorite colorscheme here
+--
 -- vim.cmd("colorscheme edge") -- Put your favorite colorscheme here
-
--- require('material').set()
+--
 -- vim.cmd('colorscheme base16-onedark')
 
-require('onedark').setup()
+-- require('onedark').setup()
+
+-- ======
+
+
+require('material').setup({
+	contrast = false, -- Enable contrast for sidebars, floating windows and popup menus like Nvim-Tree
+	borders = false, -- Enable borders between verticaly split windows
+
+	italics = {
+		comments = false, -- Enable italic comments
+		keywords = false, -- Enable italic keywords
+		functions = false, -- Enable italic functions
+		strings = false, -- Enable italic strings
+		variables = false -- Enable italic variables
+	},
+
+	contrast_windows = { -- Specify which windows get the contrasted (darker) background
+		"terminal", -- Darker terminal background
+		"packer", -- Darker packer background
+    "nvim-tree",
+		"qf" -- Darker qf list background
+	},
+
+	text_contrast = {
+		lighter = true, -- Enable higher contrast text for lighter style
+		darker = true-- Enable higher contrast text for darker style
+	},
+  disable = {
+    background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+    term_colors = false, -- Prevent the theme from setting terminal colors
+    eob_lines = false -- Hide the end-of-buffer lines
+  }
+}
+)
+
+vim.api.nvim_set_keymap('n', '<leader>ml', [[<Cmd>lua require('material.functions').change_style('lighter')<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>md', [[<Cmd>lua require('material.functions').change_style('deep ocean')<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>bg', [[<Cmd>lua require('material.functions').toggle_style()<CR>]], { noremap = true, silent = true })
+vim.cmd('colorscheme material')
+
+-- vim.o.background = "light"
+vim.o.background = "dark"

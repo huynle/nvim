@@ -51,6 +51,10 @@ endfunction
 " Repeat latest f, t, F or T
 nnoremap \ ;
 
+" " paste without over writting the 0 registery
+" xnoremap p ""p
+" nnoremap p ""p
+
 
 " Returns visually selected text
 function! s:get_selection() abort "{{{
@@ -108,6 +112,15 @@ function! HeaderToggle()
     endif
 endfunction
 
+function! OpenOther()
+    if expand("%:e") == "cpp"
+        exe "split" fnameescape(expand("%:p:r:s?src?include?").".h")
+    elseif expand("%:e") == "h"
+        exe "split" fnameescape(expand("%:p:r:s?include?src?").".cpp")
+    endif
+endfunction
 
+" using alternate.vim
+" let g:alternateSearchPath = 'reg:#\<src\>$#include#,reg:#\<include\>$#src#'
 
-nnoremap <M-o> :call HeaderToggle()<cr>
+" nnoremap <M-o> :call OpenOther()<cr>

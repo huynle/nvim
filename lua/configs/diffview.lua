@@ -7,6 +7,7 @@ require'diffview'.setup {
     use_icons = true        -- Requires nvim-web-devicons
   },
   key_bindings = {
+    disable_defaults = true,                   -- Disable the default key bindings
     -- The `view` bindings are active in the diff buffers, only when the current
     -- tabpage is a Diffview.
     view = {
@@ -19,8 +20,8 @@ require'diffview'.setup {
 
     },
     file_panel = {
-			['q']         = '<cmd>DiffviewClose<CR>',
-			['<C-c>']         = '<cmd>DiffviewClose<CR>',
+      ['q']         = '<cmd>DiffviewClose<CR>',
+      ['<C-c>']         = '<cmd>DiffviewClose<CR>',
       ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
       ["<down>"]        = cb("next_entry"),
       ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
@@ -37,7 +38,29 @@ require'diffview'.setup {
       ["[d"]       = cb("select_prev_entry"),
       ["<localleader>a"]     = cb("focus_files"),
       ["<localleader>e"]     = cb("toggle_files"),
-    }
+    },
+    file_history_panel = {
+      ["?"]            = cb("options"),            -- Open the option panel
+      ["<C-d>"]         = cb("open_in_diffview"),   -- Open the entry under the cursor in a diffview
+      ["zR"]            = cb("open_all_folds"),
+      ["zM"]            = cb("close_all_folds"),
+      ["j"]             = cb("next_entry"),
+      ["<down>"]        = cb("next_entry"),
+      ["k"]             = cb("prev_entry"),
+      ["<up>"]          = cb("prev_entry"),
+      ["<cr>"]          = cb("select_entry"),
+      ["o"]             = cb("select_entry"),
+      ["<2-LeftMouse>"] = cb("select_entry"),
+      ["]d"]         = cb("select_next_entry"),
+      ["[d"]       = cb("select_prev_entry"),
+      ["<localleader>a"]     = cb("focus_files"),
+      ["<localleader>e"]     = cb("toggle_files"),
+      ['<C-c>']         = '<cmd>DiffviewClose<CR>',
+    },
+    option_panel = {
+      ["<cr>"] = cb("select"),
+      ["<C-c>"]     = cb("close"),
+    },
   }
 }
 

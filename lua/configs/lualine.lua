@@ -22,7 +22,8 @@ vim.cmd([[autocmd User LspProgressUpdate let &ro = &ro]])
 
 local config = {
   options = {
-    theme = "onedark",
+    -- theme = "onedark",
+    theme = "material-nvim",
     section_separators = { "", "" },
     component_separators = { "", "" },
     -- section_separators = { "", "" },
@@ -71,7 +72,7 @@ local config = {
       },
       "filename",
     },
-    lualine_x = { "filetype", "progress"},
+    lualine_x = { "filetype", "progress", "location"},
     lualine_y = {},
     lualine_z = {lsp_progress},
   },

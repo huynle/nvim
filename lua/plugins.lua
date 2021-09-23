@@ -180,16 +180,16 @@ local function plugins(use)
 
 
   use {
-    event = "VimEnter",
     'embear/vim-localvimrc',
-    config = function()
+    setup = function()
       -- local cwd = vim.fn.getcwd()
       vim.g.localvimrc_enable = 1
       vim.g.localvimrc_ask = 0
       vim.g.localvimrc_sandbox = 0
-      vim.g.localvimrc_event = { "VimEnter", "BufRead", "BufWrite"}
---       vim.g.localvimrc_name = { cwd .. "/.project/config.vim", cwd .. "/.project/local.vim" }
-      vim.g.localvimrc_name = {"~/.config/nvim/local.vim"}
+      vim.g.localvimrc_event = { "VimEnter", "BufRead", "BufWrite" }
+      -- vim.g.localvimrc_name = { cwd .. "/.project/config.vim", cwd .. "/.project/local.vim", cwd .. "/.vimrc" }
+      -- vim.g.localvimrc_name = { ".vimrc" }
+      -- vim.g.localvimrc_name = {"~/.config/nvim/local.vim"}
     end
   }
 
@@ -408,6 +408,21 @@ local function plugins(use)
     end
   }
 
+  use { 
+    "tversteeg/registers.nvim",
+    setup = function ()
+      vim.g.registers_delay = 100  --0 by default, milliseconds to wait before opening the popup window
+      vim.g.registers_register_key_sleep = 1  --0 by default, seconds to wait before closing the window when a register key is pressed
+      vim.g.registers_show_empty_registers = 0  --1 by default, an additional line with the registers without content
+      vim.g.registers_trim_whitespace = 0  --1 by default, don't show whitespace at the begin and end of the registers
+      vim.g.registers_hide_only_whitespace = 1  --0 by default, don't show registers filled exclusively with whitespace
+      vim.g.registers_window_border =  "single" -- "'none' by default, can be 'none', 'single','double', 'rounded', 'solid', or 'shadow' (requires Neovim 0.5.0+)
+      vim.g.registers_window_min_height = 10  --3 by default, minimum height of the window when there is the cursor at the bottom
+      vim.g.registers_window_max_width = 20  --100 by default, maximum width of the window
+    end,
+  }
+
+
 
   use {
     'kristijanhusak/vim-dadbod-ui',
@@ -596,7 +611,7 @@ local function plugins(use)
     config = function()
       require('configs.diffview')
     end,
-    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewFileHistory" },
     ft = "NeogitStatus"
   }
 
@@ -693,6 +708,11 @@ local function plugins(use)
     config = function ()
       vim.g.mkdp_auto_start = 0
     end
+  }
+
+  use {
+    'derekwyatt/vim-fswitch',
+    ft = "cpp"
   }
 
 
@@ -837,7 +857,7 @@ local function plugins(use)
     -- "wadackel/vim-dogrun",
     -- { "npxbr/gruvbox.nvim", requires = "rktjmp/lush.nvim" },
     -- "bluz71/vim-nightfly-guicolors",
-    -- { "marko-cerovac/material.nvim" },
+    "marko-cerovac/material.nvim",
     -- "sainnhe/edge",
     -- { "embark-theme/vim", as = "embark" },
     -- "norcalli/nvim-base16.lua",
@@ -852,7 +872,7 @@ local function plugins(use)
     -- "Th3Whit3Wolf/onebuddy",
     -- "christianchiarulli/nvcode-color-schemes.vim",
     -- "Th3Whit3Wolf/one-nvim",
-    'navarasu/onedark.nvim',
+    -- 'navarasu/onedark.nvim',
 
     -- "folke/tokyonight.nvim",
     -- event = "VimEnter",

@@ -97,6 +97,9 @@ util.nnoremap("<S-Left>", ":vertical resize -4<CR>")
 util.nnoremap("<S-Right>", ":vertical resize +4<CR>")
 
 
+util.nnoremap("<M-o>", ":FSHere<cr>")
+
+
 -- Clear search with <esc>
 util.map("", "<esc>", ":noh<cr>")
 util.nnoremap("gw", "*N")
@@ -272,6 +275,7 @@ local localleader = {
 
   t = {
     name = "+toggle",
+    o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
     w = {
       function()
         util.toggle("wrap")
@@ -289,6 +293,14 @@ local localleader = {
         P(exec_cmd)
         vim.cmd(exec_cmd)
       end, "Against <branch>"
+    },
+    h = {
+      function()
+        local filepath = vim.fn.expand("%")
+        local exec_cmd = "DiffviewFileHistory ".. filepath
+        P(exec_cmd)
+        vim.cmd(exec_cmd)
+      end, "Git History"
     },
     r = {
       function()
@@ -319,6 +331,12 @@ local leader = {
         vim.cmd("DiffviewOpen ".. branch .. " -- " .. path)
       end, "DiffOpen <branch>"
     },
+    h = {
+      function()
+        local path = vim.fn.input("folder > ")
+        vim.cmd("DiffviewFileHistory " .. path)
+      end, "DiffOpenHistory <path>"
+    },
     o={"<cmd>DiffviewOpen<CR>", "DiffOpen"},
     m={"<cmd>DiffviewOpen master<CR>", "DiffOpen master"},
     r={"<cmd>DiffviewOpen HEAD~1<CR>", "DiffOpen HEAD~1"},
@@ -339,7 +357,6 @@ local leader = {
 
   t = {
     name = "+toggle",
-    o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
     -- q = {"<cmd>call ToggleList('Quickfix List', 'c')<CR>", "Quickfix"},
     -- l = {"<cmd>call ToggleList('Location List', 'l')<CR>", "Location"},
     q = {require'util.user'.qflist.toggle, "Quickfix"},
@@ -383,7 +400,7 @@ local leader = {
   },
   f = {
     name = "+find",
-    p = {
+    g = {
       function()
         R('configs.telescope')['grep_prompt']()
       end,
@@ -401,7 +418,7 @@ local leader = {
       end,
       "Vimwiki Live Grep"
     },
-    g = {
+    l = {
       function()
         R('configs.telescope')['live_grep']()
       end,
@@ -419,7 +436,7 @@ local leader = {
       end,
       "Registers"
     },
-    t = {"<cmd>TodoTelescope<CR>", "Find Trouble"},
+    x = {"<cmd>TodoTelescope<CR>", "Find Trouble"},
     f = {
       function()
         R('configs.telescope')['find_files']()

@@ -51,8 +51,8 @@ function autocmd.load_autocmds()
       {"BufRead,BufNewFile", "*.pp", " setf puppet"};
       {"FileType", "markdown", "setlocal spell"};
       -- windows to close with "q"
-      {"FileType","help,startuptime,qf,lspinfo,man,Trouble,orgagenda,org", "nnoremap <buffer><silent> q :close<CR>"};
-      {"FileType","help,startuptime,qf,lspinfo,man,Trouble,orgagenda,org", "nnoremap <buffer><silent> <C-c> :close<CR>"};
+      {"FileType","help,startuptime,qf,lspinfo,man,Trouble,orgagenda,org,packer,lspsagafinder,Outline", "nnoremap <buffer><silent> q :close<CR>"};
+      {"FileType","help,startuptime,qf,lspinfo,man,Trouble,orgagenda,org,packer,lspsagafinder,Outline", "nnoremap <buffer><silent> <C-c> :close<CR>"};
       {"BufEnter", "_cheat", "nnoremap <buffer><silent> <C-c> :close<CR>"};
     };
 
@@ -74,6 +74,13 @@ function autocmd.load_autocmds()
       {"BufWinLeave", "*.*", "mkview"};
       {"BufWinEnter", "*.*", "silent! loadview"}
     };
+
+    -- cpp_switching = {
+    --   -- switching between header and source files, setting up FSSwitch to work
+    --   -- doesnt work for some reason.. but lvimrc works
+    --   {"BufEnter", "*.h", [[let b:fswitchdst = 'cpp' | let b:fswitchlocs = '..']]};
+    --   {"BufEnter", "*.cpp:", [[let b:fswitchdst = 'h' | let b:fswitchlocs = 'include']]}
+    -- };
 
 
   };
