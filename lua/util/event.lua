@@ -78,7 +78,7 @@ function autocmd.load_autocmds()
     background_toggle = {
       {"VimEnter",  "*", [[if filereadable(g:themefile) | call SetColors() | endif]]};
       {"Signal",  "SIGUSR1", "call ToggleBg()"}; -- allow all vim processes to change color
-      -- depends on this bash function
+      -- depends on this bash script
       -- function toggle-bg-fn {
       --   for pid in $(pgrep vim)
       --   do

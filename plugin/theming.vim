@@ -42,6 +42,7 @@ function! SetColors()
     execute printf("let g:material_style='%s'", (filereadable(g:themefile) ? readfile(g:themefile)[0] : g:default_material_style))
     execute printf("colorscheme %s", filereadable(g:themefile) ? readfile(g:themefile)[1] : g:default_theme)
     execute printf("set background=%s",(filereadable(g:themefile) ? readfile(g:themefile)[2] : g:default_bg))
+    " execute printf("lua require('material.functions').change_style('%s')", g:default_material_style)
     " execute g:test1
     " execute g:test2
     " execute g:test3
@@ -70,18 +71,20 @@ function! ToggleBg()
     call SetColors()
     " execute "silent !tmux source-file " . shellescape(expand('~/.tmux/themes/huy-dark.sh'))
   endif
-  " trigger all over vim processes
-
-
+  " lua require('plenary.reload').reload_module('lualine.nvim', true)
 endfunction
 
 command! ToggleBackground call ToggleBg()
 
 " ReloadBackground
-nnoremap <silent><Leader>bg :<C-u>call ToggleBg()<CR>
+" " trigger all over vim processes
+" ```togglebg bash script
+" #! /usr/bin/env bash
+" for pid in $(pgrep vim)
+" do
+"   # echo $pid
+"   kill -SIGUSR1 $pid
+" done
+" ```
 
-" " THEME NAME
-" if filereadable(g:themefile)
-"   call s:setColors()
-" endif
-
+nnoremap <silent><Leader>bg :<C-u>call ToggleBg()<CR>:execute printf("!bash -c togglebg")<CR>
