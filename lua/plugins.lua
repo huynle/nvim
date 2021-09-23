@@ -839,6 +839,10 @@ local function plugins(use)
   }
 
   -- use {
+  --   'edkolev/tmuxline.vim'
+  -- }
+
+  -- use {
   --   'navarasu/onedark.nvim',
   --   config = function()
   --     vim.g.onedark_style = 'deep'

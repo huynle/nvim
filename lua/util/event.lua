@@ -75,6 +75,19 @@ function autocmd.load_autocmds()
       {"BufWinEnter", "*.*", "silent! loadview"}
     };
 
+    background_toggle = {
+      {"VimEnter",  "*", [[if filereadable(g:themefile) | call SetColors() | endif]]};
+      {"Signal",  "SIGUSR1", "call ToggleBg()"}; -- allow all vim processes to change color
+      -- depends on this bash function
+      -- function toggle-bg-fn {
+      --   for pid in $(pgrep vim)
+      --   do
+      --     kill -SIGUSR1 $pid
+      --   done
+      -- }
+
+    }
+
     -- cpp_switching = {
     --   -- switching between header and source files, setting up FSSwitch to work
     --   -- doesnt work for some reason.. but lvimrc works

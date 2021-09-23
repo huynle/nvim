@@ -51,6 +51,8 @@ vim.g.mapleader = " "
 vim.api.nvim_set_keymap('n',' ','',{noremap = true})
 vim.api.nvim_set_keymap('x',' ','',{noremap = true})
 
+vim.g.vimcache = global.cache_dir
+
 -- " When the --vimgrep flag is given to ripgrep, then the default value for the --color flag changes to 'never'.
 vim.go.grepprg = "rg --no-heading --vimgrep --smart-case --follow"
 vim.go.grepformat = "%f:%l:%c:%m"
