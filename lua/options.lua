@@ -14,6 +14,8 @@ function global:load_variables()
   self.path_sep = path_sep
   self.home = home
   self.data_dir = string.format('%s/site/',vim.fn.stdpath('data'))
+
+  vim.fn.setenv("VARPATH", global.cache_dir)
 end
 
 global:load_variables()

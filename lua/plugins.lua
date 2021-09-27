@@ -78,6 +78,20 @@ local function plugins(use)
     -- cmd = {'LspInstall'}
   }
 
+  use {'ludovicchabant/vim-gutentags'}
+  use {'skywind3000/gutentags_plus'}
+
+  use {
+    'kristijanhusak/completion-tags',
+    requires = {'nvim-lua/completion-nvim'},
+    setup = function()
+      vim.g.setup_test = 1
+    end,
+    config = function()
+      require 'configs.completion'
+    end,
+    }
+
 
 
   -- -- LSP

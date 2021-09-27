@@ -1,65 +1,15 @@
-" " ChangeBackground changes the background mode based on macOS's `Appearance`
-" " setting. We also refresh the statusline colors to reflect the new mode.
-" function! ChangeBackground()
-"   if system("defaults read -g AppleInterfaceStyle") =~ '^Dark'
-"   " if 0
-"     " lua require('material.functions').change_style('deep ocean')
-"     let g:material_style = "deep ocean"
-"     colorscheme material
-"     set background=dark   " for the dark version of the theme
-"   else
-"     " lua require('material.functions').change_style('lighter')
-"     let g:material_style = "lighter"
-"     colorscheme material
-"     set background=light  " for the light version of the theme
-"   endif
-
-"   " try
-"   "   execute "AirlineRefresh"
-"   " catch
-"   " endtry
-" endfunction
-
-" initialize the colorscheme for the first run
-" call ChangeBackground()
-
-" " change the color scheme if we receive a SigUSR1
-" autocmd SigUSR1 * call ChangeBackground()
-"
-"
-
-
 " COLORSCHEME NAME
+" inspiration from here: https://arslan.io/2021/02/15/automatic-dark-mode-for-terminal-applications/
 let g:themefile = g:vimcache.'theme.txt'
 let g:default_theme = 'material'
 let g:default_bg = 'dark'
 let g:default_material_style = "deep ocean"
 
 function! SetColors()
-  " if ! exists('g:colors_name')
-    " echom "got colorschem: " . readfile(g:themefile)[0]
-    " echom "got bg" . readfile(g:themefile)[1]
     execute printf("let g:material_style='%s'", (filereadable(g:themefile) ? readfile(g:themefile)[0] : g:default_material_style))
     execute printf("colorscheme %s", filereadable(g:themefile) ? readfile(g:themefile)[1] : g:default_theme)
     execute printf("set background=%s",(filereadable(g:themefile) ? readfile(g:themefile)[2] : g:default_bg))
-    " execute printf("lua require('material.functions').change_style('%s')", g:default_material_style)
-    " execute g:test1
-    " execute g:test2
-    " execute g:test3
-  " endif
 endfunction
-
-" function! s:theme_write(color_info, filepath)
-"   call writefile(a:color_info, a:filepath)
-" endfunction
-
-" function! s:reloadBackground()
-        " let l:saved_bg = filereadable(g:themefile) ? readfile(g:themefile)[1] : 'dark'
-        " if l:saved_bg != &background
-                " call s:setColors()
-        " endif
-" endfunction
-
 
 function! ToggleBg()
   if &background ==? 'dark'
@@ -75,16 +25,5 @@ function! ToggleBg()
 endfunction
 
 command! ToggleBackground call ToggleBg()
-
-" ReloadBackground
-" " trigger all over vim processes
-" ```togglebg bash script
-" #! /usr/bin/env bash
-" for pid in $(pgrep vim)
-" do
-"   # echo $pid
-"   kill -SIGUSR1 $pid
-" done
-" ```
 
 nnoremap <silent><Leader>bg :<C-u>call ToggleBg()<CR>:execute printf("!bash -c togglebg")<CR>
