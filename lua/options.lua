@@ -15,7 +15,12 @@ function global:load_variables()
   self.home = home
   self.data_dir = string.format('%s/site/',vim.fn.stdpath('data'))
 
+  vim.fn.setenv("VIMPATH", self.vim_path)
   vim.fn.setenv("VARPATH", global.cache_dir)
+  vim.fn.setenv("PROJECT", vim.fn.getcwd())
+  vim.fn.setenv("ROOT_MARKER", '.vim')
+  vim.fn.setenv("PROJECTCONFIG", vim.env.PROJECT..'/'..vim.env.ROOT_MARKER)
+
 end
 
 global:load_variables()

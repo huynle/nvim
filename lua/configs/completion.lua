@@ -7,5 +7,3 @@ vim.g.completion_chain_complete_list = {
     }
   }
 }
-
-vim.g.test = 1

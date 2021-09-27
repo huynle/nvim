@@ -196,14 +196,17 @@ local function plugins(use)
   use {
     'embear/vim-localvimrc',
     setup = function()
-      -- local cwd = vim.fn.getcwd()
       vim.g.localvimrc_enable = 1
       vim.g.localvimrc_ask = 0
       vim.g.localvimrc_sandbox = 0
+      vim.g.localvimrc_reverse = 0
+      -- vim.g.localvimrc_blacklist=['.*'],
+      -- vim.g.localvimrc_whitelist=['[^/]*/*/work/', '/*/*/.config/nvim/'],
       vim.g.localvimrc_event = { "VimEnter", "BufRead", "BufWrite" }
-      -- vim.g.localvimrc_name = { cwd .. "/.project/config.vim", cwd .. "/.project/local.vim", cwd .. "/.vimrc" }
-      -- vim.g.localvimrc_name = { ".vimrc" }
-      -- vim.g.localvimrc_name = {"~/.config/nvim/local.vim"}
+      vim.g.localvimrc_name = { 
+        vim.env.PROJECTCONFIG.."/settings.vim",
+        vim.env.VIMPATH.."/settings.vim", 
+    }
     end
   }
 

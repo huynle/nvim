@@ -1,6 +1,0 @@
-" add this to project
-
-" setting up FSSwitch to work
-au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '..'
-au! BufEnter *.cpp let b:fswitchdst = 'h' | let b:fswitchlocs = 'include'
-
