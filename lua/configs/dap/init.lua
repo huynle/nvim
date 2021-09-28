@@ -1,7 +1,6 @@
 local dap = require('dap')
 -- NOTE: Read help page for a lot of cool info
 
-
 -- Virtual text
 vim.g.dap_virtual_text = true
 -- request variable values for all frames (experimental)
@@ -17,6 +16,7 @@ nnoremap <silent> <localleader>dc :lua require'dap'.continue()<CR>
 nnoremap <silent> <localleader>dk :lua require'dap'.step_over()<CR>
 nnoremap <silent> <localleader>d; :lua require'dap'.step_into()<CR>
 nnoremap <silent> <localleader>dj :lua require'dap'.step_out()<CR>
+nnoremap <silent> <localleader>ds :lua require'dap'.close()<CR>
 " moving up and down the call stack?
 nnoremap <silent> <M-k> :lua require'dap'.up()<CR>
 nnoremap <silent> <M-j> :lua require'dap'.down()<CR>
@@ -27,6 +27,9 @@ nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
 
 nnoremap <silent> <localleader>dff :Telescope dap frames<CR>
 nnoremap <silent> <localleader>dfb :Telescope dap list_breakpoints<CR>
+nnoremap <silent> <localleader>dfc :Telescope dap comands<CR>
+nnoremap <silent> <localleader>dfd :Telescope dap configurations<CR>
+nnoremap <silent> <localleader>dfv :Telescope dap variables<CR>
 
 ]])
 
@@ -40,39 +43,33 @@ vim.cmd[[nnoremap <localleader>dh <cmd>lua require('dap.ui.widgets').hover()<CR>
 -- NOTE: Custom configuration for adapters are here https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
 -- ======
 -- RUST, C and CPP
-dap.adapters.lldb = {
+dap.adapters.cppdbg = {
     type = 'executable',
-    attach = {pidProperty = "pid", pidSelect = "ask"},
-    command = 'lldb-vscode',
-    name = "lldb",
-    env = {LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"}
+    command = vim.env.DAPINSTALLDIR..'ccppr_vsc/extension/debugAdapters/bin/OpenDebugAD7',
 }
 
 dap.configurations.cpp = {
-    {
-        name = "Launch",
-        type = "lldb",
-        request = "launch",
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/',
-                                'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = false,
-        args = {},
-
-        -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-        --
-        --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-        --
-        -- Otherwise you might get the following error:
-        --
-        --    Error on launch: Failed to attach to the target process
-        --
-        -- But you should be aware of the implications:
-        -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-        runInTerminal = false
+  {
+    name = "generic_1stage",
+    type = "cppdbg",
+    request = "launch",
+    program = "${workspaceFolder}/cmake_build/gcc/Debug/bin/sim.exe",
+    args = {
+      "-MCseed","333333","generic_1stage.cmd"
+    },
+    stopAtEntry = true,
+    cwd = "${workspaceFolder}/sandbox",
+    environment = {},
+    externalConsole = false,
+    MIMode = "gdb",
+    setupCommands = {
+      {
+        description = "Enable pretty-printing for gdb",
+        text = "-enable-pretty-printing",
+        ignoreFailures = true
+      }
     }
+  }
 }
 
 dap.configurations.c = dap.configurations.cpp

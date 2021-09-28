@@ -186,8 +186,6 @@ require('telescope').load_extension('fzf_writer')
 -- uses lua built version of fzf
 -- require('telescope').load_extension('fzy_native')
 
-
-
 local function mysplit (inputstr, sep)
   if sep == nil then
     sep = "%s"

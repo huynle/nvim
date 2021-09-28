@@ -21,7 +21,7 @@ function global:load_variables()
   vim.fn.setenv("ROOT_MARKER", '.vim')
   vim.fn.setenv("PROJECTCONFIG", vim.env.PROJECT..'/'..vim.env.ROOT_MARKER)
   vim.fn.setenv("CACHEDIR", global.cache_dir)
-
+  vim.fn.setenv("DAPINSTALLDIR", vim.fn.stdpath("data") .. "/dapinstall/")
 end
 
 global:load_variables()

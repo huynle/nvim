@@ -27,3 +27,4 @@ endfunction
 command! ToggleBackground call ToggleBg()
 
 nnoremap <silent><Leader>bg :<C-u>call ToggleBg()<CR>:execute printf("!bash -c togglebg")<CR>
+

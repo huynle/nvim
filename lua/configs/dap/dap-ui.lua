@@ -1,7 +1,12 @@
+local dap, dapui = require('dap'), require('dapui')
+-- dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+-- dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+-- dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+
 require("dapui").setup({
   icons = {
-    expanded = "⯆",
-    collapsed = "⯈",
+    expanded = "▾",
+    collapsed = "▸",
     circular = "↺"
   },
   mappings = {
@@ -26,13 +31,13 @@ require("dapui").setup({
       { id = "stacks", size = 0.25 },
       { id = "watches", size = 00.25 },
     },
-    width = 40,
+    size = 40,
     position = "left", -- Can be "left" or "right"
   },
   tray = {
     open_on_start = true,
     elements = { "repl" },
-    height = 10,
+    size = 10,
     position = "bottom", -- Can be "bottom" or "top"
   },
   floating = {
@@ -51,7 +56,7 @@ require("dapui").setup({
 
 
 vim.cmd([[
-nnoremap <silent> <localleader>do <cmd>require'dapui'.toggle()<CR>
+nnoremap <silent> <localleader>do <cmd>lua require'dapui'.toggle()<CR>
 nnoremap <silent> <M-k> <cmd>lua require'dapui'.eval(<expression>)<CR>
 vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
 " nnoremap <silent> <localleader>df <cmd>require("dapui").float_element(<element ID>)<CR>

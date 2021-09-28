@@ -92,11 +92,3 @@ require('material').setup({
   }
 }
 )
-
--- vim.api.nvim_set_keymap('n', '<leader>ml', [[<Cmd>lua require('material.functions').change_style('lighter')<CR>]], { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>md', [[<Cmd>lua require('material.functions').change_style('deep ocean')<CR>]], { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>bg', [[<Cmd>lua require('material.functions').toggle_style()<CR>]], { noremap = true, silent = true })
--- vim.cmd('colorscheme material')
-
--- vim.o.background = "light"
--- vim.o.background = "dark"
