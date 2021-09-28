@@ -727,11 +727,6 @@ local function plugins(use)
     end
   }
 
-  use {
-    'derekwyatt/vim-fswitch',
-    ft = "cpp"
-  }
-
 
   use {
     'kristijanhusak/orgmode.nvim',

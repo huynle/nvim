@@ -54,7 +54,5 @@ vim.cmd([[
 nnoremap <silent> <localleader>do <cmd>require'dapui'.toggle()<CR>
 nnoremap <silent> <M-k> <cmd>lua require'dapui'.eval(<expression>)<CR>
 vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
-nnoremap <silent> <localleader>df <cmd>require("dapui").float_element(<element ID>)<CR>
-
-
+" nnoremap <silent> <localleader>df <cmd>require("dapui").float_element(<element ID>)<CR>
 ]])
