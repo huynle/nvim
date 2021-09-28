@@ -31,20 +31,23 @@ function! RemoteSync (sync_type)
     let l:rsync_base = l:rsync_base . " --exclude-from=".b:rsync_local."/".g:rsync_exclude
   endif 
 
-	if a:sync_type == "write-project"
+  if a:sync_type == "write-file"
+    let l:rsync_cmd_post = b:rsync_local."/".b:rsync_cur_file." ".g:rsync_server.":".g:rsync_remote_dir."/".b:rsync_cur_file." &"
+
+  elseif a:sync_type == "write-project"
 		let l:rsync_cmd_post = b:rsync_local."/ ".g:rsync_server.":".g:rsync_remote_dir." &"
+
   elseif a:sync_type == "write-project-delete"
 		let l:rsync_cmd_post = b:rsync_local."/ ".g:rsync_server.":".g:rsync_remote_dir." --delete &"
-	elseif a:sync_type == "read-project"
-		let l:rsync_cmd_post = g:rsync_server.":".g:rsync_remote_dir."/ ".b:rsync_local." &"
-	elseif a:sync_type == "read-project-delete"
-		let l:rsync_cmd_post = g:rsync_server.":".g:rsync_remote_dir."/ ".b:rsync_local." --delete &"
-	elseif a:sync_type == "read-delete-no-exclude"
-		let l:rsync_cmd_post = "rsync -art ".b:rsync_server.":".g:rsync_remote_dir." ".b:rsync_local."/ --delete &"
-  elseif a:sync_type == "write-file"
-    let l:rsync_cmd_post = b:rsync_local."/".b:rsync_cur_file." ".g:rsync_server.":".g:rsync_remote_dir."/".b:rsync_cur_file." &"
+
   elseif a:sync_type == "read-file"
     let l:rsync_cmd_post = b:rsync_server."/".b:rsync_cur_file." ".g:rsync_local.":".g:rsync_remote_dir."/".b:rsync_cur_file." &"
+
+	elseif a:sync_type == "read-project"
+		let l:rsync_cmd_post = g:rsync_server.":".g:rsync_remote_dir."/ ".b:rsync_local." &"
+
+	elseif a:sync_type == "read-project-delete"
+		let l:rsync_cmd_post = g:rsync_server.":".g:rsync_remote_dir."/ ".b:rsync_local." --delete &"
 	endif
 
   let total_rsync_cmd = l:rsync_base ." ". l:rsync_cmd_post
@@ -56,6 +59,16 @@ function! RemoteSync (sync_type)
 	" turn off rsync until it is loaded again by .local.vimrc
 endfunction
 
+function! IsMaster()
+  if isdirectory($PROJECT."/.git")
+    " if filereadable($PROJECT."/.vim/rsync_master")
+    return 1
+  elseif filereadable($PROJECT."/.git")
+    return 1
+  endif
+  return 0
+endfunction
+
 " " bind K to grep word under cursor
 " nnoremap <silent> <Leader>sw :call RemoteSync("write-project")<CR>
 " nnoremap <silent> <Leader>swd :call RemoteSync("write-delete")<CR>
@@ -64,17 +77,16 @@ endfunction
 " nnoremap <silent> <Leader>srdd :call RemoteSync("read-delete-no-exclude")<CR>
 " " au BufWritePost,FileWritePost * silent call RemoteSync()
 
-
 command! RRemoteWriteFile call RemoteSync("write-file") 
-command! RRemoteReadFile call RemoteSync("read-file") 
 command! RRemoteWriteProject call RemoteSync("write-project") 
 command! RRemoteWriteProjectDelete call RemoteSync("write-project-delete") 
+
+command! RRemoteReadFile call RemoteSync("read-file") 
 command! RRemoteReadProject call RemoteSync("read-project") 
 command! RRemoteReadProjectDelete call RemoteSync("read-project-delete") 
 
+autocmd BufWritePost * if g:rsync_auto_write_project && IsMaster() | silent! call RemoteSync("write-project") | endif
+autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project && IsMaster() | silent! call RemoteSync("write-file") | endif
 
-autocmd BufWritePost * if g:rsync_auto_write_project | silent! call RemoteSync("write-project") | endif
-autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project | silent! call RemoteSync("write-file") | endif
-
-" autocmd BufWritePost * if g:rsync_auto_write_project | call RemoteSync("write-project") | endif
-" autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project | call RemoteSync("write-file") | endif
+" autocmd BufWritePost * if g:rsync_auto_write_project && IsMaster() | call RemoteSync("write-project") | endif
+" autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project && IsMaster() | call RemoteSync("write-file") | endif

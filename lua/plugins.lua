@@ -84,9 +84,6 @@ local function plugins(use)
   use {
     'kristijanhusak/completion-tags',
     requires = {'nvim-lua/completion-nvim'},
-    setup = function()
-      vim.g.setup_test = 1
-    end,
     config = function()
       require 'configs.completion'
     end,
@@ -725,6 +722,11 @@ local function plugins(use)
     config = function ()
       vim.g.mkdp_auto_start = 0
     end
+  }
+
+  use {
+    'derekwyatt/vim-fswitch',
+    ft = "cpp"
   }
 
 

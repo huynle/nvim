@@ -35,7 +35,7 @@ let g:gutentags_generate_on_new = 0
 
 " Define custom project root marker
 let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['.project/config.vim']
+let g:gutentags_project_root = ['.vim/settings.vim']
 let g:gutentags_exclude_project_root = [ '/usr/local', '/usr/include']
 
 let g:gutentags_file_list_command = {
@@ -59,7 +59,7 @@ let g:gutentags_ctags_exclude = [
 
 " settings project cscope
 let g:gutentags_auto_add_cscope = 1
-let g:gutentags_scopefile = '.project/cscope.big'
+let g:gutentags_scopefile = '.vim/cscope.big'
 
 
 " settings project gtags

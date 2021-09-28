@@ -15,7 +15,7 @@ let b:rsync_cur_file = @%
 
 " DON't end with forward slash
 let b:rsync_local   = "$PROJECT"
-let g:rsync_exclude = ".vim/rsync_exclude"
+let g:rsync_exclude = $VIMPATH."/rsync_exclude"
 
 
 let g:easy_align_delimiters = {
@@ -45,9 +45,7 @@ let g:easy_align_delimiters = {
 \ }
 
 
-
-" add this to project
-
+" ######### CPP configs
 " cpp settings setting up FSSwitch to work
 au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '..'
 au! BufEnter *.cpp let b:fswitchdst = 'h' | let b:fswitchlocs = 'include'

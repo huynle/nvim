@@ -4,6 +4,8 @@ docs*
 trace*
 *.pyc
 .lvimrc
+rsync_master
+rsync_slave
 .rsync_exclude
 
 *.lock

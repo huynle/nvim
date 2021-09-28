@@ -9,7 +9,6 @@
 -- end
 -- reloader()
 
-
 -- NOTE: if a function is used, there has to be a name associated to it
 local wk = require("which-key")
 local util = require("util")
@@ -73,9 +72,9 @@ wk.setup {
   ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
-  -- triggers = "auto", -- automatically setup triggers
-  triggers = {}, -- setting empty to disable
-  -- triggers = {"<leader>"} -- or specify a list manually
+  triggers = "auto", -- automatically setup triggers
+  -- triggers = {}, -- setting empty to disable
+  -- triggers = {"<leader>", "<localleader>"}, -- or specify a list manually
   triggers_blacklist = {
     -- list of mode / prefixes that should never be hooked by WhichKey
     -- this is mostly relevant for key maps that start with a native binding
@@ -486,6 +485,9 @@ local leader = {
         R('configs.telescope')['edit_dotfiles']()
       end,
       "Edit Dotfiles"
+    },
+    e = {"<cmd>:LocalVimRCEdit<cr>",
+      "Edit LocalVimRC (editor settings)"
     },
   },
   ["."] = { ":Telescope file_browser<CR>", "Browse Files" },
