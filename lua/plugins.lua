@@ -749,6 +749,15 @@ local function plugins(use)
   }
 
   use {
+    "akinsho/org-bullets.nvim",
+    config = function()
+      require("org-bullets").setup {
+        symbols = { "◉", "○", "✸", "✿" }
+      }
+    end
+  }
+
+  use {
     'michal-h21/vim-zettel',
     config = function()
       vim.g.nv_search_paths = {'/docs/wiki'}
