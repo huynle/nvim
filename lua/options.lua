@@ -20,6 +20,7 @@ function global:load_variables()
   vim.fn.setenv("PROJECT", vim.fn.getcwd())
   vim.fn.setenv("ROOT_MARKER", '.vim')
   vim.fn.setenv("PROJECTCONFIG", vim.env.PROJECT..'/'..vim.env.ROOT_MARKER)
+  vim.fn.setenv("CACHEDIR", global.cache_dir)
 
 end
 
@@ -58,7 +59,6 @@ vim.g.mapleader = " "
 vim.api.nvim_set_keymap('n',' ','',{noremap = true})
 vim.api.nvim_set_keymap('x',' ','',{noremap = true})
 
-vim.g.vimcache = global.cache_dir
 
 -- " When the --vimgrep flag is given to ripgrep, then the default value for the --color flag changes to 'never'.
 vim.go.grepprg = "rg --no-heading --vimgrep --smart-case --follow"

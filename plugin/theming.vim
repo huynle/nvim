@@ -1,6 +1,6 @@
 " COLORSCHEME NAME
 " inspiration from here: https://arslan.io/2021/02/15/automatic-dark-mode-for-terminal-applications/
-let g:themefile = g:vimcache.'theme.txt'
+let g:themefile = $CACHEDIR.'theme.txt'
 let g:default_theme = 'material'
 let g:default_bg = 'dark'
 let g:default_material_style = "deep ocean"

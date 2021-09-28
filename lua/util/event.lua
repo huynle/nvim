@@ -87,15 +87,6 @@ function autocmd.load_autocmds()
       -- }
 
     }
-
-    -- cpp_switching = {
-    --   -- switching between header and source files, setting up FSSwitch to work
-    --   -- doesnt work for some reason.. but lvimrc works
-    --   {"BufEnter", "*.h", [[let b:fswitchdst = 'cpp' | let b:fswitchlocs = '..']]};
-    --   {"BufEnter", "*.cpp:", [[let b:fswitchdst = 'h' | let b:fswitchlocs = 'include']]}
-    -- };
-
-
   };
 
   autocmd.nvim_create_augroups(definitions)
