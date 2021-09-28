@@ -81,15 +81,6 @@ local function plugins(use)
   use {'ludovicchabant/vim-gutentags'}
   use {'skywind3000/gutentags_plus'}
 
-  use {
-    'kristijanhusak/completion-tags',
-    requires = {'nvim-lua/completion-nvim'},
-    config = function()
-      require 'configs.completion'
-    end,
-    }
-
-
 
   -- -- LSP
   -- -- from rMagatti
@@ -132,7 +123,7 @@ local function plugins(use)
   use {
     'hrsh7th/nvim-compe',
     opt = true,
-    event = 'InsertEnter',
+    event = 'BufReadPre',
     config = function()
       require "configs.compe"
     end,
@@ -500,27 +491,41 @@ local function plugins(use)
   --   end,
   -- }
 
-  -- Symbols
+  -- -- Symbols
+  -- use {
+  --   'simrat39/symbols-outline.nvim',
+  --   config = function()
+  --     require('symbols-outline').setup {
+  --       highlight_hovered_item = true,
+  --       show_guides = true,
+  --       auto_preview = false,
+  --       position = 'right',
+  --       keymaps = {
+  --         close = "<Esc>",
+  --         goto_location = "<CR>",
+  --         focus_location = "o",
+  --         hover_symbol = "p",
+  --         rename_symbol = "r",
+  --         code_actions = "a",
+  --       },
+  --       lsp_blacklist = {},
+  --     }
+  --   end,
+  --   cmd = {'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose'}
+  -- }
+
+  -- vista.vim: a tagbar alternative that supports lsp symbols and async processing
+  -- only guaranteed with Universal Ctags
   use {
-    'simrat39/symbols-outline.nvim',
-    config = function()
-      require('symbols-outline').setup {
-        highlight_hovered_item = true,
-        show_guides = true,
-        auto_preview = false,
-        position = 'right',
-        keymaps = {
-          close = "<Esc>",
-          goto_location = "<CR>",
-          focus_location = "o",
-          hover_symbol = "p",
-          rename_symbol = "r",
-          code_actions = "a",
-        },
-        lsp_blacklist = {},
+    "liuchengxu/vista.vim",
+    cmd = {"Vista"},
+    setup = function()
+      vim.g.vista_default_executive = "nvim_lsp"
+      vim.g.vista_executive_for = {
+        cpp = 'ctags',
+        lua = 'ctags',
       }
     end,
-    cmd = {'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose'}
   }
 
 

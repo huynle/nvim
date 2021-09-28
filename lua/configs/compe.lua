@@ -1,18 +1,51 @@
-require'compe'.setup({
-	source = {
-		path = true,
-		buffer = {kind = '⌯', true},  -- ﬘,
-		-- spell = true,
-		nvim_lsp = true,
-		nvim_lua = true,
-		vsnip = {kind = '*'},  -- ﬌
-		orgmode = true,
-		-- norg = true,
-		-- tmux = true,
-		-- tmux = { all_panes = true }
-	},
-})
+-- require'compe'.setup({
+-- 	source = {
+-- 		path = true,
+-- 		tags = true,
+-- 		buffer = {kind = '⌯', true},  -- ﬘,
+-- 		-- spell = true,
+-- 		nvim_lsp = true,
+-- 		nvim_lua = true,
+-- 		vsnip = {kind = '*'},  -- ﬌
+-- 		orgmode = true,
+-- 		-- norg = true,
+-- 		-- tmux = true,
+-- 		-- tmux = { all_panes = true }
+-- 	},
+-- })
+vim.o.completeopt = "menu,menuone,noselect,noinsert"
 
+require'compe'.setup {
+  enabled = true,
+  autocomplete = true,
+  debug = false,
+  min_length = 1,
+  -- preselect = 'enable',
+  throttle_time = 80,
+  source_timeout = 200,
+  resolve_timeout = 800;
+  incomplete_delay = 400,
+  max_abbr_width = 100,
+  max_kind_width = 100,
+  max_menu_width = 100,
+  documentation = true,
+  source = {
+    path = true,
+    buffer = true,
+    calc = true,
+    tags = true,
+    spell = true,
+    nvim_lsp = true,
+    nvim_lua = true,
+    vsnip = true,
+    treesitter = true,
+    orgmode = true
+  }
+}
+
+
+
+-- ========== Tab completion
 local t = function(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end

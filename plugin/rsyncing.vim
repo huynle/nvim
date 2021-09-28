@@ -5,6 +5,7 @@ let g:rsync_auto_write_file = 0
 let g:rsync_enable = 0
 let g:rsync_exclude_gitignore = 1
 let g:rsync_exclude_git = 1
+let g:rsync_trace = 0
 
 " rsync
 function! RemoteSync (sync_type)
@@ -52,11 +53,11 @@ function! RemoteSync (sync_type)
 
   let total_rsync_cmd = l:rsync_base ." ". l:rsync_cmd_post
 
-  " execute "!" . rsync_command
-	execute "!" . total_rsync_cmd
-	" execute "!" . rsync_command_reverse
-
-	" turn off rsync until it is loaded again by .local.vimrc
+  if g:rsync_trace
+	  execute "!" . total_rsync_cmd
+  else
+	  silent execute "!" . total_rsync_cmd
+  endif
 endfunction
 
 function! IsMaster()
@@ -85,8 +86,8 @@ command! RRemoteReadFile call RemoteSync("read-file")
 command! RRemoteReadProject call RemoteSync("read-project") 
 command! RRemoteReadProjectDelete call RemoteSync("read-project-delete") 
 
-autocmd BufWritePost * if g:rsync_auto_write_project && IsMaster() | silent! call RemoteSync("write-project") | endif
-autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project && IsMaster() | silent! call RemoteSync("write-file") | endif
+" autocmd BufWritePost * if g:rsync_auto_write_project && IsMaster() | silent! call RemoteSync("write-project") | endif
+" autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project && IsMaster() | silent! call RemoteSync("write-file") | endif
 
-" autocmd BufWritePost * if g:rsync_auto_write_project && IsMaster() | call RemoteSync("write-project") | endif
-" autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project && IsMaster() | call RemoteSync("write-file") | endif
+autocmd BufWritePost * if g:rsync_auto_write_project && IsMaster() | call RemoteSync("write-project") | endif
+autocmd BufWritePost * if g:rsync_auto_write_file && !g:rsync_auto_write_project && IsMaster() | call RemoteSync("write-file") | endif

@@ -39,23 +39,23 @@ let g:gutentags_project_root = ['.vim/settings.vim']
 let g:gutentags_exclude_project_root = [ '/usr/local', '/usr/include']
 
 let g:gutentags_file_list_command = {
-    \ 'markers': {
-	\ '.git': 'git ls-files',
-	\ '.hg': 'hg files',
-	\ },
-    \ }
+      \ 'markers': {
+        \ '.git': 'git ls-files',
+        \ '.hg': 'hg files',
+        \ },
+        \ }
 
 " Ignore these wild generating tags
-let g:gutentags_ctags_exclude_wildignore = 0
-let g:gutentags_ctags_exclude = [
-  \ '*/wp-admin', '*/wp-content', '*/wp-includes',
-  \ '*/application/vendor', '*/vendor/ckeditor', '*/media/vendor',
-  \ '*/venv', '*.css', '*.html', '*.js', '*.json', '*.xml',
-  \ '*.phar', '*.ini', '*.rst', '*.md',
-  \ '*vendor/*/test*', '*vendor/*/Test*',
-  \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
-  \ '.idea', '.cache', '.tox', '.bundle', 'build', 'dist',
-  \ '*var/cache*', '*var/log*']
+let g:gutentags_ctags_exclude_wildignore = 1
+" let g:gutentags_ctags_exclude = [
+"   \ '*/wp-admin', '*/wp-content', '*/wp-includes',
+"   \ '*/application/vendor', '*/vendor/ckeditor', '*/media/vendor',
+"   \ '*/venv', '*.css', '*.html', '*.js', '*.json', '*.xml',
+"   \ '*.phar', '*.ini', '*.rst', '*.md',
+"   \ '*vendor/*/test*', '*vendor/*/Test*',
+"   \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
+"   \ '.idea', '.cache', '.tox', '.bundle', 'build', 'dist',
+"   \ '*var/cache*', '*var/log*']
 
 " settings project cscope
 let g:gutentags_auto_add_cscope = 1

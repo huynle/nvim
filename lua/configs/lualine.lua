@@ -2,6 +2,12 @@ local function clock()
   return " " .. os.date("%H:%M")
 end
 
+
+local function NearestMethodOrFunction()
+  return vim.b.vista_nearest_method_or_function or ""
+end
+
+
 -- show lsp progress in statusline
 local function lsp_progress()
   local messages = vim.lsp.util.get_progress_messages()
@@ -74,7 +80,7 @@ local config = {
     },
     lualine_x = { "filetype", "progress", "location"},
     lualine_y = {},
-    lualine_z = {lsp_progress},
+    lualine_z = {NearestMethodOrFunction, lsp_progress},
   },
   inactive_sections = {
     lualine_a = {},

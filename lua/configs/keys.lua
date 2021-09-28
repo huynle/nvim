@@ -274,7 +274,7 @@ local localleader = {
 
   t = {
     name = "+toggle",
-    o = {"<cmd>SymbolsOutline<CR>", "SymbolOutline"},
+    t = {"<cmd>Vista!!<CR>", "Vista"},
     w = {
       function()
         util.toggle("wrap")
