@@ -69,6 +69,47 @@ dap.configurations.cpp = {
         ignoreFailures = true
       }
     }
+  },
+  {
+    name = "mohifisim",
+    type = "cppdbg",
+    request = "launch",
+    program = "${workspaceFolder}/cmake_build/gcc/Debug/bin/sim.exe",
+    args = {
+      "mohifisim.cmd"
+    },
+    stopAtEntry = true,
+    cwd = "${workspaceFolder}/sandbox",
+    environment = {},
+    externalConsole = false,
+    MIMode = "gdb",
+    setupCommands = {
+      {
+        description = "Enable pretty-printing for gdb",
+        text = "-enable-pretty-printing",
+        ignoreFailures = true
+      }
+    }
+  },
+  {
+    name = "gtest",
+    type = "cppdbg",
+    request = "launch",
+    program = "${workspaceFolder}/cmake_build/gcc/Debug/bin/gtest.exe",
+    args = {"--gtest_filter=*", --  uncomment line and replace "Test" with appropriate keyword to debug specific unit test(s)            
+    "${workspaceFolder}/src/sim/test/data"},
+    stopAtEntry = false,
+    cwd = "${workspaceFolder}/sandbox",
+    environment = {},
+    externalConsole = false,
+    MIMode = "gdb",
+    setupCommands = {
+    {
+      description = "Enable pretty-printing for gdb",
+      text = "-enable-pretty-printing",
+      ignoreFailures = true
+    }
+    }
   }
 }
 

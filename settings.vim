@@ -201,3 +201,55 @@ au! BufEnter *.cpp let b:fswitchdst = 'h' | let b:fswitchlocs = 'include'
 
 "" " vim: set foldmethod=marker ts=2 sw=2 tw=80 noet :
 
+lua<<EOF
+
+-- local has_dap, dap = pcall(require, "dap")
+-- if not has_dap then
+--   return
+-- end
+-- 
+-- dap.configurations.cpp = {
+--   {
+--     name = "generic_1stage",
+--     type = "cppdbg",
+--     request = "launch",
+--     program = "${workspaceFolder}/cmake_build/gcc/Debug/bin/sim.exe",
+--     args = {
+--       "-MCseed","333333","generic_1stage.cmd"
+--     },
+--     stopAtEntry = true,
+--     cwd = "${workspaceFolder}/sandbox",
+--     environment = {},
+--     externalConsole = false,
+--     MIMode = "gdb",
+--     setupCommands = {
+--       {
+--         description = "Enable pretty-printing for gdb",
+--         text = "-enable-pretty-printing",
+--         ignoreFailures = true
+--       }
+--     }
+--   },
+--   {
+--       name = "mohifisim",
+--       type = "cppdbg",
+--       request = "launch",
+--       program = "${workspaceFolder}/cmake_build/gcc/Debug/bin/sim.exe",
+--       args = {
+--           "mohifisim.cmd"
+--       },
+--       stopAtEntry = true,
+--       cwd = "${workspaceFolder}/sandbox",
+--       environment = {},
+--       externalConsole = false,
+--       MIMode = "gdb",
+--       setupCommands = {
+--           {
+--               description = "Enable pretty-printing for gdb",
+--               text = "-enable-pretty-printing",
+--               ignoreFailures = true
+--           }
+--       }
+--   },
+-- }
+EOF

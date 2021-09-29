@@ -8,9 +8,10 @@ local packer = require('util.packer')
 local config = {
 
   profile = {
-    enable = true,
+    enable = false,
     threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
   },
+  max_jobs = 20,
   display = {
     open_fn = function()
       return require("packer.util").float {border = "single"}
@@ -42,7 +43,6 @@ local function plugins(use)
   }
 
   use {"nvim-lua/popup.nvim"}
-
   use {"nvim-lua/plenary.nvim"}
 
 -- here is all the mapping
@@ -63,40 +63,21 @@ local function plugins(use)
 
   use {
     'neovim/nvim-lspconfig',
-    requires = { 'kabouzeid/nvim-lspinstall'},
-    event = 'BufReadPre',
-  }
-
-  use {
-    'kabouzeid/nvim-lspinstall',
-    after = 'nvim-lspconfig',
-    event = 'BufReadPost',
+    requires = {
+      'kabouzeid/nvim-lspinstall',
+      'onsails/lspkind-nvim',
+      'wbthomason/lsp-status.nvim'
+    },
+    -- after = 'nvim-lspinstall',
+    -- event = 'BufReadPre',
     config = function()
       require "configs.lspconfig"
     end,
-    -- opt = true,
-    -- cmd = {'LspInstall'}
   }
 
   use {'ludovicchabant/vim-gutentags'}
   use {'skywind3000/gutentags_plus'}
 
-
-  -- -- LSP
-  -- -- from rMagatti
-  -- use {
-  --   'neovim/nvim-lspconfig',
-  --   event = 'BufReadPre'
-  -- }
-  -- use {
-  --   'kabouzeid/nvim-lspinstall',
-  --   requires = {'neovim/nvim-lspconfig'},
-  --   config = function()
-  --     require('rmagatti.lsp-server-configs')
-  --   end,
-  --   event = 'BufReadPost',
-  --   after = 'nvim-lspconfig'
-  -- }
 
   -- use {
   --   "ray-x/lsp_signature.nvim",
@@ -120,31 +101,48 @@ local function plugins(use)
     end
   }
 
-  use {
-    'hrsh7th/nvim-compe',
-    opt = true,
-    event = 'BufReadPre',
-    config = function()
-      require "configs.compe"
-    end,
-    requires = {
-      {
-        "windwp/nvim-autopairs",
-        config = function()
-          require('nvim-autopairs').setup()
-        end,
-      },
-    },
-  }
-
-
-
   -- use {
-  --   "folke/which-key.nvim",
+  --   'hrsh7th/nvim-compe',
+  --   opt = true,
+  --   event = 'BufReadPre',
   --   config = function()
-  --     require "configs.keys"
-  --   end
+  --     require "configs.compe"
+  --   end,
+  --   requires = {
+  --     {
+  --       "windwp/nvim-autopairs",
+  --       config = function()
+  --         require('nvim-autopairs').setup()
+  --       end,
+  --     },
+  --   },
   -- }
+
+  -- Autocomplete
+  use {
+    'hrsh7th/nvim-cmp',
+    config = function()
+      require "configs.completion"
+    end,
+  }
+  use {'hrsh7th/cmp-nvim-lsp'}
+  use {'hrsh7th/cmp-buffer'}
+  use {'hrsh7th/cmp-vsnip'}
+  use {
+    'hrsh7th/vim-vsnip',
+    event = 'InsertCharPre',
+    config = function()
+      vim.g.vsnip_snippet_dir = os.getenv('HOME') .. '/.config/nvim/snippets'
+    end
+  }
+  use {'hrsh7th/cmp-path'}
+  use {'hrsh7th/cmp-calc'}
+  use {'ray-x/cmp-treesitter'}
+  use {'quangnguyen30192/cmp-nvim-tags'}
+  use {'rafamadriz/friendly-snippets'}
+  use {'windwp/nvim-autopairs'}
+  use {'AndrewRadev/tagalong.vim'}
+  use {'andymass/vim-matchup'}
 
   use {
     'mtth/scratch.vim',
@@ -199,11 +197,6 @@ local function plugins(use)
   }
 
 
-  use {
-    'hrsh7th/vim-vsnip',
-    event = 'InsertCharPre',
-    config = conf.vim_vsnip
-  }
 
   use {
     'nvim-telescope/telescope.nvim',
@@ -968,14 +961,6 @@ local function plugins(use)
 
 
   use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
-
-  use {
-    disable = true,
-    'nvim-lua/lsp-status.nvim'
-    -- FIXME: needs to add to lualine, dont even know if this is necessary
-    -- sections = {lualine_c = {require'lsp-status'.status}}
-  }
-
 
 end
 

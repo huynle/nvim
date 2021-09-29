@@ -1,30 +1,71 @@
-local lspconfig = require 'lspconfig'
+-- local lspconfig = require 'lspconfig'
+local has_lsp, lspconfig = pcall(require, "lspconfig")
+if not has_lsp then
+  return
+end
+
+local lspinstall = require "lspinstall".setup()
+local extract_config = require "lspinstall/util".extract_config
+
+local lspkind = require "lspkind"
+local nvim_status = require "lsp-status"
+local status = require "configs.lspconfig.status"
+
+lspkind.init()
+status.activate()
 
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
 end
 
 local saga = require 'lspsaga'
-saga.init_lsp_saga({
-  code_action_icon = ''
-})
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+saga.init_lsp_saga(
+  {
+    code_action_icon = ''
+  }
+)
 
-function _G.reload_lsp()
-  vim.lsp.stop_client(vim.lsp.get_active_clients())
-  vim.cmd [[edit]]
+function defaultTable(t, d)
+  local mt = {
+    __index = function ()
+      return d 
+    end,
+
+    __add = function (t1, t2)
+        local ret = {}
+        for i, v in ipairs(t1) do
+            table.insert(ret, v)
+        end
+        for i, v in ipairs(t2) do
+            table.insert(ret, v)
+        end
+        return ret
+      end
+  }
+
+  setmetatable(t, mt)
 end
 
-function _G.open_lsp_log()
-  local path = vim.lsp.get_log_path()
-  vim.cmd("edit " .. path)
+local custom_init = function(client)
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
 end
 
-vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
-vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+   properties = {
+     'documentation',
+     'detail',
+     'additionalTextEdits',
+   }
+ }
 
+
+-- dont show diagnostic line
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Enable underline, use default values
@@ -38,13 +79,6 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     -- Disable a feature
     update_in_insert = false,
 })
-
--- local enhance_attach = function(client,bufnr)
---   if client.resolved_capabilities.document_formatting then
---     format.lsp_before_save()
---   end
---   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
 
 -- lspconfig.gopls.setup {
 --   cmd = {"gopls","--remote=auto"},
@@ -76,30 +110,82 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 --   }
 -- }
 
--- lspconfig.tsserver.setup {
---   on_attach = function(client)
---     client.resolved_capabilities.document_formatting = false
---     enhance_attach(client)
---   end
--- }
-
--- lspconfig.clangd.setup {
---   cmd = {
---     "clangd",
---     "--background-index",
---     "--suggest-missing-includes",
---     "--clang-tidy",
---     "--header-insertion=iwyu",
---   },
--- }
-
-lspconfig.rust_analyzer.setup {
-  capabilities = capabilities,
-}
 
 local servers = {
-  'docker-langserver','bash-language-server','pyright'
+  bashls = {
+    cmd = {
+      string.format('%s/lspinstall/bash/./node_modules/.bin/bash-language-server',vim.fn.stdpath('data')),
+      "start"
+    }
+  },
+
+  python = true,
+  vim = true,
+  lua = true,
+  yamlls = {
+    cmd = {
+      string.format('%s/lspinstall/yaml/./node_modules/.bin/yaml-language-server',vim.fn.stdpath('data')),
+      "--stdio"
+    }
+  },
+
+  cmake = (1 == vim.fn.executable "cmake-language-server"),
+  clangd = {
+    cmd = {
+      string.format('%s/lspinstall/cpp/clangd/bin/clangd',vim.fn.stdpath('data')),
+      "--background-index",
+      "--suggest-missing-includes",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+    },
+    -- Required for lsp-status
+    init_options = {
+      clangdFileStatus = true,
+    },
+    handlers = nvim_status.extensions.clangd.setup(),
+  },
+
+  -- gopls = {
+  --   root_dir = function(fname)
+  --     local Path = require "plenary.path"
+
+  --     local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+  --     local absolute_fname = Path:new(fname):absolute()
+
+  --     if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
+  --       return absolute_cwd
+  --     end
+
+  --     return lspconfig_util.root_pattern("go.mod", ".git")(fname)
+  --   end,
+
+  --   settings = {
+  --     gopls = {
+  --       codelenses = { test = true },
+  --     },
+  --   },
+
+  --   flags = {
+  --     debounce_text_changes = 200,
+  --   },
+  -- },
+
+  tsserver = {
+    cmd = {
+      string.format('%s/lspinstall/typescript/node_modules/.bin/typescript-language-server',vim.fn.stdpath('data')),
+      "--stdio"
+    },
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+  },
 }
+
 
 local function has_value (tab, val)
   for _, value in ipairs(tab) do
@@ -110,27 +196,54 @@ local function has_value (tab, val)
   return false
 end
 
-function _G.dump(...)
-  local objects = vim.tbl_map(vim.inspect, {...})
-  print(unpack(objects))
-end
 
 
 local opts = { noremap=true, silent=true }
 
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-  -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local filetype_attach = setmetatable({
+  go = function(client)
+    vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
+      augroup END
+    ]]
+  end,
 
-  -- See https://github.com/ray-x/lsp_signature.nvim
-  -- require('lsp_signature').on_attach({
-  -- 	bind = true,
-  -- 	hint_enable = true,
-  -- 	hint_prefix = ' ',
-  -- 	handler_opts = { border = 'single' },
-  -- })
+  rust = function()
+    telescope_mapper("<space>wf", "lsp_workspace_symbols", {
+      ignore_filename = true,
+      query = "#",
+    }, true)
+
+    -- vim.cmd [[
+    --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
+    -- ]]
+
+    vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
+      augroup END
+    ]]
+  end,
+}, {
+  __index = function()
+    return function() end
+  end,
+})
+
+local function buf_set_keymap(...)
+  vim.api.nvim_buf_set_keymap(bufnr, ...)
+end
+
+
+local custom_attach = function(client, bufnr)
+  local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+
+  nvim_status.on_attach(client)
+
+  -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   -- Mappings.
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -181,13 +294,26 @@ local on_attach = function(client, bufnr)
   ---- ["n|<localleader>e"]          = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
   --["n|<localleader>ct"]         = map_args("Template"),
   ----
+  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", ",f", '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  end
+
   if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("v", ",f", '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+    buf_set_keymap("v", "<leader>=", '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+  end
+
+  -- -- Set some keybinds conditional on server capabilities
+  -- if client.resolved_capabilities.document_formatting then
+  --   buf_set_keymap("n", ",f", '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  -- end
+  -- Set autocommands conditional on server_capabilities
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd [[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -203,86 +329,140 @@ local on_attach = function(client, bufnr)
     augroup END
     ]], false)
   end
+
+  -- Attach any filetype specific options to the client
+  filetype_attach[filetype](client)
 end
-
-
 
 
 local lua_settings = {
-	Lua = {
-		runtime = { version = 'LuaJIT', path = vim.split(package.path, ';'), },
-		diagnostics = {
-			enable = true,
-			globals = {'vim', 'use', 'describe', 'it', 'assert', 'before_each', 'after_each'},
-		},
-		workspace = {
-			preloadFileSize = 400,
-			library = {
-				[vim.fn.expand('$VIMRUNTIME/lua')] = true,
-				[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-			},
-		},
-	}
+  Lua = {
+    runtime = { version = 'LuaJIT', path = vim.split(package.path, ';'), },
+    diagnostics = {
+      enable = true,
+      globals = {'vim', 'use', 'describe', 'it', 'assert', 'before_each', 'after_each'},
+    },
+    workspace = {
+      preloadFileSize = 400,
+      library = {
+        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+      },
+    },
+  }
 }
 
 
-local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      'documentation',
-      'detail',
-      'additionalTextEdits',
-    }
-  }
-  return {
-    on_attach = on_attach,
-  }
-end
+-- local function make_config()
+--   return {
+--     on_attach = custom_attach ,
+--   }
+-- end
 
-local function setup_servers()
-  require'lspinstall'.setup()
-  local lspinstalled_servers = require'lspinstall'.installed_servers()
-  for _, server in pairs(lspinstalled_servers) do
-    local config = make_config()
-    --     if has_value(servers, server) then
-    --       require'lspconfig'[server].setup{}
-    if server == 'lua' then
-      -- See https://github.com/folke/lua-dev.nvim
-      config.settings = lua_settings
-      config = require('lua-dev').setup({
-        lspconfig = config,
-        library = {
-          vimruntime = true, -- runtime path
-          types = true, -- full signature, docs and completion
-          plugins = { 'plenary.nvim' },
-        },
-      })
-    elseif server == 'solargraph' then
-      config.init_options = {
-        config = {
-          filetypes = {
-            "ruby", "puppet"
-          }
-          -- settings = {
-          --   solargraph = {
-          --     diagnostics = true
-          --   }
-          -- }
-        }
-      }
-    end
+-- local function setup_servers()
+--   require'lspinstall'.setup()
+--   local lspinstalled_servers = require'lspinstall'.installed_servers()
+--   for _, server in pairs(lspinstalled_servers) do
+--     local config = make_config()
+--     --     if has_value(servers, server) then
+--     --       require'lspconfig'[server].setup{}
+--     if server == 'lua' then
+--       -- See https://github.com/folke/lua-dev.nvim
+--       config.settings = lua_settings
+--       config = require('lua-dev').setup({
+--         lspconfig = config,
+--         library = {
+--           vimruntime = true, -- runtime path
+--           types = true, -- full signature, docs and completion
+--           plugins = { 'plenary.nvim' },
+--         },
+--       })
+--     elseif server == 'solargraph' then
+--       config.init_options = {
+--         config = {
+--           filetypes = {
+--             "ruby", "puppet"
+--           }
+--           -- settings = {
+--           --   solargraph = {
+--           --     diagnostics = true
+--           --   }
+--           -- }
+--         }
+--       }
+--     end
 
 
-    require'lspconfig'[server].setup(config)
+--     require'lspconfig'[server].setup(config)
+--   end
+-- end
+
+-- setup_servers()
+--
+local setup_server = function(server, config)
+  if not config then
+    return
   end
+
+  if type(config) ~= "table" then
+    config = {}
+  end
+
+  config = vim.tbl_deep_extend("force", {
+    on_init = custom_init,
+    on_attach = custom_attach,
+    capabilities = updated_capabilities,
+    flags = {
+      debounce_text_changes = 50,
+    },
+  }, config)
+
+  lspconfig[server].setup(config)
 end
 
-setup_servers()
 
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
-  setup_servers() -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+for server, config in pairs(servers) do
+
+  installed = pcall(extract_config, server)
+  istable = type(config) == "table"
+  -- dump(server)
+  -- dump(installed)
+  -- dump(istable)
+
+  if not installed and not istable then
+    print("Need to do LspIntall", server)
+    goto continue
+  elseif not installed and istable then
+    -- using manual config
+    print("Using manual configurations for ", server)
+  elseif installed and istable then
+    -- extract out the default config and override it with any custom values
+    default_config = extract_config(server)
+    config = vim.tbl_deep_extend("force", default_config, config)
+  elseif installed and not istable then
+    -- using lspinstall default configurations
+    config = extract_config(server)
+  end 
+
+  -- if server == "bashls" then
+  --   dump(config)
+  -- end
+
+  setup_server(server, config)
+
+  ::continue::
 end
+
+-- -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+-- require'lspinstall'.post_install_hook = function ()
+--   run() -- reload installed servers
+--   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+-- end
+
+
+-- -- not necessary unless something else would use this
+-- return {
+--   on_init = custom_init,
+--   on_attach = custom_attach,
+--   capabilities = updated_capabilities,
+-- }
