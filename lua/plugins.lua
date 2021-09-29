@@ -68,8 +68,6 @@ local function plugins(use)
       'onsails/lspkind-nvim',
       'wbthomason/lsp-status.nvim'
     },
-    -- after = 'nvim-lspinstall',
-    -- event = 'BufReadPre',
     config = function()
       require "configs.lspconfig"
     end,

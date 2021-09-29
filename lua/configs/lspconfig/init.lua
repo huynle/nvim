@@ -130,20 +130,22 @@ local servers = {
   },
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
+
+  -- following inline if syntax --- (a and "blah" or "nahblah")
   clangd = {
-    cmd = {
-      string.format('%s/lspinstall/cpp/clangd/bin/clangd',vim.fn.stdpath('data')),
-      "--background-index",
-      "--suggest-missing-includes",
-      "--clang-tidy",
-      "--header-insertion=iwyu",
+      cmd = {
+        string.format('%s/lspinstall/cpp/clangd/bin/clangd',vim.fn.stdpath('data')),
+        "--background-index",
+        "--suggest-missing-includes",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+      },
+      -- Required for lsp-status
+      init_options = {
+        clangdFileStatus = true,
+      },
+      handlers = nvim_status.extensions.clangd.setup(),
     },
-    -- Required for lsp-status
-    init_options = {
-      clangdFileStatus = true,
-    },
-    handlers = nvim_status.extensions.clangd.setup(),
-  },
 
   -- gopls = {
   --   root_dir = function(fname)
@@ -185,17 +187,6 @@ local servers = {
     },
   },
 }
-
-
-local function has_value (tab, val)
-  for _, value in ipairs(tab) do
-    if value == val then
-      return true
-    end
-  end
-  return false
-end
-
 
 
 local opts = { noremap=true, silent=true }
@@ -353,11 +344,6 @@ local lua_settings = {
 }
 
 
--- local function make_config()
---   return {
---     on_attach = custom_attach ,
---   }
--- end
 
 -- local function setup_servers()
 --   require'lspinstall'.setup()
@@ -393,12 +379,6 @@ local lua_settings = {
 --     end
 
 
---     require'lspconfig'[server].setup(config)
---   end
--- end
-
--- setup_servers()
---
 local setup_server = function(server, config)
   if not config then
     return
@@ -420,21 +400,24 @@ local setup_server = function(server, config)
   lspconfig[server].setup(config)
 end
 
+local installed_servers = require'lspinstall'.installed_servers()
 
 for server, config in pairs(servers) do
 
-  installed = pcall(extract_config, server)
+  -- installed = pcall(extract_config, server)
+  installed = has_value(installed_servers, server)
   istable = type(config) == "table"
   -- dump(server)
   -- dump(installed)
   -- dump(istable)
 
   if not installed and not istable then
-    print("Need to do LspIntall", server)
+    dump("Need to do LspIntall", server)
     goto continue
   elseif not installed and istable then
     -- using manual config
-    print("Using manual configurations for ", server)
+    dump("Using manual configurations for ", server)
+    goto continue
   elseif installed and istable then
     -- extract out the default config and override it with any custom values
     default_config = extract_config(server)
@@ -442,12 +425,12 @@ for server, config in pairs(servers) do
   elseif installed and not istable then
     -- using lspinstall default configurations
     config = extract_config(server)
-  end 
+  end
 
   -- if server == "bashls" then
   --   dump(config)
   -- end
-
+  dump(server)
   setup_server(server, config)
 
   ::continue::
