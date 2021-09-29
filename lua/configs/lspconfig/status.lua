@@ -22,6 +22,8 @@ end
 status.activate = function()
   nvim_status.config {
     select_symbol = status.select_symbol,
+    current_function = false,
+    show_filename = false,
 
     indicator_errors = "",
     indicator_warnings = "",

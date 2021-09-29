@@ -2,6 +2,12 @@ local function clock()
   return " " .. os.date("%H:%M")
 end
 
+local function LspStatus()
+  if #vim.lsp.buf_get_clients() > 0 then
+    return require('lsp-status').status()
+  end
+  return
+end
 
 local function NearestMethodOrFunction()
   return vim.b.vista_nearest_method_or_function or ""
@@ -66,7 +72,7 @@ local config = {
     },
     lualine_b = { "branch" },
     lualine_c = {
-      { "diagnostics", sources = { "nvim_lsp" } },
+      -- { "diagnostics", sources = { "nvim_lsp" } },
       {
         'diff',
         colored = false, -- displays diff status in color if set to true
@@ -77,10 +83,12 @@ local config = {
         symbols = {added = '+', modified = '~', removed = '-'} -- changes diff symbols
       },
       "filename",
+      NearestMethodOrFunction,
     },
     lualine_x = { "filetype", "progress", "location"},
     lualine_y = {},
-    lualine_z = {NearestMethodOrFunction, lsp_progress},
+    lualine_z = {LspStatus},
+
   },
   inactive_sections = {
     lualine_a = {},
