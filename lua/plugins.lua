@@ -73,7 +73,12 @@ local function plugins(use)
     end,
   }
 
-  use {'ludovicchabant/vim-gutentags'}
+  use {
+    'ludovicchabant/vim-gutentags',
+    setup = function()
+      require("configs.gutentags")
+    end
+  }
   use {'skywind3000/gutentags_plus'}
 
 
@@ -152,16 +157,6 @@ local function plugins(use)
   }
 
 
-  use {
-    'folke/trouble.nvim',
-    cmd = {'Trouble', 'TroubleToggle'},
-    -- event = "BufReadPre",
-    config = function()
-      -- util.nnoremap("<leader>xx", "<cmd>TroubleToggle<CR>")
-      -- util.nnoremap("<leader>xt", "<cmd>Trouble todo<CR>")
-      require("trouble").setup({ auto_open = false })
-    end
-  }
 
 
   -- Diagnostics
@@ -176,7 +171,7 @@ local function plugins(use)
     cmd = {'LspTrouble'}
   }
 
-
+  -- configurations
   use {
     'embear/vim-localvimrc',
     setup = function()
@@ -195,7 +190,7 @@ local function plugins(use)
   }
 
 
-
+  -- Telescope
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
@@ -254,6 +249,10 @@ local function plugins(use)
   --   -- end
   -- }
 
+  -- Move & Search & replace
+  use 'karb94/neoscroll.nvim'
+  use 'dstein64/nvim-scrollview'
+  use 'chaoren/vim-wordmotion'
   use {
     disable = false,
     'ggandor/lightspeed.nvim',
@@ -324,13 +323,6 @@ local function plugins(use)
   --   'tpope/vim-unimpaired',
   -- }
 
-  use {
-    'junegunn/vim-easy-align',
-    cmd = {"EasyAlign"},
-    config = function()
-      require 'configs.easyalign'
-    end,
-  }
 
   use {
     'itchyny/vim-cursorword',
@@ -427,17 +419,48 @@ local function plugins(use)
     requires = {{'tpope/vim-dadbod',opt = true}}
   }
 
+  -- Syntax
   use {
     'editorconfig/editorconfig-vim',
     ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp', 'puppet'}
   }
+  use {
+    'chrisbra/csv.vim',
+    ft = {'csv'}
+  }
 
-  -- use {
-  --   'glepnir/prodoc.nvim',
-  --   event = 'BufReadPre'
-  -- }
+  use {
+    'junegunn/vim-easy-align',
+    cmd = {"EasyAlign"},
+    config = function()
+      require 'configs.easyalign'
+    end,
+  }
 
 
+  -- Statusline and Bufferline
+  use {
+    "hoob3rt/lualine.nvim",
+    event = "VimEnter",
+    config = [[require('configs.lualine')]],
+    wants = "nvim-web-devicons",
+  }
+
+  -- vista.vim: a tagbar alternative that supports lsp symbols and async processing
+  -- only guaranteed with Universal Ctags
+  use {
+    "liuchengxu/vista.vim",
+    cmd = {"Vista"},
+    setup = function()
+      vim.g.vista_default_executive = "nvim_lsp"
+      vim.g.vista_executive_for = {
+        cpp = 'ctags',
+        lua = 'ctags',
+      }
+    end,
+  }
+
+  -- comments and things
   use {
     'folke/todo-comments.nvim',
     cmd = { "TodoTrouble", "TodoTelescope" },
@@ -445,6 +468,17 @@ local function plugins(use)
     requires = "nvim-lua/plenary.nvim",
     config = function()
       require('configs.todo-comments')
+    end
+  }
+
+  use {
+    'folke/trouble.nvim',
+    cmd = {'Trouble', 'TroubleToggle'},
+    -- event = "BufReadPre",
+    config = function()
+      -- util.nnoremap("<leader>xx", "<cmd>TroubleToggle<CR>")
+      -- util.nnoremap("<leader>xt", "<cmd>Trouble todo<CR>")
+      require("trouble").setup({ auto_open = false })
     end
   }
 
@@ -505,19 +539,6 @@ local function plugins(use)
   --   cmd = {'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose'}
   -- }
 
-  -- vista.vim: a tagbar alternative that supports lsp symbols and async processing
-  -- only guaranteed with Universal Ctags
-  use {
-    "liuchengxu/vista.vim",
-    cmd = {"Vista"},
-    setup = function()
-      vim.g.vista_default_executive = "nvim_lsp"
-      vim.g.vista_executive_for = {
-        cpp = 'ctags',
-        lua = 'ctags',
-      }
-    end,
-  }
 
 
   -- QuickFix
@@ -603,6 +624,7 @@ local function plugins(use)
   --   }
   -- }
 
+  -- git stuff
   use {
     'TimUntersberger/neogit',
     cmd ='Neogit',
@@ -614,7 +636,6 @@ local function plugins(use)
       require 'configs.neogit'
     end
   }
-
 
   use {
     'sindrets/diffview.nvim',
@@ -791,13 +812,6 @@ local function plugins(use)
   -- }
 
 
-  -- Statusline
-  use {
-    "hoob3rt/lualine.nvim",
-    event = "VimEnter",
-    config = [[require('configs.lualine')]],
-    wants = "nvim-web-devicons",
-  }
 
 
   use {
@@ -856,19 +870,6 @@ local function plugins(use)
     },
     ft = {'vimwiki', 'markdown'},
   }
-
-  -- use {
-  --   'edkolev/tmuxline.vim'
-  -- }
-
-  -- use {
-  --   'navarasu/onedark.nvim',
-  --   config = function()
-  --     vim.g.onedark_style = 'deep'
-  --     vim.g.onedark_transparent_background = true-- By default it is false
-  --     require('onedark').setup()
-  --   end,
-  -- }
 
   -- Theme: color schemes
   -- use("tjdevries/colorbuddy.vim")

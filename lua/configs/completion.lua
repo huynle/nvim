@@ -24,28 +24,36 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
   },
   sources = {
+    { name = 'tags' },
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'path' },
     { name = 'calc' },
     { name = 'treesitter' },
-    { name = 'tags' },
+    { name = 'orgmode' },
   },
   formatting = {
     format = function(entry, vim_item)
       -- fancy icons and a name of kind
-      vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+      -- vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+      vim_item.kind = require("lspkind").presets.default[vim_item.kind]
 
       -- set a name for each source
       vim_item.menu = ({
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
+        calc = "[calc]",
+        vsnip = "[Vsnip]",
         nvim_lua = "[Lua]",
         latex_symbols = "[Latex]",
+        tags = "[T]",
+        orgmode = "[Org]",
       })[entry.source.name]
       return vim_item
     end,
