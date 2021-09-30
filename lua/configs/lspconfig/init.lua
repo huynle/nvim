@@ -122,12 +122,13 @@ local servers = {
   python = true,
   vim = true,
   lua = true,
-  yamlls = {
-    cmd = {
-      string.format('%s/lspinstall/yaml/./node_modules/.bin/yaml-language-server',vim.fn.stdpath('data')),
-      "--stdio"
-    }
-  },
+  yaml = true,
+  -- yamlls = {
+  --   cmd = {
+  --     string.format('%s/lspinstall/yaml/./node_modules/.bin/yaml-language-server',vim.fn.stdpath('data')),
+  --     "--stdio"
+  --   }
+  -- },
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
 
